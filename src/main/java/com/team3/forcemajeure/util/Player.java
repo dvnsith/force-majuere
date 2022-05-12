@@ -6,6 +6,7 @@ public class Player {
     public  Room curRoom;
     public Inventory inventory;
     private String playerMap;
+    private WriteText write = new WriteText();
 
 //    Constructor
     public Player() {
@@ -21,9 +22,12 @@ public class Player {
         if (inventory.getInventory().contains("map")){
             System.out.println(playerMap.replace(playerLocation+"[ ]",
                     playerLocation+"[X]"));
+
         }
         else{
-            System.out.println("I dont see map in your inventory");
+//            System.out.println("I dont see map in your inventory");
+            write.outputText("I dont see map in your inventory");
+
         }
     }
     public int rollDicePlayer(){
