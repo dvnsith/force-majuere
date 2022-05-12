@@ -13,6 +13,7 @@ public class Room {
     private HashMap<String, String> directions;
     private HashMap<String, String> looking;
     private List<String> npcs;
+    private WriteText write = new WriteText();
 
 // Getter and setter
     public String getName() {
@@ -54,6 +55,7 @@ public class Room {
                 npcStr +
                 "Items seen: " +
                 getItem();
-        System.out.println(str);
+//        System.out.println(str);
+        write.outputText(str);
     }
 }

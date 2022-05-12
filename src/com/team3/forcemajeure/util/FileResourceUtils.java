@@ -69,7 +69,7 @@ public class FileResourceUtils {
             Map<String, ?> map,
             String path) {
         try {
-            Writer writer = new FileWriter(path);
+            FileWriter writer = new FileWriter(path);
             new Gson().toJson(map, writer);
             writer.close();
         } catch (Exception e) {
@@ -84,7 +84,7 @@ public class FileResourceUtils {
             Inventory inventory,
             String path) {
         try {
-            Writer writer = new FileWriter(path);
+            FileWriter writer = new FileWriter(path);
             new Gson().toJson(inventory, writer);
             writer.close();
         } catch (Exception e) {

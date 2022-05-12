@@ -7,6 +7,7 @@ public class NPC {
     private String description;
     private Map<String,String> dialogue;
     private Map<String,String> endings;
+    private WriteText write = new WriteText();
 
     public String getName() {
         return name;
@@ -41,6 +42,9 @@ public class NPC {
     }
 
     public void speak() {
-        System.out.println("Hello I am " + this.getName());
+//        System.out.println("Hello I am " + this.getName());
+        write.outputText("Hello I am " + this.getName());
+
     }
+
 }

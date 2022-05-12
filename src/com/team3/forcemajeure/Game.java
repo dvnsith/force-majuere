@@ -1,6 +1,5 @@
 package com.team3.forcemajeure;
 
-
 import com.team3.forcemajeure.util.*;
 
 import java.io.IOException;
@@ -10,6 +9,7 @@ public class Game {
 //     Variables
     Audio audio = Audio.getInstance();
     boolean gameRunning = true;
+    WriteText write = new WriteText();
 
 //    Business methods
 //    primarly runs the game
@@ -62,11 +62,13 @@ public class Game {
             }
 //            prompt User
             String response = TextParser.gameScannerInput();
+            write.inputText(response);
+            String response2 = write.getInputString();
             clrScreen();
-            if ("mute".equals(response)) {
+            if ("mute".equals(response2)) {
                 audio.toggleMute();
             } else {
-                TextParser.gameScannerOutput(response, player, roomMap, npcMap, endingsMap);
+                TextParser.gameScannerOutput(response2, player, roomMap, npcMap, endingsMap);
             }
         }
     }

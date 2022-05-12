@@ -37,6 +37,8 @@ public class Enemy {
     }
 
     // BUSINESS METHODS
+
+    // blackjack
     public int rollDiceEnemy(){
         int numberRolled;
         numberRolled = (int) (Math.random() * (7-1) + 1);
@@ -62,9 +64,10 @@ public class Enemy {
         }
         else if (!player.getPlayerInventory().inventory.contains(item)){
             System.out.println("Enemy Name " + name + ": says " + dialoguEnemyDefeated);
-            if (!player.getPlayerInventory().inventory.contains(item)){
-                giveLoot();
-            }
+            giveLoot();
+//            if (!player.getPlayerInventory().inventory.contains(item)){
+//                giveLoot();
+//            }
         }
     }
 

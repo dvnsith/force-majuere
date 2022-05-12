@@ -8,6 +8,7 @@ public class Player {
     private String playerMap;
     private int pointTotal = 0;
     private int losses = 0;
+    private WriteText write = new WriteText();
 
 //    Constructor
     public Player() {
@@ -25,7 +26,9 @@ public class Player {
                     playerLocation+"[X]"));
         }
         else{
-            System.out.println("I dont see map in your inventory");
+//            System.out.println("I dont see map in your inventory");
+            write.outputText("I dont see map in your inventory");
+
         }
     }
     public int rollDicePlayer(){
