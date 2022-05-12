@@ -7,6 +7,7 @@ public class Player {
     public Inventory inventory;
     private String playerMap;
     private int pointTotal = 0;
+    private int losses = 0;
 
 //    Constructor
     public Player() {
@@ -72,5 +73,13 @@ public class Player {
 
     public void setPointTotal(int pointTotal) {
         this.pointTotal = pointTotal;
+    }
+
+    public int getLosses() {
+        return losses;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
     }
 }

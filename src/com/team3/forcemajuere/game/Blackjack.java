@@ -9,7 +9,6 @@ public class Blackjack {
 
     private Player player = new Player();
     private String answer;
-    private int losses = 0;
     private int dealerHand = 0;
     private int playerHand;
     private int card;
@@ -34,7 +33,7 @@ public class Blackjack {
     public void promptToPlay() {
 
         try {
-            while (!(losses >= 5)) {
+            while (!(player.getLosses() >= 5)) {
                 System.out.print("Do you want to play a game of 21? \n");
                 Scanner scanner = new Scanner(System.in);
                 answer = scanner.nextLine();
@@ -85,10 +84,10 @@ public class Blackjack {
         }
         else if (getPlayerHand() > 21) {
             player.setPointTotal(player.getPointTotal()-2);
-            losses++;
+            player.setLosses(player.getLosses()+1);
             System.out.println("You busted! Maybe you'll win another time. \n");
             System.out.println("Your point total: " + player.getPointTotal());
-            System.out.println("Your loss total: " + losses);
+            System.out.println("Your loss total: " + player.getLosses());
         }
     }
 
@@ -106,10 +105,10 @@ public class Blackjack {
         System.out.println("Dealer hand: " + getDealerHand());
         if (getDealerHand() > getPlayerHand()) {
             player.setPointTotal(player.getPointTotal()-2);
-            losses++;
+            player.setLosses(player.getLosses()+1);
             System.out.println("Better luck next time. \n");
             System.out.println("Your point total: " + player.getPointTotal());
-            System.out.println("Your loss total: " + losses);
+            System.out.println("Your loss total: " + player.getLosses());
         }
         else if (getPlayerHand() > getDealerHand()) {
             System.out.println("Today must be your lucky day. You win this round \n");
