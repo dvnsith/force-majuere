@@ -9,7 +9,7 @@ public class Room {
     private String description;
     private String item;
     private String story;
-//    public HashMap<String, String> item;
+// Public HashMap<String, String> item;
     private HashMap<String, String> directions;
     private HashMap<String, String> looking;
     private List<String> npcs;

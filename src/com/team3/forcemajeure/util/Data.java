@@ -1,9 +1,9 @@
 package com.team3.forcemajeure.util;
 
-import static com.team3.forcemajeure.util.FileResourceUtils.*;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import static com.team3.forcemajeure.util.FileResourceUtils.*;
 
 import java.io.*;
 import java.lang.reflect.Type;

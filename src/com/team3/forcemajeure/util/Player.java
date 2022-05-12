@@ -6,6 +6,7 @@ public class Player {
     public  Room curRoom;
     public Inventory inventory;
     private String playerMap;
+    private int pointTotal = 0;
 
 //    Constructor
     public Player() {
@@ -31,15 +32,15 @@ public class Player {
         numberRolled = (int) (Math.random() * (7-1) + 1);
         return numberRolled;
     }
-    public int rollDiceTotalPlayer(int count){
-        int total = 0;
-        for (int counter = 0; counter<count; counter++){
-            int rolled = rollDicePlayer();
-            System.out.println("You roll " + counter + " rolled a " + rolled + " total is " + total);
-            total = total + rolled;
-        }
-        return total;
-    }
+//    public int rollDiceTotalPlayer(int count){
+//        int total = 0;
+//        for (int counter = 0; counter<count; counter++){
+//            int rolled = rollDicePlayer();
+//            System.out.println("You roll " + counter + " rolled a " + rolled + " total is " + total);
+//            total = total + rolled;
+//        }
+//        return total;
+//    }
 
     public Room getCurRoom() {
         return curRoom;
@@ -63,5 +64,13 @@ public class Player {
 
     public void setCurRoom(Room room) {
         this.curRoom = room;
+    }
+
+    public int getPointTotal() {
+        return pointTotal;
+    }
+
+    public void setPointTotal(int pointTotal) {
+        this.pointTotal = pointTotal;
     }
 }
