@@ -1,7 +1,9 @@
 package com.team3.forcemajeure;
 
+
 import com.team3.forcemajeure.util.*;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class Game {
@@ -56,10 +58,7 @@ public class Game {
 //            checks if enemy is around
 //            TODO loop through enemy of array when that is implemented
             if (player.getCurRoom().equals(gambler.getLocation())) {
-                gambler.talk();
-                if (gambler.getHealth() > 0) {
-                    Battle.battle(gambler, player, 3);
-                }
+                gambler.miniGameConnect();
             }
 //            prompt User
             String response = TextParser.gameScannerInput();
@@ -73,8 +72,14 @@ public class Game {
     }
 //     Clears screen
     public void clrScreen(){
-        for (int i = 0; i < 60; ++i){
-            System.out.println();
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033\143");
+            }
+        } catch (IOException | InterruptedException ex) {
+            ex.printStackTrace();
         }
     }
 
