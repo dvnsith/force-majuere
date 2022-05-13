@@ -3,8 +3,6 @@ package com.team3.forcemajeure.util;
  * com.team3.forcemajeure.util.TextParser class deals with all the user text input in the game
  */
 
-import com.team3.forcemajeure.jswing.GameFrame;
-
 import java.util.Map;
 import java.util.Scanner;
 

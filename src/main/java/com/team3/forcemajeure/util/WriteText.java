@@ -1,7 +1,5 @@
 package com.team3.forcemajeure.util;
 
-import com.team3.forcemajeure.jswing.GameFrame;
-
 import java.util.ArrayList;
 
 public class WriteText {
