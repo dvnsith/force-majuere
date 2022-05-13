@@ -2,26 +2,18 @@ package com.team3.forcemajeure.jswing;
 
 import com.team3.forcemajeure.util.Player;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 public class GameExample {
 
     JFrame window;
     Container con;
-    JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
-    JLabel titleNameLabel, ptLabel, ptLabelNumber, inventoryLabel, inventoryLabelName;
+    JPanel userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
+    JLabel userNameLabel, titleNameLabel, ptLabel, ptLabelNumber, inventoryLabel, inventoryLabelName;
     Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
     Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
     JButton startButton, choice1, choice2, choice3, choice4;
@@ -31,9 +23,18 @@ public class GameExample {
     JLabel imageLabel = new JLabel();
     TitleScreenHandler tsHandler = new TitleScreenHandler();
     ChoiceHandler choiceHandler = new ChoiceHandler();
-    String player = "John Doe";
+    String player;
+
 
     ImageIcon logo = new ImageIcon("resources/images/island.png");
+
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
+    }
 
     public static void main(String[] args) {
 
@@ -49,6 +50,11 @@ public class GameExample {
         window.setLayout(null);
         window.setIconImage(logo.getImage());
         con = window.getContentPane();
+
+        userNamePanel = new JPanel();
+        userNamePanel.setBounds(250,250,300,125);
+        userNamePanel.setBackground(Color.black);
+        userNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         titleNamePanel = new JPanel();
         titleNamePanel.setBounds(100, 100, 600, 150);
@@ -68,9 +74,22 @@ public class GameExample {
         startButton.addActionListener(tsHandler);
         startButton.setFocusPainted(false);
 
+        userNameLabel = new JLabel("Enter username");
+        userNameLabel.setForeground(Color.white);
+        JTextField textField = new JTextField();
+        textField.setPreferredSize(new Dimension(200,40));
+        startButton.addActionListener(e -> {
+            if(e.getSource() == startButton){
+                setPlayer(textField.getText());
+
+            }
+        });
+        userNamePanel.add(userNameLabel);
+        userNamePanel.add(textField);
         titleNamePanel.add(titleNameLabel);
         startButtonPanel.add(startButton);
 
+        con.add(userNamePanel);
         con.add(titleNamePanel);
         con.add(startButtonPanel);
 
@@ -78,6 +97,7 @@ public class GameExample {
     }
 
     public void createGameScreen() {
+        userNamePanel.setVisible(false);
         titleNamePanel.setVisible(false);
         startButtonPanel.setVisible(false);
 
@@ -192,7 +212,7 @@ public class GameExample {
     // blackjack logic => int
 
     public void talkInstructor() {
-        setTexts("talkInstructor", "Instructor: Hello " + player + ", Please go to the casino and explore", "Go to dock",
+        setTexts("talkInstructor", "Instructor: Hello " + getPlayer() + ", Please go to the casino and explore", "Go to dock",
                 "Go to lobby", "", "");
     }
 
@@ -232,7 +252,7 @@ public class GameExample {
         setTexts("hall", "This is the hall", "go to lobby", "go to restaurant", "", "");
     }
     public void restaurant() {
-        setTexts("restaurant", "This is the restaurant", "go to game floor", "go to hall", "talkInstructor", "");
+        setTexts("restaurant", "This is the restaurant", "go to hall", "go game floor", "talkInstructor", "");
     }
     public void gameFloor() {
         setTexts("gameFloor", "This is the game floor", "go to theater", "go to restaurant", "talkInstructor", "");
