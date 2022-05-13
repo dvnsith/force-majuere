@@ -4,6 +4,7 @@ import com.team3.forcemajeure.jswing.GameFrame;
 import com.team3.forcemajeure.util.Audio;
 import com.team3.forcemajeure.util.Data;
 import com.team3.forcemajeure.util.TextParser;
+import com.team3.forcemajeure.util.WriteText;
 
 import java.io.*;
 /*
@@ -12,7 +13,7 @@ import java.io.*;
  */
 public class MainMenu {
         Audio audio = Audio.getInstance();
-        TextParser.WriteText write = new TextParser.WriteText();
+        WriteText write = new WriteText();
 
 
     void executes() throws IOException {

@@ -7,7 +7,7 @@ public class NPC {
     private String description;
     private Map<String,String> dialogue;
     private Map<String,String> endings;
-    private TextParser.WriteText write = new TextParser.WriteText();
+    private WriteText write = new WriteText();
 
     public String getName() {
         return name;

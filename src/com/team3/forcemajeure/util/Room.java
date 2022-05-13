@@ -12,7 +12,7 @@ public class Room {
     private HashMap<String, String> directions;
     private HashMap<String, String> looking;
     private List<String> npcs;
-    private TextParser.WriteText write = new TextParser.WriteText();
+    private WriteText write = new WriteText();
 
 // Getter and setter
     public String getName() {

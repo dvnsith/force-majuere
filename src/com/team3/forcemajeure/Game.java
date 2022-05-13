@@ -1,7 +1,7 @@
 package com.team3.forcemajeure;
 
 import com.team3.forcemajeure.util.*;
-
+import com.team3.forcemajeure.util.WriteText;
 import java.io.IOException;
 import java.util.Map;
 
@@ -9,7 +9,7 @@ public class Game {
 //     Variables
     Audio audio = Audio.getInstance();
     boolean gameRunning = true;
-    TextParser.WriteText write = new TextParser.WriteText();
+     WriteText write = new WriteText();
 
 //    Business methods
 //    primarly runs the game
