@@ -13,7 +13,7 @@ public class GameFrame {
     Audio audio = Audio.getInstance();
     boolean gameRunning = true;
     String inputOne;
-    WriteText write = new WriteText();
+    TextParser.WriteText write = new TextParser.WriteText();
 //    private static String commandInput;
 
     public boolean isSoundOn() {

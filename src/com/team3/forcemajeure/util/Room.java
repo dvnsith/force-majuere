@@ -1,6 +1,5 @@
 package com.team3.forcemajeure.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class Room {
     private HashMap<String, String> directions;
     private HashMap<String, String> looking;
     private List<String> npcs;
-    private WriteText write = new WriteText();
+    private TextParser.WriteText write = new TextParser.WriteText();
 
 // Getter and setter
     public String getName() {

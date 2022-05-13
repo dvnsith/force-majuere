@@ -8,7 +8,7 @@ public class Player {
     private String playerMap;
     private int pointTotal = 0;
     private int losses = 0;
-    private WriteText write = new WriteText();
+    private TextParser.WriteText write = new TextParser.WriteText();
 
 //    Constructor
     public Player() {

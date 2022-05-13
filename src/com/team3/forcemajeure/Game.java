@@ -9,7 +9,7 @@ public class Game {
 //     Variables
     Audio audio = Audio.getInstance();
     boolean gameRunning = true;
-    WriteText write = new WriteText();
+    TextParser.WriteText write = new TextParser.WriteText();
 
 //    Business methods
 //    primarly runs the game
