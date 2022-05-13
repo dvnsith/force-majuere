@@ -1,5 +1,7 @@
 package com.team3.forcemajeure.jswing;
 
+import com.team3.forcemajeure.util.Player;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
@@ -29,6 +31,7 @@ public class GameExample {
     JLabel imageLabel = new JLabel();
     TitleScreenHandler tsHandler = new TitleScreenHandler();
     ChoiceHandler choiceHandler = new ChoiceHandler();
+    String player = "John Doe";
 
     ImageIcon logo = new ImageIcon("resources/images/island.png");
 
@@ -164,7 +167,7 @@ public class GameExample {
 
     public void playerSetup() {
 
-        playerPT = 0;
+        // playerPT = player.getTotalPoints();
         monsterHP = 20;
         inventory = "Map";
         inventoryLabelName.setText(inventory);
@@ -189,7 +192,7 @@ public class GameExample {
     // blackjack logic => int
 
     public void talkInstructor() {
-        setTexts("talkInstructor", "Instructor: Hello [username], Please go to the casino and exlore", "Go to dock",
+        setTexts("talkInstructor", "Instructor: Hello " + player + ", Please go to the casino and explore", "Go to dock",
                 "Go to lobby", "", "");
     }
 
@@ -217,30 +220,25 @@ public class GameExample {
     }
 
     public void beach() {
-        setTexts("beach", "This is the beach", "go to lobby", "go to restaurant", "", "");
+        setTexts("beach", "This is the beach", "go to lobby", "go to dock", "talkInstructor", "");
     }
-
     public void dock() {
         setTexts("dock", "This is the dock", "go to beach", "", "", "");
     }
     public void lobby() {
         setTexts("lobby", "This is the dock", "go to hall", "go to beach", "talkInstructor", "");
     }
-
     public void hall() {
         setTexts("hall", "This is the hall", "go to lobby", "go to restaurant", "", "");
     }
-
     public void restaurant() {
-        setTexts("restaurant", "This is the restaurant", "go to game floor", "go to hall", "", "");
+        setTexts("restaurant", "This is the restaurant", "go to game floor", "go to hall", "talkInstructor", "");
     }
-
     public void gameFloor() {
-        setTexts("gameFloor", "This is the game floor", "go to theater", "go to restaurant", "", "");
+        setTexts("gameFloor", "This is the game floor", "go to theater", "go to restaurant", "talkInstructor", "");
     }
-
     public void theater() {
-        setTexts("theater", "This is the theater", "go to game floor", "", "", "");
+        setTexts("theater", "This is the theater", "go to game floor", "talkInstructor", "", "");
     }
 
     public void ending() {
@@ -398,20 +396,19 @@ public class GameExample {
         }
     }
 
-    public class ChoiceHandler implements ActionListener{
+    public class ChoiceHandler implements ActionListener {
 
-        public void actionPerformed(ActionEvent event){
+        public void actionPerformed(ActionEvent event) {
 
             String yourChoice = event.getActionCommand();
 
-            switch(position){
+            switch (position) {
                 case "dock":
-                    switch(yourChoice){
+                    switch (yourChoice) {
                         case "c1":
-                            if(silverRing==1){
+                            if (silverRing == 1) {
                                 ending();
-                            }
-                            else{
+                            } else {
                                 talkInstructor();
                             }
                             break;
@@ -420,7 +417,7 @@ public class GameExample {
                     }
                     break;
                 case "talkInstructor":
-                    switch(yourChoice) {
+                    switch (yourChoice) {
                         case "c1":
                             dock();
                             break;
@@ -430,33 +427,53 @@ public class GameExample {
                     }
                     break;
                 case "lobby":
-                    switch(yourChoice){
-                        case "c1": hall(); break;
-                        case "c2": beach(); break;
-                        case "c3": talkInstructor(); break;
+                    switch (yourChoice) {
+                        case "c1":
+                            hall();
+                            break;
+                        case "c2":
+                            beach();
+                            break;
+                        case "c3":
+                            talkInstructor();
+                            break;
                     }
                     break;
                 case "hall":
-                    switch(yourChoice){
-                        case "c1": lobby(); break;
-                        case "c2": restaurant(); break;
+                    switch (yourChoice) {
+                        case "c1":
+                            lobby();
+                            break;
+                        case "c2":
+                            restaurant();
+                            break;
                     }
                     break;
                 case "restaurant":
-                    switch(yourChoice){
-                        case "c1": hall(); break;
-                        case "c2": gameFloor(); break;
+                    switch (yourChoice) {
+                        case "c1":
+                            hall();
+                            break;
+                        case "c2":
+                            gameFloor();
+                            break;
                     }
                     break;
                 case "gameFloor":
-                    switch(yourChoice){
-                        case "c1": theater(); break;
-                        case "c2": restaurant(); break;
+                    switch (yourChoice) {
+                        case "c1":
+                            theater();
+                            break;
+                        case "c2":
+                            restaurant();
+                            break;
                     }
                     break;
                 case "theater":
-                    switch(yourChoice){
-                        case "c1": gameFloor(); break;
+                    switch (yourChoice) {
+                        case "c1":
+                            gameFloor();
+                            break;
                     }
                     break;
 
@@ -525,5 +542,4 @@ public class GameExample {
 
         }
     }
-
 }

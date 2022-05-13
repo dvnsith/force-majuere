@@ -3,7 +3,6 @@ package com.team3.forcemajeure.util;
  * com.team3.forcemajeure.util.TextParser class deals with all the user text input in the game
  */
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -241,53 +240,5 @@ public class TextParser {
 //            System.out.println(gameInput + " is not valid command, enter help to see commands");
             write.outputText(gameInput + " is not valid command, enter help to see commands");
         }
-    }
-
-    public static class WriteText {
-        private static String inputString;
-        private String outputString;
-        private ArrayList<String> outputListString;
-
-
-        public String getInputString() {
-            return inputString;
-        }
-
-        public void setInputString(String inputString) {
-            WriteText.inputString = inputString;
-        }
-
-        public String getOutputString() {
-            return outputString;
-        }
-
-        public void setOutputString(String outputString) {
-            this.outputString = outputString;
-        }
-
-        public ArrayList<String> getOutputListString() {
-            return outputListString;
-        }
-
-        public void setOutputListString(ArrayList<String> outputListString) {
-            this.outputListString = outputListString;
-        }
-
-        public void inputText(String s){
-            setInputString(s.stripLeading().stripTrailing());
-            System.out.println(getInputString());
-
-        }
-
-        public void outputText(String s){
-            setOutputString(s.stripLeading().stripTrailing());
-            System.out.println(getOutputString());
-        }
-
-        public void outputTextList (ArrayList<String> s){
-            setOutputListString(s);
-            System.out.println(getOutputListString());
-        }
-
     }
 }
