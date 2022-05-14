@@ -1,10 +1,11 @@
 package com.team3.forcemajeure.jswing;
 
-import com.team3.forcemajeure.util.Player;
+import com.team3.forcemajeure.util.Audio;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Method;
 
 import javax.swing.*;
 
@@ -12,22 +13,25 @@ public class GameExample {
 
     JFrame window;
     Container con;
-    JPanel userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
+    JPanel menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
     JLabel userNameLabel, titleNameLabel, ptLabel, ptLabelNumber, inventoryLabel, inventoryLabelName;
     Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
     Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
-    JButton startButton, choice1, choice2, choice3, choice4;
+    JButton soundButton, startButton, choice1, choice2, choice3, choice4;
     JTextArea mainTextArea;
     int playerPT, monsterHP, silverRing;
     String inventory, position;
-    JLabel imageLabel = new JLabel();
     TitleScreenHandler tsHandler = new TitleScreenHandler();
     ChoiceHandler choiceHandler = new ChoiceHandler();
-    String player;
-
-
+    String player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
+    Boolean soundOn = true;
     ImageIcon logo = new ImageIcon("resources/images/island.png");
+    ImageIcon mapImage;
+    JLabel mapLabel = new JLabel();
+    Audio audio = Audio.getInstance();
 
+
+    //Accessor
     public String getPlayer() {
         return player;
     }
@@ -36,39 +40,119 @@ public class GameExample {
         this.player = player;
     }
 
-    public static void main(String[] args) {
-
-        new GameExample();
+    public boolean isSoundOn() {
+        return soundOn;
     }
 
+    public void setSoundOn(boolean soundOn) {
+        this.soundOn = soundOn;
+    }
+
+    public String getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(String currentRoom) {
+        this.currentRoom = currentRoom;
+    }
+
+    public String getPreviousRoom() {
+        return previousRoom;
+    }
+
+    public void setPreviousRoom(String previousRoom) {
+        this.previousRoom = previousRoom;
+    }
+
+    public String getMainText() {
+        return mainText;
+    }
+
+    public void setMainText(String mainText) {
+        this.mainText = mainText;
+    }
+
+    public String getFirstChoice() {
+        return firstChoice;
+    }
+
+    public void setFirstChoice(String firstChoice) {
+        this.firstChoice = firstChoice;
+    }
+
+    public String getSecondChoice() {
+        return secondChoice;
+    }
+
+    public void setSecondChoice(String secondChoice) {
+        this.secondChoice = secondChoice;
+    }
+
+    public String getThirdChoice() {
+        return thirdChoice;
+    }
+
+    public void setThirdChoice(String thirdChoice) {
+        this.thirdChoice = thirdChoice;
+    }
+
+    public String getFourthChoice() {
+        return fourthChoice;
+    }
+
+    public void setFourthChoice(String fourthChoice) {
+        this.fourthChoice = fourthChoice;
+    }
+
+    // Ctor
     public GameExample() {
 
+        Color bg = Color.black;
+
         window = new JFrame();
-        window.setSize(800, 600);
+        window.setSize(1000, 800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.getContentPane().setBackground(Color.black);
+        window.getContentPane().setBackground(bg);
         window.setLayout(null);
         window.setIconImage(logo.getImage());
         con = window.getContentPane();
 
+
+        soundButton = new JButton("🔈 on/off");
+        soundButton.setBounds(15,7,50,50);
+        soundButton.addActionListener(e -> {
+            if(isSoundOn()) {
+                System.out.println("Sound Off");
+                setSoundOn(false);
+            } else {
+                System.out.println("Sound on");
+                setSoundOn(true);
+            }
+        });
+
+
+        menuPanel = new JPanel();
+        menuPanel.setBounds(15,7,200,50);
+        menuPanel.setBackground(bg);
+
         userNamePanel = new JPanel();
-        userNamePanel.setBounds(250,250,300,125);
-        userNamePanel.setBackground(Color.black);
+        userNamePanel.setBounds(350,250,250,125);
+        userNamePanel.setBackground(bg);
         userNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         titleNamePanel = new JPanel();
-        titleNamePanel.setBounds(100, 100, 600, 150);
-        titleNamePanel.setBackground(Color.black);
+        titleNamePanel.setBounds(175, 100, 600, 150);
+        titleNamePanel.setBackground(bg);
         titleNameLabel = new JLabel("Force Majeure");
         titleNameLabel.setForeground(Color.white);
         titleNameLabel.setFont(titleFont);
 
         startButtonPanel = new JPanel();
-        startButtonPanel.setBounds(300, 400, 200, 100);
-        startButtonPanel.setBackground(Color.black);
+        startButtonPanel.setBounds(370, 400, 200, 100);
+        startButtonPanel.setBackground(bg);
 
         startButton = new JButton("START");
-        startButton.setBackground(Color.black);
+        startButton.setBackground(bg);
         startButton.setForeground(Color.white);
         startButton.setFont(normalFont);
         startButton.addActionListener(tsHandler);
@@ -84,11 +168,14 @@ public class GameExample {
 
             }
         });
+
+        menuPanel.add(soundButton);
         userNamePanel.add(userNameLabel);
         userNamePanel.add(textField);
         titleNamePanel.add(titleNameLabel);
         startButtonPanel.add(startButton);
 
+        con.add(menuPanel);
         con.add(userNamePanel);
         con.add(titleNamePanel);
         con.add(startButtonPanel);
@@ -96,19 +183,20 @@ public class GameExample {
         window.setVisible(true);
     }
 
+    //Business Methods
     public void createGameScreen() {
         userNamePanel.setVisible(false);
         titleNamePanel.setVisible(false);
         startButtonPanel.setVisible(false);
 
         mainTextPanel = new JPanel();
-        mainTextPanel.setBounds(100, 100, 600, 250);
+        mainTextPanel.setBounds(220, 100, 600, 250);
         mainTextPanel.setBackground(Color.black);
-        con.add(imageLabel);
+//        con.add(imageLabel);
         con.add(mainTextPanel);
         mainTextArea = new JTextArea(
                 "This is the main text are. This game is going to be great. I'm sure of it!!!!!!!");
-        mainTextArea.setBounds(100, 100, 600, 250);
+        mainTextArea.setBounds(225, 200, 500, 300);
         mainTextArea.setBackground(Color.black);
         mainTextArea.setForeground(Color.white);
         mainTextArea.setFont(normalFont);
@@ -119,7 +207,7 @@ public class GameExample {
         mainTextPanel.add(mainTextArea);
 
         choiceButtonPanel = new JPanel();
-        choiceButtonPanel.setBounds(250, 350, 300, 150);
+        choiceButtonPanel.setBounds(350, 475, 300, 150);
         choiceButtonPanel.setBackground(Color.black);
         choiceButtonPanel.setLayout(new GridLayout(4, 1));
         con.add(choiceButtonPanel);
@@ -159,7 +247,7 @@ public class GameExample {
         // choice4.setContentAreaFilled(false); // Disable highlighting on press!!!
 
         playerPanel = new JPanel();
-        playerPanel.setBounds(100, 15, 600, 50);
+        playerPanel.setBounds(250, 0, 600, 50);
         playerPanel.setBackground(Color.black);
         playerPanel.setLayout(new GridLayout(1, 4));
         con.add(playerPanel);
@@ -180,13 +268,12 @@ public class GameExample {
         inventoryLabelName.setFont(normalFont);
         inventoryLabelName.setForeground(Color.white);
         playerPanel.add(inventoryLabelName);
-
         playerSetup();
 
     }
 
     public void playerSetup() {
-
+        audio.play("start");
         // playerPT = player.getTotalPoints();
         monsterHP = 20;
         inventory = "Map";
@@ -199,6 +286,10 @@ public class GameExample {
     public void setTexts(String pos, String mainText, String choiceOne, String choiceTwo, String choiceThree,
                          String choiceFour) {
 
+        choice1.setVisible(true);
+        choice2.setVisible(true);
+        choice3.setVisible(true);
+        mapLabel.setVisible(false);
         position = pos;
         // if pos = blackjack or contains the word blackjack
         // add text area to show card output
@@ -207,14 +298,22 @@ public class GameExample {
         choice2.setText(choiceTwo);
         choice3.setText(choiceThree);
         choice4.setText(choiceFour);
+        setMainText(mainText);
+        setFirstChoice(choiceOne);
+        setSecondChoice(choiceTwo);
+        setThirdChoice(choiceThree);
+        setFourthChoice(choiceFour);
+
+        // prev. room = current room
+        // current room = pos
+        setPreviousRoom(getCurrentRoom());
+        setCurrentRoom(pos);
+
+        System.out.println("Prev room: "+ getPreviousRoom() + "\nCurrent room: " + getCurrentRoom());
     }
+
 
     // blackjack logic => int
-
-    public void talkInstructor() {
-        setTexts("talkInstructor", "Instructor: Hello " + getPlayer() + ", Please go to the casino and explore", "Go to dock",
-                "Go to lobby", "", "");
-    }
 
     public void blackJackRound1() {
         // pos = blackjack
@@ -238,27 +337,77 @@ public class GameExample {
     public void blackJackRound5() {
 
     }
+    public void showMap(String previousRoomName){
+        // when clicked => shows map of current room then on choice, return to previous room.
+        setCurrentRoom(previousRoomName);
+        mapLabel.setVisible(true);
+
+        switch (previousRoomName){
+            case "dock":
+                // show dock image
+                mapImage = new ImageIcon("resources/images/dock.jpg");
+                break;
+            case "talkInstructor":
+                // show talkInstructor image
+                mapImage = new ImageIcon("resources/images/beach.jpeg");
+                break;
+            case "lobby":
+                // show lobby image
+                mapImage = new ImageIcon("resources/images/lobby.jpg");
+                break;
+            case "hall":
+                // show hall image
+                mapImage = new ImageIcon("resources/images/hall.jpg");
+                break;
+            case "restaurant":
+                // show restaurant image
+                mapImage = new ImageIcon("resources/images/restaurant.jpg");
+                break;
+            case "gameFloor":
+                // show theater image
+                mapImage = new ImageIcon("resources/images/casinofloor.jpg");
+                break;
+            case "theater":
+                // show theater image
+                mapImage = new ImageIcon("resources/images/theater.jpg");
+                break;
+        }
+
+        mapLabel.setIcon(mapImage);
+        mainTextPanel.add(mapLabel);
+        position = "map";
+        mainTextArea.setText("this is the map");
+        choice1.setVisible(false);
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+        choice4.setText("exit map");
+    }
+
+    public void talkInstructor() {
+        setTexts("talkInstructor", "Instructor: Hello " + getPlayer() + ", Please go to the casino and explore", "Go to dock",
+                "Go to lobby", "", "see map");
+    }
 
     public void beach() {
-        setTexts("beach", "This is the beach", "go to lobby", "go to dock", "talkInstructor", "");
+        setTexts("beach", "This is the beach", "go to lobby", "go to dock", "", "see map");
     }
     public void dock() {
-        setTexts("dock", "This is the dock", "go to beach", "", "", "");
+        setTexts("dock", "This is the dock", "go to beach", "", "", "see map");
     }
     public void lobby() {
-        setTexts("lobby", "This is the dock", "go to hall", "go to beach", "talkInstructor", "");
+        setTexts("lobby", "This is the lobby", "go to hall", "go to beach", "", "see map");
     }
     public void hall() {
-        setTexts("hall", "This is the hall", "go to lobby", "go to restaurant", "", "");
+        setTexts("hall", "This is the hall", "go to lobby", "go to restaurant", "", "see map");
     }
     public void restaurant() {
-        setTexts("restaurant", "This is the restaurant", "go to hall", "go game floor", "talkInstructor", "");
+        setTexts("restaurant", "This is the restaurant", "go to hall", "go game floor", "", "see map");
     }
     public void gameFloor() {
-        setTexts("gameFloor", "This is the game floor", "go to theater", "go to restaurant", "talkInstructor", "");
+        setTexts("gameFloor", "This is the game floor", "go to theater", "go to restaurant", "", "see map");
     }
     public void theater() {
-        setTexts("theater", "This is the theater", "go to game floor", "talkInstructor", "", "");
+        setTexts("theater", "This is the theater", "go to game floor", "", "", "see map");
     }
 
     public void ending() {
@@ -432,8 +581,15 @@ public class GameExample {
                                 talkInstructor();
                             }
                             break;
-//                        case "c2": talkInstructor();break;
-//                        case "c3": lobby();break;
+                        case "c4":
+                            showMap("dock");
+                            break;
+                    }
+                    break;
+                case "map":
+                    switch (yourChoice){
+                        case "c4": setTexts(getCurrentRoom(), getMainText(), getFirstChoice(),getSecondChoice(), getThirdChoice(), getFourthChoice());// get previous method of scene
+                            break;
                     }
                     break;
                 case "talkInstructor":
@@ -444,6 +600,9 @@ public class GameExample {
                         case "c2":
                             lobby();
                             break;
+                        case "c4":
+                            showMap("talkInstructor");
+                            break;
                     }
                     break;
                 case "lobby":
@@ -452,10 +611,10 @@ public class GameExample {
                             hall();
                             break;
                         case "c2":
-                            beach();
-                            break;
-                        case "c3":
                             talkInstructor();
+                            break;
+                        case "c4":
+                            showMap("lobby");
                             break;
                     }
                     break;
@@ -467,6 +626,9 @@ public class GameExample {
                         case "c2":
                             restaurant();
                             break;
+                        case "c4":
+                            showMap("hall");
+                            break;
                     }
                     break;
                 case "restaurant":
@@ -476,6 +638,9 @@ public class GameExample {
                             break;
                         case "c2":
                             gameFloor();
+                            break;
+                        case "c4":
+                            showMap("restaurant");
                             break;
                     }
                     break;
@@ -487,6 +652,9 @@ public class GameExample {
                         case "c2":
                             restaurant();
                             break;
+                        case "c4":
+                            showMap("gameFloor");
+                            break;
                     }
                     break;
                 case "theater":
@@ -494,8 +662,10 @@ public class GameExample {
                         case "c1":
                             gameFloor();
                             break;
+                        case "c4": showMap("theater");break;
                     }
                     break;
+
 
                 // case "crossRoad":
                 //     switch(yourChoice){
@@ -563,3 +733,4 @@ public class GameExample {
         }
     }
 }
+
