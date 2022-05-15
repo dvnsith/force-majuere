@@ -191,7 +191,7 @@ public class GameExample {
         startButtonPanel.setVisible(false);
 
         mainTextPanel = new JPanel();
-        mainTextPanel.setBounds(220, 100, 600, 250);
+        mainTextPanel.setBounds(220, 75, 600, 425);
         mainTextPanel.setBackground(Color.black);
 //        con.add(imageLabel);
         con.add(mainTextPanel);
@@ -397,7 +397,7 @@ public class GameExample {
         gameMapImage = setImage(previousRoomName, true);
 
         choiceButtonPanel.setOpaque(true);
-        mainTextPanel.setBounds(220, 75, 600, 425);
+
         mapLabel.setIcon(gameMapImage);
         mainTextPanel.add(mapLabel);
         position = "map";
