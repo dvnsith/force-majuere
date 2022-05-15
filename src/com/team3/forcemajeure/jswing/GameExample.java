@@ -5,7 +5,6 @@ import com.team3.forcemajeure.util.Audio;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Method;
 
 import javax.swing.*;
 
@@ -26,8 +25,10 @@ public class GameExample {
     String player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
     Boolean soundOn = true;
     ImageIcon logo = new ImageIcon("resources/images/island.png");
-    ImageIcon mapImage;
+    ImageIcon gameMapImage;
+    ImageIcon gameBgImage;
     JLabel mapLabel = new JLabel();
+    JLabel imageBgLabel = new JLabel();
     Audio audio = Audio.getInstance();
 
 
@@ -195,8 +196,8 @@ public class GameExample {
 //        con.add(imageLabel);
         con.add(mainTextPanel);
         mainTextArea = new JTextArea(
-                "This is the main text are. This game is going to be great. I'm sure of it!!!!!!!");
-        mainTextArea.setBounds(225, 200, 500, 300);
+                "Oops...the text is not showing.");
+        mainTextArea.setBounds(225, 500, 500, 300);
         mainTextArea.setBackground(Color.black);
         mainTextArea.setForeground(Color.white);
         mainTextArea.setFont(normalFont);
@@ -207,7 +208,7 @@ public class GameExample {
         mainTextPanel.add(mainTextArea);
 
         choiceButtonPanel = new JPanel();
-        choiceButtonPanel.setBounds(350, 475, 300, 150);
+        choiceButtonPanel.setBounds(350, 515, 300, 125);
         choiceButtonPanel.setBackground(Color.black);
         choiceButtonPanel.setLayout(new GridLayout(4, 1));
         con.add(choiceButtonPanel);
@@ -270,10 +271,11 @@ public class GameExample {
         playerPanel.add(inventoryLabelName);
         playerSetup();
 
+
     }
 
     public void playerSetup() {
-        audio.play("start");
+//        audio.play("start");
         // playerPT = player.getTotalPoints();
         monsterHP = 20;
         inventory = "Map";
@@ -283,16 +285,62 @@ public class GameExample {
         dock();
     }
 
+    public ImageIcon setImage(String room, boolean isMap){
+        ImageIcon anImage = new ImageIcon();
+        //isMap then set map to image else set bg of room to image
+        switch (room){
+            case "dock":
+                // show dock image
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/dock.jpg") ;
+                break;
+            case "talkInstructor":
+                // show talkInstructor image
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_DFl.jpg") : new ImageIcon("resources/images/beach.jpeg");
+                break;
+            case "lobby":
+                // show lobby image
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_DLobby.jpg") : new ImageIcon("resources/images/lobby.jpg");
+                break;
+            case "hall":
+                // show hall image
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/hall.jpg");
+                break;
+            case "restaurant":
+                // show restaurant image
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/restaurant.jpg");
+                break;
+            case "gameFloor":
+                // show theater image
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") :  new ImageIcon("resources/images/casinofloor.jpg");
+                break;
+            case "theater":
+                // show theater image
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/theater.jpg");
+                break;
+        }
+        return anImage;
+    }
+
     public void setTexts(String pos, String mainText, String choiceOne, String choiceTwo, String choiceThree,
                          String choiceFour) {
 
+        mainTextPanel.setVisible(true);
         choice1.setVisible(true);
         choice2.setVisible(true);
         choice3.setVisible(true);
         mapLabel.setVisible(false);
+        imageBgLabel.setVisible(true);
         position = pos;
-        // if pos = blackjack or contains the word blackjack
-        // add text area to show card output
+
+        //if room is null then set bgImage to dock else
+        //get bg of image based on room
+        if(getPreviousRoom() == null){
+            gameBgImage = setImage("dock", false);
+        } else {
+            gameBgImage = setImage(pos, false);
+        }
+        imageBgLabel.setIcon(gameBgImage);
+        mainTextPanel.add(imageBgLabel);
         mainTextArea.setText(mainText);
         choice1.setText(choiceOne);
         choice2.setText(choiceTwo);
@@ -337,51 +385,31 @@ public class GameExample {
     public void blackJackRound5() {
 
     }
+
+
+
     public void showMap(String previousRoomName){
         // when clicked => shows map of current room then on choice, return to previous room.
         setCurrentRoom(previousRoomName);
+        imageBgLabel.setVisible(false);
         mapLabel.setVisible(true);
 
-        switch (previousRoomName){
-            case "dock":
-                // show dock image
-                mapImage = new ImageIcon("resources/images/dock.jpg");
-                break;
-            case "talkInstructor":
-                // show talkInstructor image
-                mapImage = new ImageIcon("resources/images/beach.jpeg");
-                break;
-            case "lobby":
-                // show lobby image
-                mapImage = new ImageIcon("resources/images/lobby.jpg");
-                break;
-            case "hall":
-                // show hall image
-                mapImage = new ImageIcon("resources/images/hall.jpg");
-                break;
-            case "restaurant":
-                // show restaurant image
-                mapImage = new ImageIcon("resources/images/restaurant.jpg");
-                break;
-            case "gameFloor":
-                // show theater image
-                mapImage = new ImageIcon("resources/images/casinofloor.jpg");
-                break;
-            case "theater":
-                // show theater image
-                mapImage = new ImageIcon("resources/images/theater.jpg");
-                break;
-        }
+        gameMapImage = setImage(previousRoomName, true);
 
-        mapLabel.setIcon(mapImage);
+        choiceButtonPanel.setOpaque(true);
+        mainTextPanel.setBounds(220, 75, 600, 425);
+        mapLabel.setIcon(gameMapImage);
         mainTextPanel.add(mapLabel);
         position = "map";
-        mainTextArea.setText("this is the map");
+        mainTextArea.setText("");
+
         choice1.setVisible(false);
         choice2.setVisible(false);
         choice3.setVisible(false);
         choice4.setText("exit map");
     }
+
+
 
     public void talkInstructor() {
         setTexts("talkInstructor", "Instructor: Hello " + getPlayer() + ", Please go to the casino and explore", "Go to dock",
@@ -575,11 +603,7 @@ public class GameExample {
                 case "dock":
                     switch (yourChoice) {
                         case "c1":
-                            if (silverRing == 1) {
-                                ending();
-                            } else {
-                                talkInstructor();
-                            }
+                            talkInstructor();
                             break;
                         case "c4":
                             showMap("dock");
@@ -662,11 +686,10 @@ public class GameExample {
                         case "c1":
                             gameFloor();
                             break;
-                        case "c4": showMap("theater");break;
+                        case "c4": showMap("theater");
+                            break;
                     }
                     break;
-
-
                 // case "crossRoad":
                 //     switch(yourChoice){
                 //         case "c1": north(); break;
@@ -728,8 +751,6 @@ public class GameExample {
                 //     break;
 
             }
-
-
         }
     }
 }
