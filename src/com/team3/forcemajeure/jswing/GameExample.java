@@ -19,10 +19,9 @@ public class GameExample {
     JButton soundButton, startButton, choice1, choice2, choice3, choice4;
     JTextArea mainTextArea;
     int playerPT, monsterHP, silverRing;
-    String inventory, position;
     TitleScreenHandler tsHandler = new TitleScreenHandler();
     ChoiceHandler choiceHandler = new ChoiceHandler();
-    String player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
+    String inventory, position, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
     Boolean soundOn = true;
     ImageIcon logo = new ImageIcon("resources/images/island.png");
     ImageIcon gameMapImage;
@@ -285,10 +284,10 @@ public class GameExample {
         dock();
     }
 
-    public ImageIcon setImage(String room, boolean isMap){
+    public ImageIcon setImage(String roomName, boolean isMap){
         ImageIcon anImage = new ImageIcon();
         //isMap then set map to image else set bg of room to image
-        switch (room){
+        switch (roomName){
             case "dock":
                 // show dock image
                 anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/dock.jpg") ;
@@ -388,13 +387,13 @@ public class GameExample {
 
 
 
-    public void showMap(String previousRoomName){
+    public void showMap(String currentRoomName){
         // when clicked => shows map of current room then on choice, return to previous room.
-        setCurrentRoom(previousRoomName);
+        setCurrentRoom(currentRoomName);
         imageBgLabel.setVisible(false);
         mapLabel.setVisible(true);
 
-        gameMapImage = setImage(previousRoomName, true);
+        gameMapImage = setImage(getCurrentRoom(), true);
 
         choiceButtonPanel.setOpaque(true);
 
