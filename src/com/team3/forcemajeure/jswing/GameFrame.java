@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.ThreadLocalRandom;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -45,6 +46,12 @@ public class GameFrame {
     private JSONObject jsonObject;
     private Object obj;
     private JSONParser parser = new JSONParser();
+    private int dealerHand = 0;
+    private int playerHand = 0;
+    private int card = 0;
+    private int losses = 0;
+    private int magicQuizCorrect = 0;
+    private Boolean magicQuizDone = false;
 
     //Accessor
     public String getPlayer() {
@@ -119,6 +126,55 @@ public class GameFrame {
         this.fourthChoice = fourthChoice;
     }
 
+    public int getDealerHand() {
+        return dealerHand;
+    }
+
+    public void setDealerHand(int dealerHand) {
+        this.dealerHand = dealerHand;
+    }
+
+    public int getPlayerHand() {
+        return playerHand;
+    }
+
+    public void setPlayerHand(int playerHand) {
+        this.playerHand = playerHand;
+    }
+
+    public int getLosses() {
+        return losses;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public Boolean getMagicQuizDone() {
+        return magicQuizDone;
+    }
+
+    public void setMagicQuizDone(Boolean magicQuizDone) {
+        this.magicQuizDone = magicQuizDone;
+    }
+
+    public int getPlayerPT() {
+        return playerPT;
+    }
+
+    public void setPlayerPT(int playerPT) {
+        this.playerPT = playerPT;
+    }
+
+    public int getMagicQuizCorrect() {
+        return magicQuizCorrect;
+    }
+
+    public void setMagicQuizCorrect(int magicQuizCorrect) {
+        this.magicQuizCorrect = magicQuizCorrect;
+    }
+
+    // Ctor
     public JSONObject getJsonObject() {
         return jsonObject;
     }
@@ -315,7 +371,7 @@ public class GameFrame {
 //        monsterHP = 20;
         inventory = "Map";
         inventoryLabelName.setText(inventory);
-        ptLabelNumber.setText("" + playerPT);
+        ptLabelNumber.setText("" + getPlayerPT());
 
         //start off with dock
         dock();
@@ -473,9 +529,105 @@ public class GameFrame {
     public void gameFloor() {
         createPanelScene("gameFloor");
     }
+
+    public void blackJackStart() {
+        setPlayerHand(0);
+        setDealerHand(0);
+        if (getLosses() < 5) {
+            setTexts("blackjackstart", "Do you want to play blackjack?", "Yes", "No", "", "");
+        } else if (getLosses() >= 5) {
+            setTexts("blackjackstart", "I think it's best you lay off the tables for today. You have too many losses", "", "Return to Game Floor", "", "");
+        }
+    }
+
+    public void blackjackDeal() {
+        setDealerHand(ThreadLocalRandom.current().nextInt(13, 21));
+        for (int playerCount = 0; playerCount < 2; playerCount++) {
+            card = ThreadLocalRandom.current().nextInt(1, 11);
+            setPlayerHand(playerHand += card);
+        }
+    }
+
+    public void blackJackRound() {
+        if (getPlayerHand() < 22) {
+            setTexts("blackjackfirsthand", "Here is your hand: " + getPlayerHand(), "Hit me", "Stay", "", "");
+        } else if (getPlayerHand() > 21) {
+            setPlayerPT(getPlayerPT() - 2);
+            ptLabelNumber.setText("" + getPlayerPT());
+            setLosses(getLosses() + 1);
+            setTexts("checkcards", "Your hand: " + getPlayerHand() + "\n You busted! Better luck next time", "Return to Game Floor", "", "", "");
+        }
+    }
+
+    public void hitMe() {
+        card = ThreadLocalRandom.current().nextInt(1, 11);
+        setPlayerHand(playerHand += card);
+    }
+
+    public void checkCards() {
+        if (getPlayerHand() > getDealerHand()) {
+            setPlayerPT(getPlayerPT() + 3);
+            ptLabelNumber.setText("" + getPlayerPT());
+            setTexts("checkcards", "Dealers Hand : " + getDealerHand() +" \n It's your lucky day! You get 3 points", "Return to Game Floor", "", "", "");
+
+        } else if (getPlayerHand() < getDealerHand()) {
+            setPlayerPT(getPlayerPT() - 2);
+            ptLabelNumber.setText("" + getPlayerPT());
+            setLosses(getLosses() + 1);
+            setTexts("checkcards", "Dealers Hand : " + getDealerHand() + "\n Better luck next time.", "Return to Game Floor", "", "", "");
+        }
+    }
+
     public void theater() {
         createPanelScene("theater");
     }
+
+    public void magicQuizAsk() {
+       if (!getMagicQuizDone()) {
+           setTexts("magicQuizAsk", "Hello " + getPlayer() + ", would you like to answer some questions? ", "Sure!", "No Thanks", "", "");
+       }
+       else if (getMagicQuizDone()) {
+         setTexts("magicQuizAsk", "It seems like you've already answered my questions. Head to another person to chat", "", "Return to Theater", "", "");
+        }
+
+    }
+
+    public void magicQuestionOne() {
+        setTexts("magicQuestionOne","Question 1: Which is the correct answer?","Incorrect","Correct","Incorrect","Incorrect");
+    }
+    public void magicQuestionTwo() {
+        setTexts("magicQuestionTwo","Question 2: Which is the correct answer?","Incorrect","Incorrect","Incorrect","Correct");
+    }
+    public void magicQuestionThree() {
+        setTexts("magicQuestionThree","Question 3: Which is the correct answer?","Correct","Incorrect","Incorrect","Incorrect");
+    }
+    public void magicQuestionFour() {
+        setTexts("magicQuestionFour","Question 4: Which is the correct answer?","Incorrect","Correct","Incorrect","Incorrect");
+    }
+    public void magicQuestionFive() {
+        setTexts("magicQuestionFive","Question 5: Which is the correct answer?","Incorrect","Incorrect","Correct","Incorrect");
+    }
+    public void magicQuestionEnd() {
+        if(getMagicQuizCorrect() >= 3) {
+            setTexts("magicQuestionEnd","Your total correct: " + getMagicQuizCorrect() + " out of 5, you did well enough to succeed here!","Return to Theater","","","");
+            setMagicQuizDone(true);
+        }
+        else if(getMagicQuizCorrect() < 3){
+            setTexts("magicQuestionEnd","Your total correct: " + getMagicQuizCorrect() + " out of 5. You probably should study up and give this another go.","Return to Theater","","","");
+        }
+
+    }
+    public void correctAnswer() {
+        setMagicQuizCorrect(getMagicQuizCorrect()+1);
+        setPlayerPT(getPlayerPT()+4);
+        ptLabelNumber.setText("" + getPlayerPT());
+    }
+    public void wrongAnswer() {
+        setPlayerPT(getPlayerPT() - 2);
+        ptLabelNumber.setText("" + getPlayerPT());
+    }
+
+
 
     public void ending() {
 
@@ -573,8 +725,40 @@ public class GameFrame {
                         case "c2":
                             restaurant();
                             break;
+                        case "c3":
+                            blackJackStart();
+                            break;
                         case "c4":
                             showMap("gameFloor");
+                            break;
+                    }
+                    break;
+                case "blackjackstart":
+                    switch (yourChoice) {
+                        case "c1":
+                            blackjackDeal();
+                            blackJackRound();
+                            break;
+                        case "c2":
+                            gameFloor();
+                            break;
+                    }
+                    break;
+                case "blackjackfirsthand":
+                    switch (yourChoice) {
+                        case "c1":
+                            hitMe();
+                            blackJackRound();
+                            break;
+                        case "c2":
+                            checkCards();
+                            break;
+                    }
+                    break;
+                case "checkcards":
+                    switch (yourChoice) {
+                        case "c1":
+                            gameFloor();
                             break;
                     }
                     break;
@@ -583,11 +767,92 @@ public class GameFrame {
                         case "c1":
                             gameFloor();
                             break;
+                        case "c2":
+                            magicQuizAsk();
+                            break;
                         case "c4": showMap("theater");
                             break;
                     }
                     break;
+                case "magicQuizAsk":
+                    switch (yourChoice) {
+                        case "c1":
+                            magicQuestionOne();
+                            break;
+                        case "c2":
+                            theater();
+                            break;
+                    }
+                    break;
+                case "magicQuestionOne":
+                    switch (yourChoice) {
+                        case "c1": case "c3": case "c4":
+                            wrongAnswer();
+                            magicQuestionTwo();
+                            break;
+                        case "c2":
+                            correctAnswer();
+                            magicQuestionTwo();
+                            break;
 
+                    }
+                    break;
+                case "magicQuestionTwo":
+                    switch (yourChoice) {
+                        case "c1": case "c2": case "c3":
+                            wrongAnswer();
+                            magicQuestionThree();
+                            break;
+                        case "c4":
+                            correctAnswer();
+                            magicQuestionThree();
+                            break;
+                    }
+                    break;
+                case "magicQuestionThree":
+                    switch (yourChoice) {
+                        case "c1":
+                            correctAnswer();
+                            magicQuestionFour();
+                            break;
+                        case "c2": case "c3": case "c4":
+                            wrongAnswer();
+                            magicQuestionFour();
+                            break;
+                    }
+                    break;
+                case "magicQuestionFour":
+                    switch (yourChoice) {
+                        case "c1": case "c3": case "c4":
+                            wrongAnswer();
+                            magicQuestionFive();
+                            break;
+                        case "c2":
+                            correctAnswer();
+                            magicQuestionFive();
+                            break;
+                    }
+                    break;
+                case "magicQuestionFive":
+                    switch (yourChoice) {
+                        case "c1": case "c2": case "c4":
+                            wrongAnswer();
+                            magicQuestionEnd();
+                            break;
+                        case "c3":
+                            correctAnswer();
+                            magicQuestionEnd();
+                            break;
+
+                    }
+                    break;
+                case "magicQuestionEnd":
+                    switch (yourChoice) {
+                        case "c1":
+                            theater();
+                            break;
+                    }
+                    break;
             }
         }
     }

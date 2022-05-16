@@ -4,7 +4,6 @@ package com.team3.forcemajeure.util;
  * Enemy class
  */
 
-import com.team3.forcemajuere.game.Blackjack;
 
 public class Enemy {
     // INSTANCE VARIABLES
@@ -17,7 +16,6 @@ public class Enemy {
     private String dialoguEnemyDefeated;
     String item;
     Player player;
-    private Blackjack blackjack = new Blackjack();
 
 
 
@@ -77,9 +75,7 @@ public class Enemy {
 
     }
 
-    public void miniGameConnect() {
-        blackjack.promptToPlay();
-    }
+
 
     // ACCESSOR METHODS
     public String getName() {

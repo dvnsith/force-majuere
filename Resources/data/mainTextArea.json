@@ -44,14 +44,14 @@
     "mainText": "this is the gameFloor",
     "choiceOne": "go to the theater",
     "choiceTwo": "go to the restaurant",
-    "choiceThree": "",
+    "choiceThree": "Talk to Casino Jay",
     "choiceFour": "see map"
   },
   "theater": {
     "pos": "theater",
     "mainText": "this is the theater",
     "choiceOne": "go to the game floor",
-    "choiceTwo": "",
+    "choiceTwo": "Talk to Magician Chad",
     "choiceThree": "",
     "choiceFour": "see map"
   }
