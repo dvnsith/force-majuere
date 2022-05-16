@@ -24,8 +24,7 @@ public class GameFrame {
     String inventory, position, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
     Boolean soundOn = true;
     ImageIcon logo = new ImageIcon("resources/images/island.png");
-    ImageIcon gameMapImage;
-    ImageIcon gameBgImage;
+    ImageIcon gameMapImage,gameBgImage;
     JLabel mapLabel = new JLabel();
     JLabel imageBgLabel = new JLabel();
     Audio audio = Audio.getInstance();
