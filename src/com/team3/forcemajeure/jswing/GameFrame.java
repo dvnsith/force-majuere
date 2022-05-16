@@ -1,11 +1,13 @@
 package com.team3.forcemajeure.jswing;
 
 import com.team3.forcemajeure.util.Audio;
+import com.team3.forcemajeure.util.SoundPlayer;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class GameFrame {
@@ -28,7 +30,7 @@ public class GameFrame {
     JLabel mapLabel = new JLabel();
     JLabel imageBgLabel = new JLabel();
     Audio audio = Audio.getInstance();
-
+    SoundPlayer sound = new SoundPlayer();
 
     //Accessor
     public String getPlayer() {
@@ -168,7 +170,7 @@ public class GameFrame {
             }
         });
 
-        menuPanel.add(soundButton);
+//        menuPanel.add(soundButton);
         userNamePanel.add(userNameLabel);
         userNamePanel.add(textField);
         titleNamePanel.add(titleNameLabel);
@@ -273,13 +275,33 @@ public class GameFrame {
     }
 
     public void playerSetup() {
-//        audio.play("start");
+
+        Clip themeSong = sound.play("start",true,0,GameFrame.class);
         // playerPT = player.getTotalPoints();
         monsterHP = 20;
         inventory = "Map";
         inventoryLabelName.setText(inventory);
         ptLabelNumber.setText("" + playerPT);
 
+        //add sound to game play
+        soundButton = new JButton("🔈 on/off");
+        soundButton.setBounds(15,7,50,50);
+        soundButton.addActionListener(e -> {
+            if(isSoundOn()) {
+                System.out.println("Sound Off");
+                setSoundOn(false);
+                themeSong.stop();
+            } else {
+                System.out.println("Sound on");
+                setSoundOn(true);
+                themeSong.start();
+            }
+        });
+
+        menuPanel.add(soundButton);
+
+
+        //start off with dock
         dock();
     }
 
