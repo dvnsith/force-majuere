@@ -335,8 +335,11 @@ public class GameExample {
         //get bg of image based on room
         if(getPreviousRoom() == null){
             gameBgImage = setImage("dock", false);
+            setPreviousRoom("dock");
+
         } else {
             gameBgImage = setImage(pos, false);
+            setPreviousRoom(getCurrentRoom());
         }
         imageBgLabel.setIcon(gameBgImage);
         mainTextPanel.add(imageBgLabel);
@@ -353,7 +356,7 @@ public class GameExample {
 
         // prev. room = current room
         // current room = pos
-        setPreviousRoom(getCurrentRoom());
+//        setPreviousRoom(getCurrentRoom());
         setCurrentRoom(pos);
 
         System.out.println("Prev room: "+ getPreviousRoom() + "\nCurrent room: " + getCurrentRoom());
