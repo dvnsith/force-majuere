@@ -22,28 +22,28 @@ import javax.swing.*;
 
 public class GameFrame {
 
-    JFrame window;
-    Container con;
-    JPanel menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
-    JLabel userNameLabel, titleNameLabel, ptLabel, ptLabelNumber, inventoryLabel, inventoryLabelName;
-    Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
-    Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
-    JButton soundButton, startButton, choice1, choice2, choice3, choice4;
-    JTextArea mainTextArea;
-    int playerPT, monsterHP, silverRing;
-    TitleScreenHandler tsHandler = new TitleScreenHandler();
-    ChoiceHandler choiceHandler = new ChoiceHandler();
-    String inventory, position, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
-    Boolean soundOn = true;
-    ImageIcon logo = new ImageIcon("resources/images/island.png");
-    ImageIcon gameMapImage,gameBgImage;
-    JLabel mapLabel = new JLabel();
-    JLabel imageBgLabel = new JLabel();
-    Audio audio = Audio.getInstance();
-    SoundPlayer sound = new SoundPlayer();
-    ReadFile readFile = new ReadFile();
-    JSONObject jsonObject;
-    Object obj;
+    private JFrame window;
+    private Container con;
+    private JPanel menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
+    private JLabel userNameLabel, titleNameLabel, ptLabel, ptLabelNumber, inventoryLabel, inventoryLabelName;
+    private Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
+    private Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
+    private JButton soundButton, startButton, choice1, choice2, choice3, choice4;
+    private JTextArea mainTextArea;
+    private int playerPT;
+    private TitleScreenHandler tsHandler = new TitleScreenHandler();
+    private ChoiceHandler choiceHandler = new ChoiceHandler();
+    private String inventory, position, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
+    private Boolean soundOn = true;
+    private ImageIcon logo = new ImageIcon("resources/images/island.png");
+    private ImageIcon gameMapImage,gameBgImage;
+    private JLabel mapLabel = new JLabel();
+    private JLabel imageBgLabel = new JLabel();
+    private Audio audio = Audio.getInstance();
+    private SoundPlayer sound = new SoundPlayer();
+    private ReadFile readFile = new ReadFile();
+    private JSONObject jsonObject;
+    private Object obj;
     private JSONParser parser = new JSONParser();
 
     //Accessor
@@ -311,8 +311,8 @@ public class GameFrame {
 
     /* create player's data */
     public void playerSetup() {
-        // playerPT = player.getTotalPoints();
-        monsterHP = 20;
+//        playerPT = player.getTotalPoints();
+//        monsterHP = 20;
         inventory = "Map";
         inventoryLabelName.setText(inventory);
         ptLabelNumber.setText("" + playerPT);
@@ -325,6 +325,16 @@ public class GameFrame {
     public ImageIcon setImage(String roomName, boolean isMap){
         ImageIcon anImage = new ImageIcon();
         //isMap then set map to image else set bg of room to image
+        //todo refactor to hashmap
+        HashMap<String,String> room = new HashMap<>();
+        HashMap<String, HashMap<String,String>> rooms = new HashMap<>();
+        room.put("dockBg","resources/images/map/VisitDock/All_Beach.png" );
+        room.put("dockMap","resources/images/dock.jpg" );
+        rooms.put("dock", room);
+
+        room.put("dockBg","resources/images/map/VisitDock/All_Beach.png" );
+        room.put("dockMap","resources/images/dock.jpg" );
+        rooms.put("dock", room);
         switch (roomName){
             case "dock":
                 // show dock image
