@@ -8,7 +8,7 @@ public class Player {
     private String playerMap;
     private int pointTotal = 0;
     private int losses = 0;
-    private WriteText write = new WriteText();
+//    private WriteText write = new WriteText();
 
 //    Constructor
     public Player() {
@@ -27,7 +27,7 @@ public class Player {
         }
         else{
 //            System.out.println("I dont see map in your inventory");
-            write.outputText("I dont see map in your inventory");
+//            write.outputText("I dont see map in your inventory");
 
         }
     }

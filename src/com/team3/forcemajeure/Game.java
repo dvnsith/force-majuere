@@ -58,7 +58,7 @@ public class Game {
 //            checks if enemy is around
 //            TODO loop through enemy of array when that is implemented
             if (player.getCurRoom().equals(gambler.getLocation())) {
-                gambler.miniGameConnect();
+//                gambler.miniGameConnect();
             }
 //            prompt User
             String response = TextParser.gameScannerInput();
