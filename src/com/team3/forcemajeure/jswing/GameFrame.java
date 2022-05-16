@@ -27,7 +27,7 @@ public class GameFrame {
     String inventory, position, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
     Boolean soundOn = true;
     ImageIcon logo = new ImageIcon("resources/images/island.png");
-    ImageIcon gameMapImage,gameBgImage;
+    ImageIcon gameMapImage, gameBgImage;
     JLabel mapLabel = new JLabel();
     JLabel imageBgLabel = new JLabel();
     Audio audio = Audio.getInstance();
@@ -36,6 +36,8 @@ public class GameFrame {
     private int playerHand = 0;
     private int card = 0;
     private int losses = 0;
+    private int magicQuizCorrect = 0;
+    private Boolean magicQuizDone = false;
 
     //Accessor
     public String getPlayer() {
@@ -134,12 +136,28 @@ public class GameFrame {
         this.losses = losses;
     }
 
+    public Boolean getMagicQuizDone() {
+        return magicQuizDone;
+    }
+
+    public void setMagicQuizDone(Boolean magicQuizDone) {
+        this.magicQuizDone = magicQuizDone;
+    }
+
     public int getPlayerPT() {
         return playerPT;
     }
 
     public void setPlayerPT(int playerPT) {
         this.playerPT = playerPT;
+    }
+
+    public int getMagicQuizCorrect() {
+        return magicQuizCorrect;
+    }
+
+    public void setMagicQuizCorrect(int magicQuizCorrect) {
+        this.magicQuizCorrect = magicQuizCorrect;
     }
 
     // Ctor
@@ -157,9 +175,9 @@ public class GameFrame {
 
 
         soundButton = new JButton("🔈 on/off");
-        soundButton.setBounds(15,7,50,50);
+        soundButton.setBounds(15, 7, 50, 50);
         soundButton.addActionListener(e -> {
-            if(isSoundOn()) {
+            if (isSoundOn()) {
                 System.out.println("Sound Off");
                 setSoundOn(false);
             } else {
@@ -170,11 +188,11 @@ public class GameFrame {
 
 
         menuPanel = new JPanel();
-        menuPanel.setBounds(15,7,200,50);
+        menuPanel.setBounds(15, 7, 200, 50);
         menuPanel.setBackground(bg);
 
         userNamePanel = new JPanel();
-        userNamePanel.setBounds(350,250,250,125);
+        userNamePanel.setBounds(350, 250, 250, 125);
         userNamePanel.setBackground(bg);
         userNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -199,9 +217,9 @@ public class GameFrame {
         userNameLabel = new JLabel("Enter username");
         userNameLabel.setForeground(Color.white);
         JTextField textField = new JTextField();
-        textField.setPreferredSize(new Dimension(200,40));
+        textField.setPreferredSize(new Dimension(200, 40));
         startButton.addActionListener(e -> {
-            if(e.getSource() == startButton){
+            if (e.getSource() == startButton) {
                 setPlayer(textField.getText());
 
             }
@@ -313,7 +331,7 @@ public class GameFrame {
 
     public void playerSetup() {
 
-        Clip themeSong = sound.play("start",true,0,GameFrame.class);
+        Clip themeSong = sound.play("start", true, 0, GameFrame.class);
         // playerPT = player.getTotalPoints();
         monsterHP = 20;
         inventory = "Map";
@@ -322,9 +340,9 @@ public class GameFrame {
 
         //add sound to game play
         soundButton = new JButton("🔈 on/off");
-        soundButton.setBounds(15,7,50,50);
+        soundButton.setBounds(15, 7, 50, 50);
         soundButton.addActionListener(e -> {
-            if(isSoundOn()) {
+            if (isSoundOn()) {
                 System.out.println("Sound Off");
                 setSoundOn(false);
                 themeSong.stop();
@@ -341,37 +359,37 @@ public class GameFrame {
         dock();
     }
 
-    public ImageIcon setImage(String roomName, boolean isMap){
+    public ImageIcon setImage(String roomName, boolean isMap) {
         ImageIcon anImage = new ImageIcon();
         //isMap then set map to image else set bg of room to image
-        switch (roomName){
+        switch (roomName) {
             case "dock":
                 // show dock image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/dock.jpg") ;
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/dock.jpg");
                 break;
             case "talkInstructor":
                 // show talkInstructor image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_DFl.jpg") : new ImageIcon("resources/images/beach.jpeg");
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_DFl.jpg") : new ImageIcon("resources/images/beach.jpeg");
                 break;
             case "lobby":
                 // show lobby image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_DLobby.jpg") : new ImageIcon("resources/images/lobby.jpg");
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_DLobby.jpg") : new ImageIcon("resources/images/lobby.jpg");
                 break;
             case "hall":
                 // show hall image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/hall.jpg");
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/hall.jpg");
                 break;
             case "restaurant":
                 // show restaurant image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/restaurant.jpg");
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/restaurant.jpg");
                 break;
             case "gameFloor":
                 // show theater image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") :  new ImageIcon("resources/images/casinofloor.jpg");
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/casinofloor.jpg");
                 break;
             case "theater":
                 // show theater image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/theater.jpg");
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/theater.jpg");
                 break;
         }
         return anImage;
@@ -390,7 +408,7 @@ public class GameFrame {
 
         //if room is null then set bgImage to dock else
         //get bg of image based on room
-        if(getPreviousRoom() == null){
+        if (getPreviousRoom() == null) {
             gameBgImage = setImage("dock", false);
             setPreviousRoom("dock");
 
@@ -415,61 +433,11 @@ public class GameFrame {
         // current room = pos
         setCurrentRoom(pos);
 
-        System.out.println("Prev room: "+ getPreviousRoom() + "\nCurrent room: " + getCurrentRoom());
+        System.out.println("Prev room: " + getPreviousRoom() + "\nCurrent room: " + getCurrentRoom());
     }
 
-    public void blackJackStart() {
-        setPlayerHand(0);
-        setDealerHand(0);
-        if (getLosses() < 5){
-            setTexts("blackjackstart", "Do you want to play blackjack?", "Yes","No","","");
-        }
-        else if(getLosses() >= 5) {
-            setTexts("blackjackstart", "I think it's best you lay off the tables for today. You have too many losses", "","Return to Game Floor","","");
-        }
-    }
 
-    public void blackjackDeal() {
-        setDealerHand(ThreadLocalRandom.current().nextInt(13,21));
-        for (int playerCount = 0; playerCount < 2; playerCount++)  {
-            card = ThreadLocalRandom.current().nextInt(1,11);
-            setPlayerHand(playerHand += card);
-        }
-    }
-
-    public void blackJackRound() {
-        if (getPlayerHand() < 22){
-            setTexts("blackjackfirsthand","Here is your hand: " + getPlayerHand(),"Hit me","Stay","","");
-        }
-        else if (getPlayerHand() > 21){
-            setPlayerPT(getPlayerPT()-2);
-            ptLabelNumber.setText("" + getPlayerPT());
-            setLosses(getLosses()+1);
-            setTexts("checkcards","You busted! Better luck next time","Return to Game Floor","","","");
-        }
-    }
-
-    public void hitMe() {
-        card = ThreadLocalRandom.current().nextInt(1,11);
-        setPlayerHand(playerHand += card);
-    }
-
-    public void checkCards() {
-        if (getPlayerHand() > getDealerHand()) {
-            setPlayerPT(getPlayerPT()+3);
-            ptLabelNumber.setText("" + getPlayerPT());
-            setTexts("checkcards","It's your lucky day! You get 3 points","Return to Game Floor","","","");
-
-        }
-        else if (getPlayerHand() < getDealerHand()) {
-            setPlayerPT(getPlayerPT()-2);
-            ptLabelNumber.setText("" + getPlayerPT());
-            setLosses(getLosses()+1);
-            setTexts("checkcards","Better luck next time.","Return to Game Floor","","","");
-        }
-    }
-
-    public void showMap(String currentRoomName){
+    public void showMap(String currentRoomName) {
         // when clicked => shows map of current room then on choice, return to previous room.
         setCurrentRoom(currentRoomName);
         imageBgLabel.setVisible(false);
@@ -514,12 +482,109 @@ public class GameFrame {
     public void restaurant() {
         setTexts("restaurant", "This is the restaurant", "go to hall", "go game floor", "", "see map");
     }
+
     public void gameFloor() {
         setTexts("gameFloor", "This is the game floor", "go to theater", "go to restaurant", "Speak to Casino Jay", "see map");
     }
-    public void theater() {
-        setTexts("theater", "This is the theater", "go to game floor", "", "", "see map");
+
+    public void blackJackStart() {
+        setPlayerHand(0);
+        setDealerHand(0);
+        if (getLosses() < 5) {
+            setTexts("blackjackstart", "Do you want to play blackjack?", "Yes", "No", "", "");
+        } else if (getLosses() >= 5) {
+            setTexts("blackjackstart", "I think it's best you lay off the tables for today. You have too many losses", "", "Return to Game Floor", "", "");
+        }
     }
+
+    public void blackjackDeal() {
+        setDealerHand(ThreadLocalRandom.current().nextInt(13, 21));
+        for (int playerCount = 0; playerCount < 2; playerCount++) {
+            card = ThreadLocalRandom.current().nextInt(1, 11);
+            setPlayerHand(playerHand += card);
+        }
+    }
+
+    public void blackJackRound() {
+        if (getPlayerHand() < 22) {
+            setTexts("blackjackfirsthand", "Here is your hand: " + getPlayerHand(), "Hit me", "Stay", "", "");
+        } else if (getPlayerHand() > 21) {
+            setPlayerPT(getPlayerPT() - 2);
+            ptLabelNumber.setText("" + getPlayerPT());
+            setLosses(getLosses() + 1);
+            setTexts("checkcards", "Your hand: " + getPlayerHand() + "\n You busted! Better luck next time", "Return to Game Floor", "", "", "");
+        }
+    }
+
+    public void hitMe() {
+        card = ThreadLocalRandom.current().nextInt(1, 11);
+        setPlayerHand(playerHand += card);
+    }
+
+    public void checkCards() {
+        if (getPlayerHand() > getDealerHand()) {
+            setPlayerPT(getPlayerPT() + 3);
+            ptLabelNumber.setText("" + getPlayerPT());
+            setTexts("checkcards", "Dealers Hand : " + getDealerHand() +" \n It's your lucky day! You get 3 points", "Return to Game Floor", "", "", "");
+
+        } else if (getPlayerHand() < getDealerHand()) {
+            setPlayerPT(getPlayerPT() - 2);
+            ptLabelNumber.setText("" + getPlayerPT());
+            setLosses(getLosses() + 1);
+            setTexts("checkcards", "Dealers Hand : " + getDealerHand() + "\n Better luck next time.", "Return to Game Floor", "", "", "");
+        }
+    }
+
+    public void theater() {
+        setTexts("theater", "This is the theater", "go to game floor", "Speak to Magician", "", "see map");
+    }
+
+    public void magicQuizAsk() {
+       if (!getMagicQuizDone()) {
+           setTexts("magicQuizAsk", "Hello " + getPlayer() + ", would you like to answer some questions? ", "Sure!", "No Thanks", "", "");
+       }
+       else if (getMagicQuizDone()) {
+         setTexts("magicQuizAsk", "It seems like you've already answered my questions. Head to another person to chat", "", "Return to Theater", "", "");
+        }
+
+    }
+
+    public void magicQuestionOne() {
+        setTexts("magicQuestionOne","Question 1: Which is the correct answer?","Incorrect","Correct","Incorrect","Incorrect");
+    }
+    public void magicQuestionTwo() {
+        setTexts("magicQuestionTwo","Question 2: Which is the correct answer?","Incorrect","Incorrect","Incorrect","Correct");
+    }
+    public void magicQuestionThree() {
+        setTexts("magicQuestionThree","Question 3: Which is the correct answer?","Correct","Incorrect","Incorrect","Incorrect");
+    }
+    public void magicQuestionFour() {
+        setTexts("magicQuestionFour","Question 4: Which is the correct answer?","Incorrect","Correct","Incorrect","Incorrect");
+    }
+    public void magicQuestionFive() {
+        setTexts("magicQuestionFive","Question 5: Which is the correct answer?","Incorrect","Incorrect","Correct","Incorrect");
+    }
+    public void magicQuestionEnd() {
+        if(getMagicQuizCorrect() >= 3) {
+            setTexts("magicQuestionEnd","Your total correct: " + getMagicQuizCorrect() + " out of 5, you did well enough to succeed here!","Return to Theater","","","");
+            setMagicQuizDone(true);
+        }
+        else if(getMagicQuizCorrect() < 3){
+            setTexts("magicQuestionEnd","Your total correct: " + getMagicQuizCorrect() + " out of 5. You probably should study up and give this another go.","Return to Theater","","","");
+        }
+
+    }
+    public void correctAnswer() {
+        setMagicQuizCorrect(getMagicQuizCorrect()+1);
+        setPlayerPT(getPlayerPT()+4);
+        ptLabelNumber.setText("" + getPlayerPT());
+    }
+    public void wrongAnswer() {
+        setPlayerPT(getPlayerPT() - 2);
+        ptLabelNumber.setText("" + getPlayerPT());
+    }
+
+
 
     public void ending() {
 
@@ -624,15 +689,6 @@ public class GameFrame {
                             break;
                     }
                     break;
-                case "theater":
-                    switch (yourChoice) {
-                        case "c1":
-                            gameFloor();
-                            break;
-                        case "c4": showMap("theater");
-                            break;
-                    }
-                    break;
                 case "blackjackstart":
                     switch (yourChoice) {
                         case "c1":
@@ -659,6 +715,97 @@ public class GameFrame {
                     switch (yourChoice) {
                         case "c1":
                             gameFloor();
+                            break;
+                    }
+                    break;
+                case "theater":
+                    switch (yourChoice) {
+                        case "c1":
+                            gameFloor();
+                            break;
+                        case "c2":
+                            magicQuizAsk();
+                            break;
+                        case "c4": showMap("theater");
+                            break;
+                    }
+                    break;
+                case "magicQuizAsk":
+                    switch (yourChoice) {
+                        case "c1":
+                            magicQuestionOne();
+                            break;
+                        case "c2":
+                            theater();
+                            break;
+                    }
+                    break;
+                case "magicQuestionOne":
+                    switch (yourChoice) {
+                        case "c1": case "c3": case "c4":
+                            wrongAnswer();
+                            magicQuestionTwo();
+                            break;
+                        case "c2":
+                            correctAnswer();
+                            magicQuestionTwo();
+                            break;
+
+                    }
+                    break;
+                case "magicQuestionTwo":
+                    switch (yourChoice) {
+                        case "c1": case "c2": case "c3":
+                            wrongAnswer();
+                            magicQuestionThree();
+                            break;
+                        case "c4":
+                            correctAnswer();
+                            magicQuestionThree();
+                            break;
+                    }
+                    break;
+                case "magicQuestionThree":
+                    switch (yourChoice) {
+                        case "c1":
+                            correctAnswer();
+                            magicQuestionFour();
+                            break;
+                        case "c2": case "c3": case "c4":
+                            wrongAnswer();
+                            magicQuestionFour();
+                            break;
+                    }
+                    break;
+                case "magicQuestionFour":
+                    switch (yourChoice) {
+                        case "c1": case "c3": case "c4":
+                            wrongAnswer();
+                            magicQuestionFive();
+                            break;
+                        case "c2":
+                            correctAnswer();
+                            magicQuestionFive();
+                            break;
+                    }
+                    break;
+                case "magicQuestionFive":
+                    switch (yourChoice) {
+                        case "c1": case "c2": case "c4":
+                            wrongAnswer();
+                            magicQuestionEnd();
+                            break;
+                        case "c3":
+                            correctAnswer();
+                            magicQuestionEnd();
+                            break;
+
+                    }
+                    break;
+                case "magicQuestionEnd":
+                    switch (yourChoice) {
+                        case "c1":
+                            theater();
                             break;
                     }
                     break;
