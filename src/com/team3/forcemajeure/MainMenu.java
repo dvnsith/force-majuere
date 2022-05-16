@@ -22,7 +22,7 @@ public class MainMenu {
         GameFrame game = new GameFrame();
         while (runGame) {
             showMainMenu();
-            game.runGame();
+//            game.runGame();
             replay();
         }
     }
