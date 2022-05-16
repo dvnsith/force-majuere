@@ -5,6 +5,8 @@ import com.team3.forcemajeure.util.Audio;
 import javax.swing.*;
 import java.awt.*;
 import com.team3.forcemajeure.util.*;
+import com.team3.forcemajeure.util.WriteText;
+
 import java.util.Map;
 
 

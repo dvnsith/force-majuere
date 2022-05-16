@@ -1,11 +1,14 @@
 package com.team3.forcemajeure.jswing;
 
 import com.team3.forcemajeure.util.Audio;
+import com.team3.forcemajeure.util.Player;
+import com.team3.forcemajuere.game.Blackjack;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.*;
 
@@ -29,6 +32,11 @@ public class GameExample {
     ImageIcon mapImage;
     JLabel mapLabel = new JLabel();
     Audio audio = Audio.getInstance();
+    private int dealerHand = 0;
+    private int playerHand = 0;
+    private int card = 0;
+    private int losses = 0;
+
 
 
     //Accessor
@@ -102,6 +110,38 @@ public class GameExample {
 
     public void setFourthChoice(String fourthChoice) {
         this.fourthChoice = fourthChoice;
+    }
+
+    public int getDealerHand() {
+        return dealerHand;
+    }
+
+    public void setDealerHand(int dealerHand) {
+        this.dealerHand = dealerHand;
+    }
+
+    public int getPlayerHand() {
+        return playerHand;
+    }
+
+    public void setPlayerHand(int playerHand) {
+        this.playerHand = playerHand;
+    }
+
+    public int getLosses() {
+        return losses;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public int getPlayerPT() {
+        return playerPT;
+    }
+
+    public void setPlayerPT(int playerPT) {
+        this.playerPT = playerPT;
     }
 
     // Ctor
@@ -278,7 +318,7 @@ public class GameExample {
         monsterHP = 20;
         inventory = "Map";
         inventoryLabelName.setText(inventory);
-        ptLabelNumber.setText("" + playerPT);
+        ptLabelNumber.setText("" + getPlayerPT());
 
         dock();
     }
@@ -315,28 +355,8 @@ public class GameExample {
 
     // blackjack logic => int
 
-    public void blackJackRound1() {
-        // pos = blackjack
-        // int card = blackjackGame();
 
-        // setText("blackjack", "dealer msg", "hit me", "hold", "","",)
-    }
 
-    public void blackJackRound2() {
-
-    }
-
-    public void blackJackRound3() {
-
-    }
-
-    public void blackJackRound4() {
-
-    }
-
-    public void blackJackRound5() {
-
-    }
     public void showMap(String previousRoomName){
         // when clicked => shows map of current room then on choice, return to previous room.
         setCurrentRoom(previousRoomName);
@@ -404,10 +424,60 @@ public class GameExample {
         setTexts("restaurant", "This is the restaurant", "go to hall", "go game floor", "", "see map");
     }
     public void gameFloor() {
-        setTexts("gameFloor", "This is the game floor", "go to theater", "go to restaurant", "", "see map");
+        setTexts("gameFloor", "This is the game floor", "go to theater", "go to restaurant", "speak to casino jay", "see map");
     }
     public void theater() {
         setTexts("theater", "This is the theater", "go to game floor", "", "", "see map");
+    }
+
+    public void blackJackStart() {
+        setPlayerHand(0);
+        setDealerHand(0);
+        if (getLosses() < 5){
+            setTexts("blackjackstart", "Do you want to play blackjack?", "Yes","No","","");
+        }
+        else if(getLosses() >= 5) {
+            setTexts("blackjackstart", "I think it's best you lay off the tables for today. You have too many losses", "","Return to Game Floor","","");
+        }
+    }
+
+    public void blackjackDeal() {
+        setDealerHand(ThreadLocalRandom.current().nextInt(13,21));
+        for (int playerCount = 0; playerCount < 2; playerCount++)  {
+            card = ThreadLocalRandom.current().nextInt(1,11);
+            setPlayerHand(playerHand += card);
+        }
+    }
+
+    public void blackJackRound() {
+        if (getPlayerHand() < 22){
+            setTexts("blackjackfirsthand","Here is your hand: " + getPlayerHand(),"Hit me","Stay","","");
+        }
+        else if (getPlayerHand() > 21){
+            setPlayerPT(getPlayerPT()-2);
+            ptLabelNumber.setText("" + getPlayerPT());
+            setLosses(getLosses()+1);
+            setTexts("checkcards","You busted! Better luck next time","Return to Game Floor","","","");
+        }
+    }
+
+    public void hitMe() {
+            card = ThreadLocalRandom.current().nextInt(1,11);
+            setPlayerHand(playerHand += card);
+    }
+
+    public void checkCards() {
+        if (getPlayerHand() > getDealerHand()) {
+            setPlayerPT(getPlayerPT()+3);
+            ptLabelNumber.setText("" + getPlayerPT());
+            setTexts("checkcards","It's your lucky day! You get 3 points","Return to Game Floor","","","");
+        }
+        else if (getPlayerHand() < getDealerHand()) {
+            setPlayerPT(getPlayerPT()-2);
+            ptLabelNumber.setText("" + getPlayerPT());
+            setLosses(getLosses()+1);
+            setTexts("checkcards","Better luck next time.","Return to Game Floor","","","");
+        }
     }
 
     public void ending() {
@@ -652,6 +722,9 @@ public class GameExample {
                         case "c2":
                             restaurant();
                             break;
+                        case "c3":
+                            blackJackStart();
+                            break;
                         case "c4":
                             showMap("gameFloor");
                             break;
@@ -665,8 +738,35 @@ public class GameExample {
                         case "c4": showMap("theater");break;
                     }
                     break;
-
-
+                case "blackjackstart":
+                    switch (yourChoice) {
+                        case "c1":
+                            blackjackDeal();
+                            blackJackRound();
+                            break;
+                        case "c2":
+                            gameFloor();
+                            break;
+                    }
+                    break;
+                case "blackjackfirsthand":
+                    switch (yourChoice) {
+                        case "c1":
+                            hitMe();
+                            blackJackRound();
+                            break;
+                        case "c2":
+                            checkCards();
+                            break;
+                    }
+                    break;
+                case "checkcards":
+                    switch (yourChoice) {
+                        case "c1":
+                            gameFloor();
+                            break;
+                    }
+                    break;
                 // case "crossRoad":
                 //     switch(yourChoice){
                 //         case "c1": north(); break;
