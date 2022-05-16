@@ -1,12 +1,22 @@
 package com.team3.forcemajeure.jswing;
 
 import com.team3.forcemajeure.util.Audio;
+import com.team3.forcemajeure.util.ReadFile;
 import com.team3.forcemajeure.util.SoundPlayer;
+import org.json.simple.*;
+import org.json.simple.parser.*;
+import org.json.simple.JSONArray;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.ThreadLocalRandom;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -27,7 +37,7 @@ public class GameFrame {
     String inventory, position, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
     Boolean soundOn = true;
     ImageIcon logo = new ImageIcon("resources/images/island.png");
-    ImageIcon gameMapImage, gameBgImage;
+    ImageIcon gameMapImage,gameBgImage;
     JLabel mapLabel = new JLabel();
     JLabel imageBgLabel = new JLabel();
     Audio audio = Audio.getInstance();
@@ -38,6 +48,10 @@ public class GameFrame {
     private int losses = 0;
     private int magicQuizCorrect = 0;
     private Boolean magicQuizDone = false;
+    ReadFile readFile = new ReadFile();
+    JSONObject jsonObject;
+    Object obj;
+    private JSONParser parser = new JSONParser();
 
     //Accessor
     public String getPlayer() {
@@ -161,6 +175,23 @@ public class GameFrame {
     }
 
     // Ctor
+    public JSONObject getJsonObject() {
+        return jsonObject;
+    }
+
+    public void setJsonObject(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
+    }
+
+    public Object getObj() {
+        return obj;
+    }
+
+    public void setObj(Object obj) {
+        this.obj = obj;
+    }
+
+    // Ctor - creates the frame for the game
     public GameFrame() {
 
         Color bg = Color.black;
@@ -173,26 +204,31 @@ public class GameFrame {
         window.setIconImage(logo.getImage());
         con = window.getContentPane();
 
-
+        Clip themeSong = sound.play("start",true,0,GameFrame.class);
+        //add sound to game play
         soundButton = new JButton("🔈 on/off");
-        soundButton.setBounds(15, 7, 50, 50);
+        soundButton.setBackground(new Color(50,100,100));
+        soundButton.setForeground(Color.white);
+        soundButton.setBounds(15,7,50,50);
         soundButton.addActionListener(e -> {
-            if (isSoundOn()) {
+            if(isSoundOn()) {
                 System.out.println("Sound Off");
                 setSoundOn(false);
+                themeSong.stop();
             } else {
                 System.out.println("Sound on");
                 setSoundOn(true);
+                themeSong.start();
             }
         });
 
 
         menuPanel = new JPanel();
-        menuPanel.setBounds(15, 7, 200, 50);
+        menuPanel.setBounds(15,7,200,50);
         menuPanel.setBackground(bg);
 
         userNamePanel = new JPanel();
-        userNamePanel.setBounds(350, 250, 250, 125);
+        userNamePanel.setBounds(350,250,250,125);
         userNamePanel.setBackground(bg);
         userNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -217,15 +253,15 @@ public class GameFrame {
         userNameLabel = new JLabel("Enter username");
         userNameLabel.setForeground(Color.white);
         JTextField textField = new JTextField();
-        textField.setPreferredSize(new Dimension(200, 40));
+        textField.setPreferredSize(new Dimension(200,40));
         startButton.addActionListener(e -> {
-            if (e.getSource() == startButton) {
+            if(e.getSource() == startButton){
                 setPlayer(textField.getText());
 
             }
         });
 
-//        menuPanel.add(soundButton);
+        menuPanel.add(soundButton);
         userNamePanel.add(userNameLabel);
         userNamePanel.add(textField);
         titleNamePanel.add(titleNameLabel);
@@ -240,6 +276,7 @@ public class GameFrame {
     }
 
     //Business Methods
+    /* creates the components to be added onto the frame */
     public void createGameScreen() {
         userNamePanel.setVisible(false);
         titleNamePanel.setVisible(false);
@@ -248,7 +285,6 @@ public class GameFrame {
         mainTextPanel = new JPanel();
         mainTextPanel.setBounds(220, 75, 600, 425);
         mainTextPanel.setBackground(Color.black);
-//        con.add(imageLabel);
         con.add(mainTextPanel);
         mainTextArea = new JTextArea(
                 "Oops...the text is not showing.");
@@ -329,72 +365,56 @@ public class GameFrame {
 
     }
 
+    /* create player's data */
     public void playerSetup() {
-
-        Clip themeSong = sound.play("start", true, 0, GameFrame.class);
         // playerPT = player.getTotalPoints();
         monsterHP = 20;
         inventory = "Map";
         inventoryLabelName.setText(inventory);
         ptLabelNumber.setText("" + getPlayerPT());
 
-        //add sound to game play
-        soundButton = new JButton("🔈 on/off");
-        soundButton.setBounds(15, 7, 50, 50);
-        soundButton.addActionListener(e -> {
-            if (isSoundOn()) {
-                System.out.println("Sound Off");
-                setSoundOn(false);
-                themeSong.stop();
-            } else {
-                System.out.println("Sound on");
-                setSoundOn(true);
-                themeSong.start();
-            }
-        });
-
-        menuPanel.add(soundButton);
-
         //start off with dock
         dock();
     }
 
-    public ImageIcon setImage(String roomName, boolean isMap) {
+    /* create image for game background and map */
+    public ImageIcon setImage(String roomName, boolean isMap){
         ImageIcon anImage = new ImageIcon();
         //isMap then set map to image else set bg of room to image
-        switch (roomName) {
+        switch (roomName){
             case "dock":
                 // show dock image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/dock.jpg");
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/dock.jpg") ;
                 break;
             case "talkInstructor":
                 // show talkInstructor image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_DFl.jpg") : new ImageIcon("resources/images/beach.jpeg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_DFl.jpg") : new ImageIcon("resources/images/beach.jpeg");
                 break;
             case "lobby":
                 // show lobby image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_DLobby.jpg") : new ImageIcon("resources/images/lobby.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_DLobby.jpg") : new ImageIcon("resources/images/lobby.jpg");
                 break;
             case "hall":
                 // show hall image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/hall.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/hall.jpg");
                 break;
             case "restaurant":
                 // show restaurant image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/restaurant.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/restaurant.jpg");
                 break;
             case "gameFloor":
                 // show theater image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/casinofloor.jpg");
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") :  new ImageIcon("resources/images/casinofloor.jpg");
                 break;
             case "theater":
                 // show theater image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/theater.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/theater.jpg");
                 break;
         }
         return anImage;
     }
 
+    /* set up panel to display room's text and image */
     public void setTexts(String pos, String mainText, String choiceOne, String choiceTwo, String choiceThree,
                          String choiceFour) {
 
@@ -408,7 +428,7 @@ public class GameFrame {
 
         //if room is null then set bgImage to dock else
         //get bg of image based on room
-        if (getPreviousRoom() == null) {
+        if(getPreviousRoom() == null){
             gameBgImage = setImage("dock", false);
             setPreviousRoom("dock");
 
@@ -416,6 +436,8 @@ public class GameFrame {
             gameBgImage = setImage(pos, false);
             setPreviousRoom(getCurrentRoom());
         }
+
+        setCurrentRoom(pos);
         imageBgLabel.setIcon(gameBgImage);
         mainTextPanel.add(imageBgLabel);
         mainTextArea.setText(mainText);
@@ -429,15 +451,11 @@ public class GameFrame {
         setThirdChoice(choiceThree);
         setFourthChoice(choiceFour);
 
-        // prev. room = current room
-        // current room = pos
-        setCurrentRoom(pos);
-
-        System.out.println("Prev room: " + getPreviousRoom() + "\nCurrent room: " + getCurrentRoom());
+        System.out.println("🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴\n" + "🌴 Previous room: "+ getPreviousRoom() + "\n🌴 Current room: " + getCurrentRoom() + "\n🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴");
     }
 
-
-    public void showMap(String currentRoomName) {
+    /* create map to show image of location after map button is clicked */
+    public void showMap(String currentRoomName){
         // when clicked => shows map of current room then on choice, return to previous room.
         setCurrentRoom(currentRoomName);
         imageBgLabel.setVisible(false);
@@ -458,33 +476,49 @@ public class GameFrame {
         choice4.setText("exit map");
     }
 
+    /* pulls the JSON data and creates a panel based on room location */
+    public void createPanelScene(String pos){
+
+        while(true){
+            setJsonObject(readFile.retrieveJson("data/mainTextArea.json"));
+            HashMap<String, String> gameMap = (HashMap<String, String>) getJsonObject().get(pos);
+
+            for(Object room : getJsonObject().keySet()){
+                if(room.toString().equals(pos)){
+                    String mainTxt = gameMap.get("mainText");
+                    if(pos.equals("talkInstructor")){
+                        mainTxt = getPlayer() + gameMap.get("mainText");
+                    }
+                    setTexts(pos,mainTxt,gameMap.get("choiceOne"),gameMap.get("choiceTwo"),gameMap.get("choiceThree"),gameMap.get("choiceFour"));/* set valuue of room here*/
+                }
+            }
+            break;
+        }
+
+    }
+
+
+//    public void beach() {
+//        createPanelScene("beach");
+//    }
     public void talkInstructor() {
-        setTexts("talkInstructor", "Instructor: Hello " + getPlayer() + ", Please go to the casino and explore", "Go to dock",
-                "Go to lobby", "", "see map");
+        createPanelScene("talkInstructor");
     }
-
-    public void beach() {
-        setTexts("beach", "This is the beach", "go to lobby", "go to dock", "", "see map");
-    }
-
     public void dock() {
-        setTexts("dock", "This is the dock", "go to beach", "", "", "see map");
+        createPanelScene("dock");
     }
-
     public void lobby() {
-        setTexts("lobby", "This is the lobby", "go to hall", "go to beach", "", "see map");
+        createPanelScene("lobby");
     }
-
     public void hall() {
-        setTexts("hall", "This is the hall", "go to lobby", "go to restaurant", "", "see map");
+        createPanelScene("hall");
     }
-
     public void restaurant() {
-        setTexts("restaurant", "This is the restaurant", "go to hall", "go game floor", "", "see map");
+        createPanelScene("restaurant");
     }
 
     public void gameFloor() {
-        setTexts("gameFloor", "This is the game floor", "go to theater", "go to restaurant", "Speak to Casino Jay", "see map");
+        createPanelScene("gameFloor");
     }
 
     public void blackJackStart() {
@@ -536,7 +570,7 @@ public class GameFrame {
     }
 
     public void theater() {
-        setTexts("theater", "This is the theater", "go to game floor", "Speak to Magician", "", "see map");
+        createPanelScene("theater");
     }
 
     public void magicQuizAsk() {
@@ -589,6 +623,7 @@ public class GameFrame {
     public void ending() {
 
     }
+
 
     public class TitleScreenHandler implements ActionListener {
 
