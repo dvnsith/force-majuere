@@ -1,11 +1,21 @@
 package com.team3.forcemajeure.jswing;
 
 import com.team3.forcemajeure.util.Audio;
+import com.team3.forcemajeure.util.ReadFile;
 import com.team3.forcemajeure.util.SoundPlayer;
+import org.json.simple.*;
+import org.json.simple.parser.*;
+import org.json.simple.JSONArray;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -31,6 +41,10 @@ public class GameFrame {
     JLabel imageBgLabel = new JLabel();
     Audio audio = Audio.getInstance();
     SoundPlayer sound = new SoundPlayer();
+    ReadFile readFile = new ReadFile();
+    JSONObject jsonObject;
+    Object obj;
+    private JSONParser parser = new JSONParser();
 
     //Accessor
     public String getPlayer() {
@@ -105,7 +119,23 @@ public class GameFrame {
         this.fourthChoice = fourthChoice;
     }
 
-    // Ctor
+    public JSONObject getJsonObject() {
+        return jsonObject;
+    }
+
+    public void setJsonObject(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
+    }
+
+    public Object getObj() {
+        return obj;
+    }
+
+    public void setObj(Object obj) {
+        this.obj = obj;
+    }
+
+    // Ctor - creates the frame for the game
     public GameFrame() {
 
         Color bg = Color.black;
@@ -118,16 +148,21 @@ public class GameFrame {
         window.setIconImage(logo.getImage());
         con = window.getContentPane();
 
-
+        Clip themeSong = sound.play("start",true,0,GameFrame.class);
+        //add sound to game play
         soundButton = new JButton("🔈 on/off");
+        soundButton.setBackground(new Color(50,100,100));
+        soundButton.setForeground(Color.white);
         soundButton.setBounds(15,7,50,50);
         soundButton.addActionListener(e -> {
             if(isSoundOn()) {
                 System.out.println("Sound Off");
                 setSoundOn(false);
+                themeSong.stop();
             } else {
                 System.out.println("Sound on");
                 setSoundOn(true);
+                themeSong.start();
             }
         });
 
@@ -170,7 +205,7 @@ public class GameFrame {
             }
         });
 
-//        menuPanel.add(soundButton);
+        menuPanel.add(soundButton);
         userNamePanel.add(userNameLabel);
         userNamePanel.add(textField);
         titleNamePanel.add(titleNameLabel);
@@ -185,6 +220,7 @@ public class GameFrame {
     }
 
     //Business Methods
+    /* creates the components to be added onto the frame */
     public void createGameScreen() {
         userNamePanel.setVisible(false);
         titleNamePanel.setVisible(false);
@@ -193,7 +229,6 @@ public class GameFrame {
         mainTextPanel = new JPanel();
         mainTextPanel.setBounds(220, 75, 600, 425);
         mainTextPanel.setBackground(Color.black);
-//        con.add(imageLabel);
         con.add(mainTextPanel);
         mainTextArea = new JTextArea(
                 "Oops...the text is not showing.");
@@ -274,37 +309,19 @@ public class GameFrame {
 
     }
 
+    /* create player's data */
     public void playerSetup() {
-
-        Clip themeSong = sound.play("start",true,0,GameFrame.class);
         // playerPT = player.getTotalPoints();
         monsterHP = 20;
         inventory = "Map";
         inventoryLabelName.setText(inventory);
         ptLabelNumber.setText("" + playerPT);
 
-        //add sound to game play
-        soundButton = new JButton("🔈 on/off");
-        soundButton.setBounds(15,7,50,50);
-        soundButton.addActionListener(e -> {
-            if(isSoundOn()) {
-                System.out.println("Sound Off");
-                setSoundOn(false);
-                themeSong.stop();
-            } else {
-                System.out.println("Sound on");
-                setSoundOn(true);
-                themeSong.start();
-            }
-        });
-
-        menuPanel.add(soundButton);
-
-
         //start off with dock
         dock();
     }
 
+    /* create image for game background and map */
     public ImageIcon setImage(String roomName, boolean isMap){
         ImageIcon anImage = new ImageIcon();
         //isMap then set map to image else set bg of room to image
@@ -341,6 +358,7 @@ public class GameFrame {
         return anImage;
     }
 
+    /* set up panel to display room's text and image */
     public void setTexts(String pos, String mainText, String choiceOne, String choiceTwo, String choiceThree,
                          String choiceFour) {
 
@@ -362,6 +380,8 @@ public class GameFrame {
             gameBgImage = setImage(pos, false);
             setPreviousRoom(getCurrentRoom());
         }
+
+        setCurrentRoom(pos);
         imageBgLabel.setIcon(gameBgImage);
         mainTextPanel.add(imageBgLabel);
         mainTextArea.setText(mainText);
@@ -375,41 +395,10 @@ public class GameFrame {
         setThirdChoice(choiceThree);
         setFourthChoice(choiceFour);
 
-        // prev. room = current room
-        // current room = pos
-        setCurrentRoom(pos);
-
-        System.out.println("Prev room: "+ getPreviousRoom() + "\nCurrent room: " + getCurrentRoom());
+        System.out.println("🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴\n" + "🌴 Previous room: "+ getPreviousRoom() + "\n🌴 Current room: " + getCurrentRoom() + "\n🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴");
     }
 
-
-    // blackjack logic => int
-
-    public void blackJackRound1() {
-        // pos = blackjack
-        // int card = blackjackGame();
-
-        // setText("blackjack", "dealer msg", "hit me", "hold", "","",)
-    }
-
-    public void blackJackRound2() {
-
-    }
-
-    public void blackJackRound3() {
-
-    }
-
-    public void blackJackRound4() {
-
-    }
-
-    public void blackJackRound5() {
-
-    }
-
-
-
+    /* create map to show image of location after map button is clicked */
     public void showMap(String currentRoomName){
         // when clicked => shows map of current room then on choice, return to previous room.
         setCurrentRoom(currentRoomName);
@@ -431,181 +420,57 @@ public class GameFrame {
         choice4.setText("exit map");
     }
 
+    /* pulls the JSON data and creates a panel based on room location */
+    public void createPanelScene(String pos){
 
+        while(true){
+            setJsonObject(readFile.retrieveJson("data/mainTextArea.json"));
+            HashMap<String, String> gameMap = (HashMap<String, String>) getJsonObject().get(pos);
 
-    public void talkInstructor() {
-        setTexts("talkInstructor", "Instructor: Hello " + getPlayer() + ", Please go to the casino and explore", "Go to dock",
-                "Go to lobby", "", "see map");
+            for(Object room : getJsonObject().keySet()){
+                if(room.toString().equals(pos)){
+                    String mainTxt = gameMap.get("mainText");
+                    if(pos.equals("talkInstructor")){
+                        mainTxt = getPlayer() + gameMap.get("mainText");
+                    }
+                    setTexts(pos,mainTxt,gameMap.get("choiceOne"),gameMap.get("choiceTwo"),gameMap.get("choiceThree"),gameMap.get("choiceFour"));/* set valuue of room here*/
+                }
+            }
+            break;
+        }
+
     }
 
-    public void beach() {
-        setTexts("beach", "This is the beach", "go to lobby", "go to dock", "", "see map");
+
+//    public void beach() {
+//        createPanelScene("beach");
+//    }
+    public void talkInstructor() {
+        createPanelScene("talkInstructor");
     }
     public void dock() {
-        setTexts("dock", "This is the dock", "go to beach", "", "", "see map");
+        createPanelScene("dock");
     }
     public void lobby() {
-        setTexts("lobby", "This is the lobby", "go to hall", "go to beach", "", "see map");
+        createPanelScene("lobby");
     }
     public void hall() {
-        setTexts("hall", "This is the hall", "go to lobby", "go to restaurant", "", "see map");
+        createPanelScene("hall");
     }
     public void restaurant() {
-        setTexts("restaurant", "This is the restaurant", "go to hall", "go game floor", "", "see map");
+        createPanelScene("restaurant");
     }
     public void gameFloor() {
-        setTexts("gameFloor", "This is the game floor", "go to theater", "go to restaurant", "", "see map");
+        createPanelScene("gameFloor");
     }
     public void theater() {
-        setTexts("theater", "This is the theater", "go to game floor", "", "", "see map");
+        createPanelScene("theater");
     }
 
     public void ending() {
 
     }
-    // public void attackGuard(){
-    // position = "attackGuard";
-    // mainTextArea.setText("Guard: Hey don't be stupid!\n\nThe guard fought back
-    // and hit you hard.\n(You receive 3 damage)");
-    // //playerHP = playerHP -3;
-    // playerPT -=3;
-    // ptLabelNumber.setText(""+playerPT);
-    // choice1.setText(">hit me");
-    // choice2.setText(">skip");
-    // choice3.setText("");
-    // choice4.setText("");
-    // }
-    // public void crossRoad(){
-    // position = "crossRoad";
-    // mainTextArea.setText("You are at a crossroad.\nIf you go south, you will go
-    // back to the town.");
-    // choice1.setText("Go north");
-    // choice2.setText("Go east");
-    // choice3.setText("Go south");
-    // choice4.setText("Go west");
-    // }
-    // public void north(){
-    // position = "north";
-    // mainTextArea.setText("There is a river. \nYou drink the water and rest at the
-    // riverside. \n\n(Your HP is recovered by 2)");
-    // playerPT = playerPT + 2;
-    // ptLabelNumber.setText(""+playerPT);
-    // choice1.setText("Go south");
-    // choice2.setText("");
-    // choice3.setText("");
-    // choice4.setText("");
-    // }
-    // public void east(){
-    // position = "east";
-    // mainTextArea.setText("You walked into a forest and found a Long
-    // Sword!\n\n(You obtained a Long Sword)");
-    // inventory = "Long Sword";
-    // inventoryLabelName.setText(inventory);
-    // choice1.setText("Go west");
-    // choice2.setText("");
-    // choice3.setText("");
-    // choice4.setText("");
 
-    // }
-    // public void west(){
-    // position = "west";
-    // mainTextArea.setText("You encounter a goblin!");
-    // choice1.setText("Fight");
-    // choice2.setText("Run");
-    // choice3.setText("");
-    // choice4.setText("");
-    // }
-    // public void fight(){
-    // position = "fight";
-    // mainTextArea.setText("Monter HP: " + monsterHP + "\n\nWhat do you do?");
-    // choice1.setText("Attack");
-    // choice2.setText("Run");
-    // choice3.setText("");
-    // choice4.setText("");
-    // }
-    // public void playerAttack(){
-    // position = "playerAttack";
-
-    // int playerDamage = 0;
-
-    // if(inventory.equals("Knife")){
-    // playerDamage = new java.util.Random().nextInt(3);
-    // }
-    // else if(inventory.equals("Long Sword")){
-    // playerDamage = new java.util.Random().nextInt(12);
-    // }
-
-    // mainTextArea.setText("You attacked the monster and gave " + playerDamage + "
-    // damage!");
-
-    // monsterHP = monsterHP - playerDamage;
-
-    // choice1.setText(">");
-    // choice2.setText("");
-    // choice3.setText("");
-    // choice4.setText("");
-    // }
-    // public void monsterAttack(){
-    // position = "monsterAttack";
-
-    // int monsterDamage = 0;
-
-    // monsterDamage = new java.util.Random().nextInt(6);
-
-    // mainTextArea.setText("The monster attacked you and gave " + monsterDamage + "
-    // damage!");
-
-    // playerPT = playerPT - monsterDamage;
-    // ptLabelNumber.setText(""+playerPT);
-
-    // choice1.setText(">");
-    // choice2.setText("");
-    // choice3.setText("");
-    // choice4.setText("");
-    // }
-    // public void win(){
-    // position = "win";
-
-    // mainTextArea.setText("You defeated the monster!\nThe monster dropped a
-    // ring!\n\n(You obtained a Silver Ring)");
-
-    // silverRing = 1;
-
-    // choice1.setText("Go east");
-    // choice2.setText("");
-    // choice3.setText("");
-    // choice4.setText("");
-
-    // }
-    // public void lose(){
-    // position = "lose";
-
-    // mainTextArea.setText("You are dead!\n\nGAME OVER");
-
-    // choice1.setText("");
-    // choice2.setText("");
-    // choice3.setText("");
-    // choice4.setText("");
-    // choice1.setVisible(false);
-    // choice2.setVisible(false);
-    // choice3.setVisible(false);
-    // choice4.setVisible(false);
-    // }
-    // public void ending(){
-    // position = "ending";
-
-    // mainTextArea.setText("Guard: Oh you killed that goblin!?\nThank you so much.
-    // You are true hero!\nWelcome to our town!\n\nTHE END");
-
-    // choice1.setText("");
-    // choice2.setText("");
-    // choice3.setText("");
-    // choice4.setText("");
-    // choice1.setVisible(false);
-    // choice2.setVisible(false);
-    // choice3.setVisible(false);
-    // choice4.setVisible(false);
-    // }
 
     public class TitleScreenHandler implements ActionListener {
 
@@ -712,65 +577,6 @@ public class GameFrame {
                             break;
                     }
                     break;
-                // case "crossRoad":
-                //     switch(yourChoice){
-                //         case "c1": north(); break;
-                //         case "c2": east();break;
-                //         case "c3": dock(); break;
-                //         case "c4": west();break;
-                //     }
-                //     break;
-                // case "north":
-                //     switch(yourChoice){
-                //         case "c1": crossRoad(); break;
-                //     }
-                //     break;
-                // case "east":
-                //     switch(yourChoice){
-                //         case "c1": crossRoad(); break;
-                //     }
-                //     break;
-                // case "west":
-                //     switch(yourChoice){
-                //         case "c1": fight(); break;
-                //         case "c2": crossRoad(); break;
-                //     }
-                //     break;
-                // case "fight":
-                //     switch(yourChoice){
-                //         case "c1": playerAttack();break;
-                //         case "c2": crossRoad(); break;
-                //     }
-                //     break;
-                // case "playerAttack":
-                //     switch(yourChoice){
-                //         case "c1":
-                //             if(monsterHP <1 ){
-                //                 win();
-                //             }
-                //             else{
-                //                 monsterAttack();
-                //             }
-                //             break;
-                //     }
-                //     break;
-                // case "monsterAttack":
-                //     switch(yourChoice){
-                //         case "c1":
-                //             if(playerPT <1 ){
-                //                 lose();
-                //             }
-                //             else{
-                //                 fight();
-                //             }
-                //             break;
-                //     }
-                //     break;
-                // case "win":
-                //     switch(yourChoice){
-                //         case "c1": crossRoad();
-                //     }
-                //     break;
 
             }
         }
