@@ -177,14 +177,6 @@ public class GameFrame {
         this.playerPT = playerPT;
     }
 
-    public int getMagicQuizCorrect() {
-        return magicQuizCorrect;
-    }
-
-    public void setMagicQuizCorrect(int magicQuizCorrect) {
-        this.magicQuizCorrect = magicQuizCorrect;
-    }
-
     public int getSkips() {
         return skips;
     }
@@ -567,6 +559,9 @@ public class GameFrame {
         createPanelScene("restaurant");
     }
     public void gameFloor() {
+        choice2.setVisible(true);
+        choice3.setVisible(true);
+        choice4.setVisible(true);
         createPanelScene("gameFloor");
     }
 
@@ -603,7 +598,7 @@ public class GameFrame {
             ptLabelNumber.setText("" + getPlayerPT());
             setLosses(getLosses() + 1);
             setTexts("checkcards", "Your hand: " + getPlayerHand() + "\n You busted! Better luck next time", "Return to Game Floor", "", "", "");
-            choice1.setVisible(false);
+            choice2.setVisible(false);
             choice3.setVisible(false);
             choice4.setVisible(false);
         }
@@ -637,72 +632,95 @@ public class GameFrame {
     }
 
     public void theater() {
-        createPanelScene("theater");
+        if (!blackjackPlayed) {
+            createPanelScene("theater");
+            choice2.setVisible(false);
+        }else if (blackjackPlayed){
+            createPanelScene("theater");
+            choice2.setText("Talk to Magician Chad");
+        }
+        choice3.setVisible(false);
+        choice4.setVisible(true);
     }
 
     // When you're in the theater, this is where the Magician prompts you to play only if you haven't played this game already
     public void magicQuizAsk() {
         if (!getMagicQuizDone()) {
             setTexts("magicQuizAsk", "Hello " + getPlayer() + ", would you like to answer some questions? ", "Sure!", "No Thanks", "", "");
+            choice3.setVisible(false);
+            choice4.setVisible(false);
         }
-
         else if (getMagicQuizDone()) {
             setTexts("magicQuizAsk", "It seems like you've already answered my questions. Head to another person to chat", "", "Return to Theater", "", "");
+            choice1.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
         }
     }
     // For each question we check to make sure that the player still has some skips left.
     public void magicQuestionOne() {
+        choice4.setVisible(true);
         if (getSkips() > 0) {
-            setTexts("magicQuestionOne", "Question 1: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "Skip");
+            setTexts("magicQuestionOne", "Question 1: Which of the following is the correct extension of the Python file?", ".python", ".py", ".p", "Skip");
         }
         else if (getSkips() >= 3) {
-            setTexts("magicQuestionOne", "Question 1: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "");
+            setTexts("magicQuestionOne", "Question 1: Which of the following is the correct extension of the Python file?", ".python", ".py", ".p", "");
+
         }
     }
     public void magicQuestionTwo() {
         if (getSkips() > 0) {
-            setTexts("magicQuestionTwo", "Question 2: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "Skip");
+            setTexts("magicQuestionTwo", "Question 2: Which character is used in Python to make a single line comment?", "//", "#", "!", "Skip");
         }
         else if (getSkips() <= 0) {
-            setTexts("magicQuestionTwo", "Question 2: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "");
+            setTexts("magicQuestionTwo", "Question 2: Which character is used in Python to make a single line comment?", "//", "#", "!", "");
+
         }
     }
     public void magicQuestionThree() {
         if (getSkips() > 0) {
-            setTexts("magicQuestionThree", "Question 3: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "Skip");
+            setTexts("magicQuestionThree", "Question 3: Which of the following functions is a built-in function in python language?", "print()", "System.out.println", "val()", "Skip");
+            choice4.setVisible(true);
         }
         else if (getSkips() <= 0) {
-            setTexts("magicQuestionThree", "Question 3: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "");
+            setTexts("magicQuestionThree", "Question 3: Which of the following functions is a built-in function in python language?", "print()", "System.out.println", "Val()", "");
             choice4.setVisible(false);
         }
     }
     public void magicQuestionFour() {
         if (getSkips() > 0) {
-            setTexts("magicQuestionFour", "Question 4: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "Skip");
+            setTexts("magicQuestionFour", "Question 4: What would be the output of the following function? \nlen([\"hello\",2, 4, 6])", "Error", "4", "3", "Skip");
+            choice4.setVisible(true);
         }
         else if (getSkips() <= 0) {
-            setTexts("magicQuestionFour", "Question 4: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "");
+            setTexts("magicQuestionFour", "Question 4: What would be the output of the following function? \nlen([\"hello\",2, 4, 6])", "Error", "4", "3", "");
+            choice4.setVisible(false);
         }
     }
     public void magicQuestionFive() {
         if (getSkips() > 0) {
-            setTexts("magicQuestionFive", "Question 5: Which is the correct answer?", "Incorrect", "Incorrect", "Correct", "Skip");
+            setTexts("magicQuestionFive", "Question 5: print(\"abc. DEF\".capitalize())", "Abc. Def", "ABC. DEF", "Abc. def", "Skip");
+            choice4.setVisible(true);
         }
         else if (getSkips() <= 0) {
-            setTexts("magicQuestionFive", "Question 5: Which is the correct answer?", "Incorrect", "Incorrect", "Correct", "");
+            setTexts("magicQuestionFive", "Question 5:  print(\"abc. DEF\".capitalize())", "Abc. Def", "ABC. DEF", "Abc. def", "");
+            choice4.setVisible(false);
         }
     }
     // Evaluating the players score, they need to get past the threshold in order to consider this a win
     public void magicQuestionEnd() {
-        if(getPlayerPT() >= 12 ) {
+        if(getPlayerPT() >= 10 ) {
             inventory.add("Key");
             inventoryLabelName.setText(inventory.get(0) + ", " + inventory.get(1));
-            setTexts("magicQuestionEnd","Your total points: " + getPlayerPT() + " out of 24 total points, you did well enough to succeed here!","Return to Theater","","","");
+            setTexts("magicQuestionEnd","Your total points: " + getPlayerPT() + " , you did well enough to succeed here! You've received a key off the island.","Return to Theater","","","");
             setMagicQuizDone(true);
         }
-        else if(getPlayerPT() < 12){
-            setTexts("magicQuestionEnd","You got " + getPlayerPT() + " points. You probably should study up and give this another go, you need to get at least 8 points at the finish.","Return to Theater","","","");
+        else if(getPlayerPT() < 10){
+            setTexts("magicQuestionEnd","You got " + getPlayerPT() + " points. You probably should study up and give this another go, you need to get at least 10 points at the finish.","Return to Theater","","","");
         }
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+        choice4.setVisible(false);
     }
     // Skips give the player the ability to skip the question without hurting the players score.
     public void skipQuestion() {
@@ -725,8 +743,9 @@ public class GameFrame {
     }
 
     public void ending() {
-        //if points greater than X amount then show ending
-        setTexts("ending", "YOOOOO do you have the key?", "leave the island", "", "","");
+    //if points greater than X amount then show ending
+        setTexts("ending", "You unlock the boat with the key and the screen pixelates to black. As you take your VR goggles off, you're feeling exhausted from the challenges. Inside you feel a huge sense of accomplishment in your spirit. \n" +
+                "You feel ready for whatever challenges may come across your journey as an SDE as you remember your training. ", "Leave the Island", "", "","");
     }
 
     public void scoreBoard(){
@@ -943,8 +962,11 @@ public class GameFrame {
                             gameFloor();
                             break;
                         case "c2":
-                            talkInstructor("chad");
-                            break;
+                            if (blackjackPlayed){
+                                talkInstructor("chad");
+                            }else {
+                                choice2.setContentAreaFilled(false);
+                            }
                         case "c4": showMap("theater");
                             break;
                     }
@@ -1069,3 +1091,4 @@ public class GameFrame {
         }
     }
 }
+
