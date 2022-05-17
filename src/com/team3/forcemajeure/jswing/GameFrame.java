@@ -54,6 +54,13 @@ public class GameFrame {
     private int magicQuizCorrect = 0;
     private int skips = 3;
     private Boolean magicQuizDone = false;
+    Color bg = Color.black;
+    Color skyBlue = new Color(177, 251, 244);
+    Color darkTeal = new Color(15, 56, 67);
+    Color mintGreen = new Color(46, 226, 109);
+    Color seaGreen = new Color(12, 168, 153);
+    Color goldenRod = new Color(195, 178, 70);
+
 
 
 
@@ -199,12 +206,11 @@ public class GameFrame {
     // Ctor - creates the frame for the game
     public GameFrame() {
 
-        Color bg = Color.black;
 
         window = new JFrame();
         window.setSize(1000, 800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.getContentPane().setBackground(bg);
+        window.getContentPane().setBackground(seaGreen);
         window.setLayout(null);
         window.setIconImage(logo.getImage());
         con = window.getContentPane();
@@ -212,8 +218,8 @@ public class GameFrame {
         Clip themeSong = sound.play("start",true,0,GameFrame.class);
         //add sound to game play
         soundButton = new JButton("🔈 on/off");
-        soundButton.setBackground(new Color(50,100,100));
-        soundButton.setForeground(Color.white);
+        soundButton.setBackground(darkTeal);
+        soundButton.setForeground(skyBlue);
         soundButton.setBounds(15,7,50,50);
         soundButton.addActionListener(e -> {
             if(isSoundOn()) {
@@ -230,33 +236,33 @@ public class GameFrame {
 
         menuPanel = new JPanel();
         menuPanel.setBounds(15,7,200,50);
-        menuPanel.setBackground(bg);
+        menuPanel.setBackground(seaGreen);
 
         userNamePanel = new JPanel();
         userNamePanel.setBounds(350,250,250,125);
-        userNamePanel.setBackground(bg);
+        userNamePanel.setBackground(seaGreen);
         userNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         titleNamePanel = new JPanel();
         titleNamePanel.setBounds(175, 100, 600, 150);
-        titleNamePanel.setBackground(bg);
+        titleNamePanel.setBackground(seaGreen);
         titleNameLabel = new JLabel("Force Majeure");
-        titleNameLabel.setForeground(Color.white);
+        titleNameLabel.setForeground(skyBlue);
         titleNameLabel.setFont(titleFont);
 
         startButtonPanel = new JPanel();
         startButtonPanel.setBounds(370, 400, 200, 100);
-        startButtonPanel.setBackground(bg);
+        startButtonPanel.setBackground(seaGreen);
 
         startButton = new JButton("START");
-        startButton.setBackground(bg);
-        startButton.setForeground(Color.white);
+        startButton.setBackground(goldenRod);
+        startButton.setForeground(seaGreen);
         startButton.setFont(normalFont);
         startButton.addActionListener(tsHandler);
         startButton.setFocusPainted(false);
 
         userNameLabel = new JLabel("Enter username");
-        userNameLabel.setForeground(Color.white);
+        userNameLabel.setForeground(skyBlue);
         JTextField textField = new JTextField();
         textField.setPreferredSize(new Dimension(200,40));
         startButton.addActionListener(e -> {
@@ -289,13 +295,13 @@ public class GameFrame {
 
         mainTextPanel = new JPanel();
         mainTextPanel.setBounds(220, 75, 600, 425);
-        mainTextPanel.setBackground(Color.black);
+        mainTextPanel.setBackground(seaGreen);
         con.add(mainTextPanel);
         mainTextArea = new JTextArea(
                 "Oops...the text is not showing.");
         mainTextArea.setBounds(225, 500, 500, 300);
-        mainTextArea.setBackground(Color.black);
-        mainTextArea.setForeground(Color.white);
+        mainTextArea.setBackground(seaGreen);
+        mainTextArea.setForeground(darkTeal);
         mainTextArea.setFont(normalFont);
         mainTextArea.setLineWrap(true);
         mainTextArea.setWrapStyleWord(true);
@@ -305,36 +311,36 @@ public class GameFrame {
 
         choiceButtonPanel = new JPanel();
         choiceButtonPanel.setBounds(350, 515, 300, 125);
-        choiceButtonPanel.setBackground(Color.black);
+        choiceButtonPanel.setBackground(seaGreen);
         choiceButtonPanel.setLayout(new GridLayout(4, 1));
         con.add(choiceButtonPanel);
         choice1 = new JButton("Choice 1");
-        choice1.setBackground(Color.black);
-        choice1.setForeground(Color.white);
+        choice1.setBackground(darkTeal);
+        choice1.setForeground(skyBlue);
         choice1.setFont(normalFont);
         choice1.setFocusPainted(false);
         choice1.addActionListener(choiceHandler);
         choice1.setActionCommand("c1");
         choiceButtonPanel.add(choice1);
         choice2 = new JButton("Choice 2");
-        choice2.setBackground(Color.black);
-        choice2.setForeground(Color.white);
+        choice2.setBackground(darkTeal);
+        choice2.setForeground(skyBlue);
         choice2.setFont(normalFont);
         choice2.setFocusPainted(false);
         choice2.addActionListener(choiceHandler);
         choice2.setActionCommand("c2");
         choiceButtonPanel.add(choice2);
         choice3 = new JButton("Choice 3");
-        choice3.setBackground(Color.black);
-        choice3.setForeground(Color.white);
+        choice3.setBackground(darkTeal);
+        choice3.setForeground(skyBlue);
         choice3.setFont(normalFont);
         choice3.setFocusPainted(false);
         choice3.addActionListener(choiceHandler);
         choice3.setActionCommand("c3");
         choiceButtonPanel.add(choice3);
         choice4 = new JButton("Choice 4");
-        choice4.setBackground(Color.black);
-        choice4.setForeground(Color.white);
+        choice4.setBackground(darkTeal);
+        choice4.setForeground(skyBlue);
         choice4.setFont(normalFont);
         choice4.setFocusPainted(false);
         choice4.addActionListener(choiceHandler);
@@ -343,29 +349,29 @@ public class GameFrame {
 
         playerPanel = new JPanel();
         playerPanel.setBounds(250, 0, 600, 50);
-        playerPanel.setBackground(Color.black);
+        playerPanel.setBackground(seaGreen);
         playerPanel.setLayout(new GridLayout(1, 4));
         con.add(playerPanel);
         ptLabel = new JLabel("Points:");
         ptLabel.setFont(normalFont);
-        ptLabel.setForeground(Color.white);
+        ptLabel.setForeground(skyBlue);
         playerPanel.add(ptLabel);
         ptLabelNumber = new JLabel();
         ptLabelNumber.setFont(normalFont);
-        ptLabelNumber.setForeground(Color.white);
+        ptLabelNumber.setForeground(skyBlue);
         playerPanel.add(ptLabelNumber);
         inventoryLabel = new JLabel("Inventory:");
         inventoryLabel.setFont(normalFont);
-        inventoryLabel.setForeground(Color.white);
-        inventoryLabel.setBackground(Color.red);
+        inventoryLabel.setForeground(skyBlue);
+        inventoryLabel.setBackground(darkTeal);
         playerPanel.add(inventoryLabel);
         inventoryLabelName = new JLabel();
         inventoryLabelName.setFont(normalFont);
-        inventoryLabelName.setForeground(Color.white);
+        inventoryLabelName.setForeground(skyBlue);
         playerPanel.add(inventoryLabelName);
         skipLabel = new JLabel();
         skipLabel.setFont(normalFont);
-        skipLabel.setForeground(Color.white);
+        skipLabel.setForeground(skyBlue);
         playerPanel.add(skipLabel);
         playerSetup();
 
@@ -390,31 +396,47 @@ public class GameFrame {
         switch (roomName){
             case "dock":
                 // show dock image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/dock.jpg") ;
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/DockMap.jpg") : new ImageIcon("resources/images/dock.jpg") ;
                 break;
-            case "talkInstructor":
+            case "beach":
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/BeachMap.jpg") : new ImageIcon("resources/images/beach.jpg");
+                break;
+            case "rennie":
                 // show talkInstructor image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_DFl.jpg") : new ImageIcon("resources/images/beach.jpeg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/BeachMap.jpg") : new ImageIcon("resources/images/rennie.jpg");
                 break;
             case "lobby":
                 // show lobby image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_DLobby.jpg") : new ImageIcon("resources/images/lobby.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/LobbyMap.jpg") : new ImageIcon("resources/images/lobby.jpg");
+                break;
+            case "nelly":
+                // show talkInstructor image
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/LobbyMap.jpg") : new ImageIcon("resources/images/nelly.jpg");
                 break;
             case "hall":
                 // show hall image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/hall.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/HallMap.png") : new ImageIcon("resources/images/hall.jpg");
                 break;
             case "restaurant":
+            case "karl":
                 // show restaurant image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/restaurant.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/RestaurantMap.png") : new ImageIcon("resources/images/restaurant.jpg");
                 break;
             case "gameFloor":
+            case "jay":
+            case "checkcards":
+            case "blackjackfirsthand":
+            case "blackjackstart":
                 // show theater image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") :  new ImageIcon("resources/images/casinofloor.jpg");
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/GameFloorMap.jpg") :  new ImageIcon("resources/images/casinofloor.jpg");
                 break;
             case "theater":
                 // show theater image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/theater.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/TheaterMap.jpg") : new ImageIcon("resources/images/theaterstage.jpg");
+                break;
+            case "chad":
+                // show theater image
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/TheaterMap.jpg") : new ImageIcon("resources/images/chad.jpg");
                 break;
         }
         return anImage;
@@ -486,19 +508,20 @@ public class GameFrame {
     public void createPanelScene(String pos){
 
         while(true){
-            setJsonObject(readFile.retrieveJson("data/mainTextArea.json"));
+            setJsonObject(readFile.retrieveJson("data/location.json"));
             HashMap<String, String> gameMap = (HashMap<String, String>) getJsonObject().get(pos);
             String choiceThree = gameMap.get("choiceThree");
             for(Object room : getJsonObject().keySet()){
                 if(room.toString().equals(pos)){
-                    String mainTxt = gameMap.get("mainText");
-                    if(pos.equals("talkInstructor")){
-                        mainTxt = getPlayer() + gameMap.get("mainText");
+                    String mainTxt = gameMap.get("maintext");
+                    choiceThree = gameMap.get("c3");
+                    if(pos.matches("rennie||nelly||karl||jay||chad")){
+                        mainTxt = getPlayer() + gameMap.get("maintext");
                         if(inventory.contains("Key")){
                             choiceThree = "leave this B";
                         }
                     }
-                    setTexts(pos,mainTxt,gameMap.get("choiceOne"),gameMap.get("choiceTwo"),choiceThree,gameMap.get("choiceFour"));/* set valuue of room here*/
+                    setTexts(pos,mainTxt,gameMap.get("c1"),gameMap.get("c2"),choiceThree,gameMap.get("c4"));/* set valuue of room here*/
                 }
             }
             break;
@@ -507,12 +530,32 @@ public class GameFrame {
     }
 
 
-    public void talkInstructor() {
-        createPanelScene("talkInstructor");
-
+    public void talkInstructor(String position) {
+        switch (position) {
+            case "rennie":
+                createPanelScene("rennie");
+                break;
+            case "nelly":
+                createPanelScene("nelly");
+                break;
+            case "karl":
+                createPanelScene("karl");
+                break;
+            case "jay":
+                createPanelScene("jay");
+                break;
+            case "chad":
+                createPanelScene("chad");
+                break;
+        }
     }
+
+    public void miniGame(){createPanelScene("miniGame");}
     public void dock() {
         createPanelScene("dock");
+    }
+    public void beach() {
+        createPanelScene("beach");
     }
     public void lobby() {
         createPanelScene("lobby");
@@ -531,7 +574,7 @@ public class GameFrame {
         setPlayerHand(0);
         setDealerHand(0);
         if (getLosses() < 5) {
-            setTexts("blackjackstart", "Do you want to play blackjack?", "Yes", "No", "", "");
+            setTexts("blackjackstart", "Jay cracks his fingers and begins to shuffle the deck. Surprised? Ready for a game?", "Let's go!", "Not right now", "", "");
             choice3.setVisible(false);
             choice4.setVisible(false);
         } else if (getLosses() >= 5) {
@@ -682,7 +725,7 @@ public class GameFrame {
     }
 
     public void ending() {
-    //if points greater than X amount then show ending
+        //if points greater than X amount then show ending
         setTexts("ending", "YOOOOO do you have the key?", "leave the island", "", "","");
     }
 
@@ -709,7 +752,10 @@ public class GameFrame {
                 case "dock":
                     switch (yourChoice) {
                         case "c1":
-                            talkInstructor();
+                            talkInstructor("rennie");
+                            break;
+                        case "c2":
+                            beach();
                             break;
                         case "c4":
                             showMap("dock");
@@ -722,13 +768,13 @@ public class GameFrame {
                             break;
                     }
                     break;
-                case "talkInstructor":
+                case "rennie":
                     switch (yourChoice) {
                         case "c1":
                             dock();
                             break;
                         case "c2":
-                            lobby();
+                            miniGame();
                             break;
                         case "c3":
                             if(inventory.contains("Key")){
@@ -738,7 +784,20 @@ public class GameFrame {
                             }
                             break;
                         case "c4":
-                            showMap("talkInstructor");
+                            showMap("beach");
+                            break;
+                    }
+                    break;
+                case "beach":
+                    switch (yourChoice) {
+                        case "c1":
+                            lobby();
+                            break;
+                        case "c2":
+                            dock();
+                            break;
+                        case "c4":
+                            showMap("lobby");
                             break;
                     }
                     break;
@@ -748,20 +807,44 @@ public class GameFrame {
                             hall();
                             break;
                         case "c2":
-                            talkInstructor();
+                            beach();
+                        case "c3":
+                            talkInstructor("nelly");
                             break;
                         case "c4":
                             showMap("lobby");
                             break;
                     }
                     break;
-                case "hall":
-                    switch (yourChoice) {
+                case "nelly":
+                    switch (yourChoice){
                         case "c1":
                             lobby();
                             break;
                         case "c2":
+                            miniGame();
+                            break;
+                        case "c3":
+                            if(inventory.contains("Key")){
+                                ending();
+                            } else {
+                                choice3.setContentAreaFilled(false);
+                            }
+                            break;
+                        case "c4":
+                            showMap("lobby");
+                            break;
+                    }
+                case "hall":
+                    switch (yourChoice) {
+                        case "c1":
                             restaurant();
+                            break;
+                        case "c2":
+                            gameFloor();
+                            break;
+                        case "c3":
+                            lobby();
                             break;
                         case "c4":
                             showMap("hall");
@@ -771,10 +854,26 @@ public class GameFrame {
                 case "restaurant":
                     switch (yourChoice) {
                         case "c1":
-                            hall();
+                            talkInstructor("karl");
                             break;
                         case "c2":
                             gameFloor();
+                            break;
+                        case "c3":
+                            hall();
+                            break;
+                        case "c4":
+                            showMap("restaurant");
+                            break;
+                    }
+                    break;
+                case "karl":
+                    switch (yourChoice){
+                        case "c1":
+                            restaurant();
+                            break;
+                        case "c2":
+                            miniGame();
                             break;
                         case "c4":
                             showMap("restaurant");
@@ -784,19 +883,31 @@ public class GameFrame {
                 case "gameFloor":
                     switch (yourChoice) {
                         case "c1":
-                            theater();
+                            talkInstructor("jay");
                             break;
                         case "c2":
                             restaurant();
                             break;
                         case "c3":
-                            blackJackStart();
+                            theater();
                             break;
                         case "c4":
                             showMap("gameFloor");
                             break;
                     }
                     break;
+                case "jay":
+                    switch (yourChoice){
+                        case "c1":
+                            gameFloor();
+                            break;
+                        case "c2":
+                            blackJackStart();
+                            break;
+                        case "c4":
+                            showMap("gameFloor");
+                            break;
+                    }
                 case "blackjackstart":
                     switch (yourChoice) {
                         case "c1":
@@ -831,13 +942,26 @@ public class GameFrame {
                         case "c1":
                             gameFloor();
                             break;
-                        case "c2": //if beaten 21
-                            magicQuizAsk();
+                        case "c2":
+                            talkInstructor("chad");
                             break;
                         case "c4": showMap("theater");
                             break;
                     }
                     break;
+                case "chad":
+                    switch (yourChoice){
+                        case "c1":
+                            theater();
+                            break;
+                        case "c2":
+                            //if beaten 21
+                            magicQuizAsk();
+                            break;
+                        case "c4":
+                            showMap("theater");
+                            break;
+                    }
                 case "magicQuizAsk":
                     switch (yourChoice) {
                         case "c1":
@@ -945,4 +1069,3 @@ public class GameFrame {
         }
     }
 }
-

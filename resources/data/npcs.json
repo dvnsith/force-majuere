@@ -1,0 +1,50 @@
+{
+  "rennie": {
+    "pos": "rennie",
+    "id": "01",
+    "inventory": "sanddollar",
+    "maintext": "go to the beach",
+    "c1": "wait, what?",
+    "c2": "c2",
+    "c3": "c3",
+    "c4": "c4"
+  },
+  "nelly": {
+    "pos": "nelly",
+    "id": "02",
+    "inventory": "career-blueprint",
+    "maintext": "go to the beach",
+    "c1": "wait, what?",
+    "c2": "c2",
+    "c3": "c3",
+    "c4": "c4"
+  },
+  "karl": {
+    "pos": "karl",
+    "id": "03",
+    "inventory": "spaghetti",
+    "maintext": "go to the beach",
+    "c1": "wait, what?",
+    "c2": "c2",
+    "c3": "c3",
+    "c4": "c4"
+  },
+  "jay": {
+    "pos": "jay",
+    "id": "04",
+    "c1": "wait, what?",
+    "c2": "c2",
+    "c3": "c3",
+    "c4": "c4"
+  },
+  "chad": {
+    "pos": "chad",
+    "id": "04",
+    "inventory": "python",
+    "maintext": "go to the beach",
+    "c1": "wait, what?",
+    "c2": "c2",
+    "c3": "c3",
+    "c4": "c4"
+  }
+}

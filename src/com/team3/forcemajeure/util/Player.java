@@ -1,88 +1,55 @@
 package com.team3.forcemajeure.util;
 
-public class Player {
+import java.util.*;
 
-//    Variables
-    public  Room curRoom;
-    public Inventory inventory;
-    private String playerMap;
-    private int pointTotal = 0;
-    private int losses = 0;
-//    private WriteText write = new WriteText();
+    public class Player {
 
-//    Constructor
-    public Player() {
-//        starting player off with map for right now
-        inventory = Data.getInventory();
-        this.playerMap = Data.getTextMap().get("playerMap");
-    }
+        private String name;
+        private String location;
+        private int npcVisitTotal;
+        private int points;
+        private ArrayList<String> inventory = new ArrayList<>();
 
-//    Business Methods
-//    readMap prints out map for user and replaces location on map with currentRoom he is in with [X]
-    public void readMap() {
-        String playerLocation = getCurRoom().getName();
-        if (inventory.getInventory().contains("map")){
-            System.out.println(playerMap.replace(playerLocation+"[ ]",
-                    playerLocation+"[X]"));
+        public String getName() {
+            return name;
         }
-        else{
-//            System.out.println("I dont see map in your inventory");
-//            write.outputText("I dont see map in your inventory");
 
+        public void setName(String name) {
+            this.name = name;
         }
-    }
-    public int rollDicePlayer(){
-        int numberRolled;
-        numberRolled = (int) (Math.random() * (7-1) + 1);
-        return numberRolled;
-    }
-//    public int rollDiceTotalPlayer(int count){
-//        int total = 0;
-//        for (int counter = 0; counter<count; counter++){
-//            int rolled = rollDicePlayer();
-//            System.out.println("You roll " + counter + " rolled a " + rolled + " total is " + total);
-//            total = total + rolled;
-//        }
-//        return total;
-//    }
 
-    public Room getCurRoom() {
-        return curRoom;
-    }
+        public String getLocation() {
+            return location;
+        }
 
-    public Inventory getPlayerInventory() {
-        return inventory;
-    }
+        public void setLocation(String location) {
+            this.location = location;
+        }
 
-    public void setPlayerInventory(Inventory playerInventory) {
-        this.inventory = playerInventory;
-    }
+        public int getNpcVisitTotal() {
+            return npcVisitTotal;
+        }
 
-    public String getPlayerMap() {
-        return playerMap;
-    }
+        public void setNpcVisitTotal(int npcVisitTotal) {
+            this.npcVisitTotal = npcVisitTotal;
+        }
 
-    public void setPlayerMap(String playerMap) {
-        this.playerMap = playerMap;
-    }
+        public int getPoints() {
+            return points;
+        }
 
-    public void setCurRoom(Room room) {
-        this.curRoom = room;
+        public void setPoints(int points) {
+            this.points = points;
+        }
+
+        public ArrayList<String> getInventory() {
+            return inventory;
+        }
+
+        public void setInventory(ArrayList<String> inventory) {
+            this.inventory = inventory;
+        }
+
+
     }
 
-    public int getPointTotal() {
-        return pointTotal;
-    }
-
-    public void setPointTotal(int pointTotal) {
-        this.pointTotal = pointTotal;
-    }
-
-    public int getLosses() {
-        return losses;
-    }
-
-    public void setLosses(int losses) {
-        this.losses = losses;
-    }
-}
