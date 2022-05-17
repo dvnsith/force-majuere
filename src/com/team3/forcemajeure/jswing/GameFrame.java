@@ -26,7 +26,7 @@ public class GameFrame {
     private JFrame window;
     private Container con;
     private JPanel menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
-    private JLabel userNameLabel, titleNameLabel, ptLabel, ptLabelNumber, inventoryLabel, inventoryLabelName;
+    private JLabel userNameLabel, titleNameLabel, ptLabel, ptLabelNumber, inventoryLabel, inventoryLabelName, skipLabel;
     private Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
     private Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
     private JButton soundButton, startButton, choice1, choice2, choice3, choice4;
@@ -52,6 +52,7 @@ public class GameFrame {
     private int card = 0;
     private int losses = 0;
     private int magicQuizCorrect = 0;
+    private int skips = 3;
     private Boolean magicQuizDone = false;
 
 
@@ -177,6 +178,15 @@ public class GameFrame {
         this.magicQuizCorrect = magicQuizCorrect;
     }
 
+    public int getSkips() {
+        return skips;
+    }
+
+    public void setSkips(int skips) {
+        this.skips = skips;
+    }
+
+    // Ctor
     public JSONObject getJsonObject() {
         return jsonObject;
     }
@@ -353,6 +363,10 @@ public class GameFrame {
         inventoryLabelName.setFont(normalFont);
         inventoryLabelName.setForeground(Color.white);
         playerPanel.add(inventoryLabelName);
+        skipLabel = new JLabel();
+        skipLabel.setFont(normalFont);
+        skipLabel.setForeground(Color.white);
+        playerPanel.add(skipLabel);
         playerSetup();
 
 
@@ -363,7 +377,7 @@ public class GameFrame {
         inventory.add("Map");
         inventoryLabelName.setText(inventory.get(0));
         ptLabelNumber.setText("" + getPlayerPT());
-
+        skipLabel.setText("Skips: " + getSkips());
         //start off with dock
         dock();
     }
@@ -574,6 +588,8 @@ public class GameFrame {
             choice2.setVisible(false);
             choice3.setVisible(false);
             choice4.setVisible(false);
+        } else if (getPlayerHand() == getDealerHand()) {
+            setTexts("checkcards", "Dealers Hand : " + getDealerHand() + "\n Didn't they tell you? The House always wins. We won't take any points off though.", "Return to Game Floor", "", "", "");
         }
     }
 
@@ -581,50 +597,85 @@ public class GameFrame {
         createPanelScene("theater");
     }
 
+    // When you're in the theater, this is where the Magician prompts you to play only if you haven't played this game already
     public void magicQuizAsk() {
-       if (!getMagicQuizDone()) {
-           setTexts("magicQuizAsk", "Hello " + getPlayer() + ", would you like to answer some questions? ", "Sure!", "No Thanks", "", "");
-       }
-       else if (getMagicQuizDone()) {
-         setTexts("magicQuizAsk", "It seems like you've already answered my questions. Head to another person to chat", "", "Return to Theater", "", "");
+        if (!getMagicQuizDone()) {
+            setTexts("magicQuizAsk", "Hello " + getPlayer() + ", would you like to answer some questions? ", "Sure!", "No Thanks", "", "");
         }
 
+        else if (getMagicQuizDone()) {
+            setTexts("magicQuizAsk", "It seems like you've already answered my questions. Head to another person to chat", "", "Return to Theater", "", "");
+        }
     }
-
+    // For each question we check to make sure that the player still has some skips left.
     public void magicQuestionOne() {
-        setTexts("magicQuestionOne","Question 1: Which is the correct answer?","Incorrect","Correct","Incorrect","Incorrect");
+        if (getSkips() > 0) {
+            setTexts("magicQuestionOne", "Question 1: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "Skip");
+        }
+        else if (getSkips() >= 3) {
+            setTexts("magicQuestionOne", "Question 1: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "");
+        }
     }
     public void magicQuestionTwo() {
-        setTexts("magicQuestionTwo","Question 2: Which is the correct answer?","Incorrect","Incorrect","Incorrect","Correct");
+        if (getSkips() > 0) {
+            setTexts("magicQuestionTwo", "Question 2: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "Skip");
+        }
+        else if (getSkips() <= 0) {
+            setTexts("magicQuestionTwo", "Question 2: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "");
+        }
     }
     public void magicQuestionThree() {
-        setTexts("magicQuestionThree","Question 3: Which is the correct answer?","Correct","Incorrect","Incorrect","Incorrect");
+        if (getSkips() > 0) {
+            setTexts("magicQuestionThree", "Question 3: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "Skip");
+        }
+        else if (getSkips() <= 0) {
+            setTexts("magicQuestionThree", "Question 3: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "");
+            choice4.setVisible(false);
+        }
     }
     public void magicQuestionFour() {
-        setTexts("magicQuestionFour","Question 4: Which is the correct answer?","Incorrect","Correct","Incorrect","Incorrect");
+        if (getSkips() > 0) {
+            setTexts("magicQuestionFour", "Question 4: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "Skip");
+        }
+        else if (getSkips() <= 0) {
+            setTexts("magicQuestionFour", "Question 4: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "");
+        }
     }
     public void magicQuestionFive() {
-        setTexts("magicQuestionFive","Question 5: Which is the correct answer?","Incorrect","Incorrect","Correct","Incorrect");
+        if (getSkips() > 0) {
+            setTexts("magicQuestionFive", "Question 5: Which is the correct answer?", "Incorrect", "Incorrect", "Correct", "Skip");
+        }
+        else if (getSkips() <= 0) {
+            setTexts("magicQuestionFive", "Question 5: Which is the correct answer?", "Incorrect", "Incorrect", "Correct", "");
+        }
     }
+    // Evaluating the players score, they need to get past the threshold in order to consider this a win
     public void magicQuestionEnd() {
-        if(getMagicQuizCorrect() >= 3) {
-
+        if(getPlayerPT() >= 12 ) {
             inventory.add("Key");
             inventoryLabelName.setText(inventory.get(0) + ", " + inventory.get(1));
-
-            setTexts("magicQuestionEnd","Your total correct: " + getMagicQuizCorrect() + " out of 5, you did well enough to succeed here!","Return to Theater","","","");
+            setTexts("magicQuestionEnd","Your total points: " + getPlayerPT() + " out of 24 total points, you did well enough to succeed here!","Return to Theater","","","");
             setMagicQuizDone(true);
         }
-        else if(getMagicQuizCorrect() < 3){
-            setTexts("magicQuestionEnd","Your total correct: " + getMagicQuizCorrect() + " out of 5. You probably should study up and give this another go.","Return to Theater","","","");
+        else if(getPlayerPT() < 12){
+            setTexts("magicQuestionEnd","You got " + getPlayerPT() + " points. You probably should study up and give this another go, you need to get at least 8 points at the finish.","Return to Theater","","","");
         }
-
     }
-    public void correctAnswer() {
-        setMagicQuizCorrect(getMagicQuizCorrect()+1);
+    // Skips give the player the ability to skip the question without hurting the players score.
+    public void skipQuestion() {
+        setSkips(getSkips()-1);
+        skipLabel.setText("Skips: " + getSkips());
+    }
+    // The first 3 questions will be easy and the last two will be hard. Easy questions give less points when correct.
+    public void correctAnswerEasy() {
         setPlayerPT(getPlayerPT()+4);
         ptLabelNumber.setText("" + getPlayerPT());
     }
+    public void correctAnswerHard() {
+        setPlayerPT(getPlayerPT()+6);
+        ptLabelNumber.setText("" + getPlayerPT());
+    }
+    // Wrong questions will subtract 2 points
     public void wrongAnswer() {
         setPlayerPT(getPlayerPT() - 2);
         ptLabelNumber.setText("" + getPlayerPT());
@@ -725,7 +776,6 @@ public class GameFrame {
                         case "c2":
                             gameFloor();
                             break;
-
                         case "c4":
                             showMap("restaurant");
                             break;
@@ -800,25 +850,32 @@ public class GameFrame {
                     break;
                 case "magicQuestionOne":
                     switch (yourChoice) {
-                        case "c1": case "c3": case "c4":
+                        case "c1": case "c3":
                             wrongAnswer();
                             magicQuestionTwo();
                             break;
                         case "c2":
-                            correctAnswer();
+                            correctAnswerEasy();
                             magicQuestionTwo();
                             break;
-
+                        case "c4":
+                            skipQuestion();
+                            magicQuestionTwo();
+                            break;
                     }
                     break;
                 case "magicQuestionTwo":
                     switch (yourChoice) {
-                        case "c1": case "c2": case "c3":
+                        case "c1": case "c3":
                             wrongAnswer();
                             magicQuestionThree();
                             break;
+                        case "c2":
+                            correctAnswerEasy();
+                            magicQuestionThree();
+                            break;
                         case "c4":
-                            correctAnswer();
+                            skipQuestion();
                             magicQuestionThree();
                             break;
                     }
@@ -826,38 +883,49 @@ public class GameFrame {
                 case "magicQuestionThree":
                     switch (yourChoice) {
                         case "c1":
-                            correctAnswer();
+                            correctAnswerEasy();
                             magicQuestionFour();
                             break;
-                        case "c2": case "c3": case "c4":
+                        case "c2": case "c3":
                             wrongAnswer();
+                            magicQuestionFour();
+                            break;
+                        case "c4":
+                            skipQuestion();
                             magicQuestionFour();
                             break;
                     }
                     break;
                 case "magicQuestionFour":
                     switch (yourChoice) {
-                        case "c1": case "c3": case "c4":
+                        case "c1": case "c3":
                             wrongAnswer();
                             magicQuestionFive();
                             break;
                         case "c2":
-                            correctAnswer();
+                            correctAnswerHard();
+                            magicQuestionFive();
+                            break;
+                        case "c4":
+                            skipQuestion();
                             magicQuestionFive();
                             break;
                     }
                     break;
                 case "magicQuestionFive":
                     switch (yourChoice) {
-                        case "c1": case "c2": case "c4":
+                        case "c1": case "c2":
                             wrongAnswer();
                             magicQuestionEnd();
                             break;
                         case "c3":
-                            correctAnswer();
+                            correctAnswerHard();
                             magicQuestionEnd();
                             break;
-
+                        case "c4":
+                            skipQuestion();
+                            magicQuestionEnd();
+                            break;
                     }
                     break;
                 case "magicQuestionEnd":
