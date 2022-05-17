@@ -1,26 +1,34 @@
 package com.team3.forcemajeure.jswing.controller;
 
-import com.team3.forcemajeure.jswing.view.GameFrame;
-
+import com.team3.forcemajeure.jswing.model.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FrameController implements ActionListener {
+public class ChoiceHandler implements ActionListener {
 
     private final GameFrame gameFrame;
+    private final MagicGame magicGame;
+    private final BlackJackGame blackJackGame;
+    private final SetUp setUp;
 
-    public FrameController(GameFrame pView) {
-        gameFrame = pView;
+    //Ctor
+    public ChoiceHandler(GameFrame view) {
+        gameFrame = view;
+        magicGame = new MagicGame(view);
+        blackJackGame = new BlackJackGame(view);
+        setUp = new SetUp(view);
     }
+
+    //Business methods
     public void actionPerformed(ActionEvent event) {
 
         String yourChoice = event.getActionCommand();
 
-        switch (gameFrame.position) {
+        switch (gameFrame.getCurrentRoom()) {
             case "dock":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.talkInstructor();
+                        setUp.talkInstructor();
                         break;
                     case "c4":
                         gameFrame.showMap("dock");
@@ -36,14 +44,14 @@ public class FrameController implements ActionListener {
             case "talkInstructor":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.dock();
+                        setUp.dock();
                         break;
                     case "c2":
-                        gameFrame.lobby();
+                        setUp.lobby();
                         break;
                     case "c3":
                         if(gameFrame.inventory.contains("Key")){
-                            gameFrame.ending();
+                            setUp.ending();
                         } else {
                             gameFrame.choice3.setContentAreaFilled(false);
                         }
@@ -56,10 +64,10 @@ public class FrameController implements ActionListener {
             case "lobby":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.hall();
+                        setUp.hall();
                         break;
                     case "c2":
-                        gameFrame.talkInstructor();
+                        setUp.talkInstructor();
                         break;
                     case "c4":
                         gameFrame.showMap("lobby");
@@ -69,10 +77,10 @@ public class FrameController implements ActionListener {
             case "hall":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.lobby();
+                        setUp.lobby();
                         break;
                     case "c2":
-                        gameFrame.restaurant();
+                        setUp.restaurant();
                         break;
                     case "c4":
                         gameFrame.showMap("hall");
@@ -82,10 +90,10 @@ public class FrameController implements ActionListener {
             case "restaurant":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.hall();
+                        setUp.hall();
                         break;
                     case "c2":
-                        gameFrame.gameFloor();
+                        setUp.gameFloor();
                         break;
 
                     case "c4":
@@ -96,13 +104,13 @@ public class FrameController implements ActionListener {
             case "gameFloor":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.theater();
+                        setUp.theater();
                         break;
                     case "c2":
-                        gameFrame.restaurant();
+                        setUp.restaurant();
                         break;
                     case "c3":
-                        gameFrame.blackJackStart();
+                        blackJackGame.blackJackStart();
                         break;
                     case "c4":
                         gameFrame.showMap("gameFloor");
@@ -112,39 +120,39 @@ public class FrameController implements ActionListener {
             case "blackjackstart":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.blackjackDeal();
-                        gameFrame.blackJackRound();
+                        blackJackGame.blackjackDeal();
+                        blackJackGame.blackJackRound();
                         break;
                     case "c2":
-                        gameFrame.gameFloor();
+                        setUp.gameFloor();
                         break;
                 }
                 break;
             case "blackjackfirsthand":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.hitMe();
-                        gameFrame.blackJackRound();
+                        blackJackGame.hitMe();
+                        blackJackGame.blackJackRound();
                         break;
                     case "c2":
-                        gameFrame.checkCards();
+                        blackJackGame.checkCards();
                         break;
                 }
                 break;
             case "checkcards":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.gameFloor();
+                        setUp.gameFloor();
                         break;
                 }
                 break;
             case "theater":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.gameFloor();
+                        setUp.gameFloor();
                         break;
                     case "c2": //if beaten 21
-                        gameFrame.magicQuizAsk();
+                        magicGame.magicQuizAsk();
                         break;
                     case "c4": gameFrame.showMap("theater");
                         break;
@@ -153,22 +161,22 @@ public class FrameController implements ActionListener {
             case "magicQuizAsk":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.magicQuestionOne();
+                        magicGame.magicQuestionOne();
                         break;
                     case "c2":
-                        gameFrame.theater();
+                        setUp.theater();
                         break;
                 }
                 break;
             case "magicQuestionOne":
                 switch (yourChoice) {
                     case "c1": case "c3": case "c4":
-                        gameFrame.wrongAnswer();
-                        gameFrame.magicQuestionTwo();
+                        magicGame.wrongAnswer();
+                        magicGame.magicQuestionTwo();
                         break;
                     case "c2":
-                        gameFrame.correctAnswer();
-                        gameFrame.magicQuestionTwo();
+                        magicGame.correctAnswerEasy();
+                        magicGame.magicQuestionTwo();
                         break;
 
                 }
@@ -176,48 +184,48 @@ public class FrameController implements ActionListener {
             case "magicQuestionTwo":
                 switch (yourChoice) {
                     case "c1": case "c2": case "c3":
-                        gameFrame.wrongAnswer();
-                        gameFrame.magicQuestionThree();
+                        magicGame.wrongAnswer();
+                        magicGame.magicQuestionThree();
                         break;
                     case "c4":
-                        gameFrame.correctAnswer();
-                        gameFrame.magicQuestionThree();
+                        magicGame.correctAnswerEasy();
+                        magicGame.magicQuestionThree();
                         break;
                 }
                 break;
             case "magicQuestionThree":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.correctAnswer();
-                        gameFrame.magicQuestionFour();
+                        magicGame.correctAnswerEasy();
+                        magicGame.magicQuestionFour();
                         break;
                     case "c2": case "c3": case "c4":
-                        gameFrame.wrongAnswer();
-                        gameFrame.magicQuestionFour();
+                        magicGame.wrongAnswer();
+                        magicGame.magicQuestionFour();
                         break;
                 }
                 break;
             case "magicQuestionFour":
                 switch (yourChoice) {
                     case "c1": case "c3": case "c4":
-                        gameFrame.wrongAnswer();
-                        gameFrame.magicQuestionFive();
+                        magicGame.wrongAnswer();
+                        magicGame.magicQuestionFive();
                         break;
                     case "c2":
-                        gameFrame.correctAnswer();
-                        gameFrame.magicQuestionFive();
+                        magicGame.correctAnswerEasy();
+                        magicGame.magicQuestionFive();
                         break;
                 }
                 break;
             case "magicQuestionFive":
                 switch (yourChoice) {
                     case "c1": case "c2": case "c4":
-                        gameFrame.wrongAnswer();
-                        gameFrame.magicQuestionEnd();
+                        magicGame.wrongAnswer();
+                        magicGame.magicQuestionEnd();
                         break;
                     case "c3":
-                        gameFrame.correctAnswer();
-                        gameFrame.magicQuestionEnd();
+                        magicGame.correctAnswerEasy();
+                        magicGame.magicQuestionEnd();
                         break;
 
                 }
@@ -225,14 +233,14 @@ public class FrameController implements ActionListener {
             case "magicQuestionEnd":
                 switch (yourChoice) {
                     case "c1":
-                        gameFrame.theater();
+                        setUp.theater();
                         break;
                 }
                 break;
             case "ending":
                 switch(yourChoice){
                     case "c1":
-                        gameFrame.scoreBoard();
+                        setUp.scoreBoard();
                         break;
                 }
         }
