@@ -24,11 +24,11 @@ public class ChoiceHandler implements ActionListener {
 
         String yourChoice = event.getActionCommand();
 
-        switch (gameFrame.getCurrentRoom()) {
+        switch (gameFrame.position) {
             case "dock":
                 switch (yourChoice) {
                     case "c1":
-                        setUp.talkInstructor();
+                        setUp.beach();
                         break;
                     case "c4":
                         gameFrame.showMap("dock");
@@ -41,13 +41,13 @@ public class ChoiceHandler implements ActionListener {
                         break;
                 }
                 break;
-            case "talkInstructor":
+            case "rennie":
                 switch (yourChoice) {
                     case "c1":
                         setUp.dock();
                         break;
                     case "c2":
-                        setUp.lobby();
+                        setUp.miniGame();
                         break;
                     case "c3":
                         if(gameFrame.inventory.contains("Key")){
@@ -57,7 +57,23 @@ public class ChoiceHandler implements ActionListener {
                         }
                         break;
                     case "c4":
-                        gameFrame.showMap("talkInstructor");
+                        gameFrame.showMap("beach");
+                        break;
+                }
+                break;
+            case "beach":
+                switch (yourChoice) {
+                    case "c1":
+                        setUp.lobby();
+                        break;
+                    case "c2":
+                        setUp.dock();
+                        break;
+                    case "c3":
+                        setUp.talkInstructor("rennie");
+                        break;
+                    case "c4":
+                        gameFrame.showMap("beach");
                         break;
                 }
                 break;
@@ -67,7 +83,30 @@ public class ChoiceHandler implements ActionListener {
                         setUp.hall();
                         break;
                     case "c2":
-                        setUp.talkInstructor();
+                        setUp.beach();
+                        break;
+                    case "c3":
+                        setUp.talkInstructor("nelly");
+                        break;
+                    case "c4":
+                        gameFrame.showMap("lobby");
+                        break;
+                }
+                break;
+            case "nelly":
+                switch (yourChoice){
+                    case "c1":
+                        setUp.lobby();
+                        break;
+                    case "c2":
+                        setUp.miniGame();
+                        break;
+                    case "c3":
+                        if(gameFrame.inventory.contains("Key")){
+                            setUp.ending();
+                        } else {
+                            gameFrame.choice3.setContentAreaFilled(false);
+                        }
                         break;
                     case "c4":
                         gameFrame.showMap("lobby");
@@ -77,10 +116,13 @@ public class ChoiceHandler implements ActionListener {
             case "hall":
                 switch (yourChoice) {
                     case "c1":
-                        setUp.lobby();
+                        setUp.restaurant();
                         break;
                     case "c2":
-                        setUp.restaurant();
+                        setUp.gameFloor();
+                        break;
+                    case "c3":
+                        setUp.lobby();
                         break;
                     case "c4":
                         gameFrame.showMap("hall");
@@ -90,12 +132,27 @@ public class ChoiceHandler implements ActionListener {
             case "restaurant":
                 switch (yourChoice) {
                     case "c1":
-                        setUp.hall();
+                        setUp.talkInstructor("karl");
                         break;
                     case "c2":
                         setUp.gameFloor();
                         break;
-
+                    case "c3":
+                        setUp.hall();
+                        break;
+                    case "c4":
+                        gameFrame.showMap("restaurant");
+                        break;
+                }
+                break;
+            case "karl":
+                switch (yourChoice){
+                    case "c1":
+                        setUp.restaurant();
+                        break;
+                    case "c2":
+                        setUp.miniGame();
+                        break;
                     case "c4":
                         gameFrame.showMap("restaurant");
                         break;
@@ -104,12 +161,25 @@ public class ChoiceHandler implements ActionListener {
             case "gameFloor":
                 switch (yourChoice) {
                     case "c1":
-                        setUp.theater();
+                        setUp.talkInstructor("jay");
                         break;
                     case "c2":
-                        setUp.restaurant();
+                        setUp.theater();
                         break;
                     case "c3":
+                        setUp.restaurant();
+                        break;
+                    case "c4":
+                        gameFrame.showMap("gameFloor");
+                        break;
+                }
+                break;
+            case "jay":
+                switch (yourChoice){
+                    case "c1":
+                        setUp.gameFloor();
+                        break;
+                    case "c2":
                         blackJackGame.blackJackStart();
                         break;
                     case "c4":

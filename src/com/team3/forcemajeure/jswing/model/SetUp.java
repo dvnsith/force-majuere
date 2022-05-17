@@ -47,54 +47,72 @@ public class SetUp {
         switch (roomName){
             case "dock":
                 // show dock image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/dock.jpg") ;
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/DockMap.jpg") : new ImageIcon("resources/images/dock.jpg") ;
                 break;
-            case "talkInstructor":
+            case "beach":
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/BeachMap.jpg") : new ImageIcon("resources/images/beach.jpg");
+                break;
+            case "rennie":
                 // show talkInstructor image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_DFl.jpg") : new ImageIcon("resources/images/beach.jpeg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/BeachMap.jpg") : new ImageIcon("resources/images/rennie.jpg");
                 break;
             case "lobby":
                 // show lobby image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_DLobby.jpg") : new ImageIcon("resources/images/lobby.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/LobbyMap.jpg") : new ImageIcon("resources/images/lobby.jpg");
+                break;
+            case "nelly":
+                // show talkInstructor image
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/LobbyMap.jpg") : new ImageIcon("resources/images/nelly.jpg");
                 break;
             case "hall":
                 // show hall image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/hall.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/HallMap.png") : new ImageIcon("resources/images/hall.jpg");
                 break;
             case "restaurant":
+            case "karl":
                 // show restaurant image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/restaurant.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/RestaurantMap.png") : new ImageIcon("resources/images/restaurant.jpg");
                 break;
             case "gameFloor":
+            case "jay":
+            case "checkcards":
+            case "blackjackfirsthand":
+            case "blackjackstart":
                 // show theater image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") :  new ImageIcon("resources/images/casinofloor.jpg");
+                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/GameFloorMap.jpg") :  new ImageIcon("resources/images/casinofloor.jpg");
                 break;
             case "theater":
                 // show theater image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/All_Beach.png") : new ImageIcon("resources/images/theater.jpg");
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/TheaterMap.jpg") : new ImageIcon("resources/images/theaterstage.jpg");
+                break;
+            case "chad":
+                // show theater image
+                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/TheaterMap.jpg") : new ImageIcon("resources/images/chad.jpg");
                 break;
         }
         return anImage;
     }
 
 
+
     /* pulls the JSON data and creates a panel based on room location */
     public void createPanelScene(String pos){
 
         while(true){
-            setJsonObject(readFile.retrieveJson("data/mainTextArea.json"));
+            setJsonObject(readFile.retrieveJson("data/location.json"));
             HashMap<String, String> gameMap = (HashMap<String, String>) getJsonObject().get(pos);
-            String choiceThree = gameMap.get("choiceThree");
+            String choiceThree = gameMap.get("c3");
             for(Object room : getJsonObject().keySet()){
                 if(room.toString().equals(pos)){
-                    String mainTxt = gameMap.get("mainText");
-                    if(pos.equals("talkInstructor")){
-                        mainTxt = gameFrame.getPlayer() + gameMap.get("mainText");
+                    String mainTxt = gameMap.get("maintext");
+                    choiceThree = gameMap.get("c3");
+                    if(pos.matches("rennie")){
+                        mainTxt = gameFrame.getPlayer() + gameMap.get("maintext");
                         if(gameFrame.inventory.contains("Key")){
                             choiceThree = "leave this B";
                         }
                     }
-                    gameFrame.setTexts(pos,mainTxt,gameMap.get("choiceOne"),gameMap.get("choiceTwo"),choiceThree,gameMap.get("choiceFour"));/* set valuue of room here*/
+                    gameFrame.setTexts(pos,mainTxt,gameMap.get("c1"),gameMap.get("c2"),choiceThree,gameMap.get("c4"));/* set valuue of room here*/
                 }
             }
             break;
@@ -102,11 +120,34 @@ public class SetUp {
 
     }
 
-    public void talkInstructor() {
-        createPanelScene("talkInstructor");
+    public void talkInstructor(String position) {
+        switch (position) {
+            case "rennie":
+                createPanelScene("rennie");
+                break;
+            case "nelly":
+                createPanelScene("nelly");
+                break;
+            case "karl":
+                createPanelScene("karl");
+                break;
+            case "jay":
+                createPanelScene("jay");
+                break;
+            case "chad":
+                createPanelScene("chad");
+                break;
+        }
     }
+
+    public void miniGame(){
+        createPanelScene("miniGame");}
+
     public void dock() {
         createPanelScene("dock");
+    }
+    public void beach() {
+        createPanelScene("beach");
     }
     public void lobby() {
         createPanelScene("lobby");
