@@ -23,35 +23,38 @@ import javax.swing.*;
 
 public class GameFrame {
 
-    JFrame window;
-    Container con;
-    JPanel menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
-    JLabel userNameLabel, titleNameLabel, ptLabel, ptLabelNumber, inventoryLabel, inventoryLabelName;
-    Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
-    Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
-    JButton soundButton, startButton, choice1, choice2, choice3, choice4;
-    JTextArea mainTextArea;
-    int playerPT, monsterHP, silverRing;
-    TitleScreenHandler tsHandler = new TitleScreenHandler();
-    ChoiceHandler choiceHandler = new ChoiceHandler();
-    String inventory, position, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
-    Boolean soundOn = true;
-    ImageIcon logo = new ImageIcon("resources/images/island.png");
-    ImageIcon gameMapImage,gameBgImage;
-    JLabel mapLabel = new JLabel();
-    JLabel imageBgLabel = new JLabel();
-    Audio audio = Audio.getInstance();
-    SoundPlayer sound = new SoundPlayer();
+    private JFrame window;
+    private Container con;
+    private JPanel menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
+    private JLabel userNameLabel, titleNameLabel, ptLabel, ptLabelNumber, inventoryLabel, inventoryLabelName;
+    private Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
+    private Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
+    private JButton soundButton, startButton, choice1, choice2, choice3, choice4;
+    private JTextArea mainTextArea;
+    private int playerPT;
+    private TitleScreenHandler tsHandler = new TitleScreenHandler();
+    private ChoiceHandler choiceHandler = new ChoiceHandler();
+    private String position, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
+    private ArrayList<String> inventory = new ArrayList<>();
+    private Boolean soundOn = true;
+    private ImageIcon logo = new ImageIcon("resources/images/island.png");
+    private ImageIcon gameMapImage,gameBgImage;
+    private JLabel mapLabel = new JLabel();
+    private JLabel imageBgLabel = new JLabel();
+    private Audio audio = Audio.getInstance();
+    private SoundPlayer sound = new SoundPlayer();
+    private ReadFile readFile = new ReadFile();
+    private JSONObject jsonObject;
+    private Object obj;
+    private JSONParser parser = new JSONParser();
     private int dealerHand = 0;
     private int playerHand = 0;
     private int card = 0;
     private int losses = 0;
     private int magicQuizCorrect = 0;
     private Boolean magicQuizDone = false;
-    ReadFile readFile = new ReadFile();
-    JSONObject jsonObject;
-    Object obj;
-    private JSONParser parser = new JSONParser();
+
+
 
     //Accessor
     public String getPlayer() {
@@ -174,7 +177,6 @@ public class GameFrame {
         this.magicQuizCorrect = magicQuizCorrect;
     }
 
-    // Ctor
     public JSONObject getJsonObject() {
         return jsonObject;
     }
@@ -183,13 +185,6 @@ public class GameFrame {
         this.jsonObject = jsonObject;
     }
 
-    public Object getObj() {
-        return obj;
-    }
-
-    public void setObj(Object obj) {
-        this.obj = obj;
-    }
 
     // Ctor - creates the frame for the game
     public GameFrame() {
@@ -336,8 +331,6 @@ public class GameFrame {
         choice4.setActionCommand("c4");
         choiceButtonPanel.add(choice4);
 
-        // choice4.setContentAreaFilled(false); // Disable highlighting on press!!!
-
         playerPanel = new JPanel();
         playerPanel.setBounds(250, 0, 600, 50);
         playerPanel.setBackground(Color.black);
@@ -367,10 +360,8 @@ public class GameFrame {
 
     /* create player's data */
     public void playerSetup() {
-        // playerPT = player.getTotalPoints();
-        monsterHP = 20;
-        inventory = "Map";
-        inventoryLabelName.setText(inventory);
+        inventory.add("Map");
+        inventoryLabelName.setText(inventory.get(0));
         ptLabelNumber.setText("" + getPlayerPT());
 
         //start off with dock
@@ -381,6 +372,7 @@ public class GameFrame {
     public ImageIcon setImage(String roomName, boolean isMap){
         ImageIcon anImage = new ImageIcon();
         //isMap then set map to image else set bg of room to image
+        // When time is available: refactor to hashmap
         switch (roomName){
             case "dock":
                 // show dock image
@@ -482,14 +474,17 @@ public class GameFrame {
         while(true){
             setJsonObject(readFile.retrieveJson("data/mainTextArea.json"));
             HashMap<String, String> gameMap = (HashMap<String, String>) getJsonObject().get(pos);
-
+            String choiceThree = gameMap.get("choiceThree");
             for(Object room : getJsonObject().keySet()){
                 if(room.toString().equals(pos)){
                     String mainTxt = gameMap.get("mainText");
                     if(pos.equals("talkInstructor")){
                         mainTxt = getPlayer() + gameMap.get("mainText");
+                        if(inventory.contains("Key")){
+                            choiceThree = "leave this B";
+                        }
                     }
-                    setTexts(pos,mainTxt,gameMap.get("choiceOne"),gameMap.get("choiceTwo"),gameMap.get("choiceThree"),gameMap.get("choiceFour"));/* set valuue of room here*/
+                    setTexts(pos,mainTxt,gameMap.get("choiceOne"),gameMap.get("choiceTwo"),choiceThree,gameMap.get("choiceFour"));/* set valuue of room here*/
                 }
             }
             break;
@@ -498,11 +493,9 @@ public class GameFrame {
     }
 
 
-//    public void beach() {
-//        createPanelScene("beach");
-//    }
     public void talkInstructor() {
         createPanelScene("talkInstructor");
+
     }
     public void dock() {
         createPanelScene("dock");
@@ -516,7 +509,6 @@ public class GameFrame {
     public void restaurant() {
         createPanelScene("restaurant");
     }
-
     public void gameFloor() {
         createPanelScene("gameFloor");
     }
@@ -526,8 +518,13 @@ public class GameFrame {
         setDealerHand(0);
         if (getLosses() < 5) {
             setTexts("blackjackstart", "Do you want to play blackjack?", "Yes", "No", "", "");
+            choice3.setVisible(false);
+            choice4.setVisible(false);
         } else if (getLosses() >= 5) {
             setTexts("blackjackstart", "I think it's best you lay off the tables for today. You have too many losses", "", "Return to Game Floor", "", "");
+            choice1.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
         }
     }
 
@@ -542,11 +539,16 @@ public class GameFrame {
     public void blackJackRound() {
         if (getPlayerHand() < 22) {
             setTexts("blackjackfirsthand", "Here is your hand: " + getPlayerHand(), "Hit me", "Stay", "", "");
+            choice3.setVisible(false);
+            choice4.setVisible(false);
         } else if (getPlayerHand() > 21) {
             setPlayerPT(getPlayerPT() - 2);
             ptLabelNumber.setText("" + getPlayerPT());
             setLosses(getLosses() + 1);
             setTexts("checkcards", "Your hand: " + getPlayerHand() + "\n You busted! Better luck next time", "Return to Game Floor", "", "", "");
+            choice1.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
         }
     }
 
@@ -560,12 +562,18 @@ public class GameFrame {
             setPlayerPT(getPlayerPT() + 3);
             ptLabelNumber.setText("" + getPlayerPT());
             setTexts("checkcards", "Dealers Hand : " + getDealerHand() +" \n It's your lucky day! You get 3 points", "Return to Game Floor", "", "", "");
+            choice2.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
 
         } else if (getPlayerHand() < getDealerHand()) {
             setPlayerPT(getPlayerPT() - 2);
             ptLabelNumber.setText("" + getPlayerPT());
             setLosses(getLosses() + 1);
             setTexts("checkcards", "Dealers Hand : " + getDealerHand() + "\n Better luck next time.", "Return to Game Floor", "", "", "");
+            choice2.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
         }
     }
 
@@ -600,6 +608,10 @@ public class GameFrame {
     }
     public void magicQuestionEnd() {
         if(getMagicQuizCorrect() >= 3) {
+
+            inventory.add("Key");
+            inventoryLabelName.setText(inventory.get(0) + ", " + inventory.get(1));
+
             setTexts("magicQuestionEnd","Your total correct: " + getMagicQuizCorrect() + " out of 5, you did well enough to succeed here!","Return to Theater","","","");
             setMagicQuizDone(true);
         }
@@ -618,12 +630,15 @@ public class GameFrame {
         ptLabelNumber.setText("" + getPlayerPT());
     }
 
-
-
     public void ending() {
-
+    //if points greater than X amount then show ending
+        setTexts("ending", "YOOOOO do you have the key?", "leave the island", "", "","");
     }
 
+    public void scoreBoard(){
+        //show bgImage of closing scene and show scoreboard when leaving the island
+        System.out.println("Here is the scoreboard");
+    }
 
     public class TitleScreenHandler implements ActionListener {
 
@@ -664,6 +679,13 @@ public class GameFrame {
                         case "c2":
                             lobby();
                             break;
+                        case "c3":
+                            if(inventory.contains("Key")){
+                                ending();
+                            } else {
+                                choice3.setContentAreaFilled(false);
+                            }
+                            break;
                         case "c4":
                             showMap("talkInstructor");
                             break;
@@ -703,6 +725,7 @@ public class GameFrame {
                         case "c2":
                             gameFloor();
                             break;
+
                         case "c4":
                             showMap("restaurant");
                             break;
@@ -758,7 +781,7 @@ public class GameFrame {
                         case "c1":
                             gameFloor();
                             break;
-                        case "c2":
+                        case "c2": //if beaten 21
                             magicQuizAsk();
                             break;
                         case "c4": showMap("theater");
@@ -844,6 +867,12 @@ public class GameFrame {
                             break;
                     }
                     break;
+                case "ending":
+                    switch(yourChoice){
+                        case "c1":
+                            scoreBoard();
+                            break;
+                    }
             }
         }
     }

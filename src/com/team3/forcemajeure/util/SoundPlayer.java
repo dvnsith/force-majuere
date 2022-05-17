@@ -17,16 +17,18 @@ public class SoundPlayer {
         String fileNameMP3 = "audio/" + name + ".mp3";
         boolean isMP3 = FileResourceUtils.resourceExists(fileNameMP3);
         String fileName = isMP3 ? fileNameMP3 : fileNameWav;
-        AudioInputStream audioInputStream = null;
+
 
         InputStream sound = new BufferedInputStream(readFile.getFileFromResourceAsStream(fileName, aClass));
         Clip clip = null;
 
         try{
+            // if playAll then start
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(sound));
             clip.start();
 
+            // if not playing all then stop after timer
             if(!playAll){
                 Thread.sleep(playLengthInMilSec);
                 clip.stop();
