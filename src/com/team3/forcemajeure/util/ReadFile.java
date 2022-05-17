@@ -1,6 +1,6 @@
 package com.team3.forcemajeure.util;
 
-import com.team3.forcemajeure.jswing.GameFrame;
+import com.team3.forcemajeure.jswing.view.GameFrame;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

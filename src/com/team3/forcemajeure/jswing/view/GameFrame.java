@@ -1,20 +1,15 @@
-package com.team3.forcemajeure.jswing;
+package com.team3.forcemajeure.jswing.view;
 
+import com.team3.forcemajeure.jswing.controller.FrameController;
+import com.team3.forcemajeure.jswing.controller.TitleScreenHandler;
 import com.team3.forcemajeure.util.Audio;
 import com.team3.forcemajeure.util.ReadFile;
 import com.team3.forcemajeure.util.SoundPlayer;
 import org.json.simple.*;
 import org.json.simple.parser.*;
-import org.json.simple.JSONArray;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.concurrent.ThreadLocalRandom;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,16 +21,15 @@ public class GameFrame {
     private JFrame window;
     private Container con;
     private JPanel menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
-    private JLabel userNameLabel, titleNameLabel, ptLabel, ptLabelNumber, inventoryLabel, inventoryLabelName;
+    public JLabel userNameLabel, titleNameLabel, ptLabel, ptLabelNumber, inventoryLabel, inventoryLabelName;
     private Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
     private Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
-    private JButton soundButton, startButton, choice1, choice2, choice3, choice4;
+    public JButton soundButton, startButton, choice1, choice2, choice3, choice4;
     private JTextArea mainTextArea;
-    private int playerPT;
-    private TitleScreenHandler tsHandler = new TitleScreenHandler();
-    private ChoiceHandler choiceHandler = new ChoiceHandler();
-    private String position, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
-    private ArrayList<String> inventory = new ArrayList<>();
+    public int playerPT;
+    public String position;
+    private String player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
+    public ArrayList<String> inventory = new ArrayList<>();
     private Boolean soundOn = true;
     private ImageIcon logo = new ImageIcon("resources/images/island.png");
     private ImageIcon gameMapImage,gameBgImage;
@@ -53,8 +47,9 @@ public class GameFrame {
     private int losses = 0;
     private int magicQuizCorrect = 0;
     private Boolean magicQuizDone = false;
-
-
+    private Magic magic = new Magic();
+    private FrameController choiceHandler = new FrameController(this);
+    private TitleScreenHandler tsHandler = new TitleScreenHandler(this);
 
     //Accessor
     public String getPlayer() {
@@ -640,241 +635,5 @@ public class GameFrame {
         System.out.println("Here is the scoreboard");
     }
 
-    public class TitleScreenHandler implements ActionListener {
-
-        public void actionPerformed(ActionEvent event) {
-
-            createGameScreen();
-        }
-    }
-
-    public class ChoiceHandler implements ActionListener {
-
-        public void actionPerformed(ActionEvent event) {
-
-            String yourChoice = event.getActionCommand();
-
-            switch (position) {
-                case "dock":
-                    switch (yourChoice) {
-                        case "c1":
-                            talkInstructor();
-                            break;
-                        case "c4":
-                            showMap("dock");
-                            break;
-                    }
-                    break;
-                case "map":
-                    switch (yourChoice){
-                        case "c4": setTexts(getCurrentRoom(), getMainText(), getFirstChoice(),getSecondChoice(), getThirdChoice(), getFourthChoice());// get previous method of scene
-                            break;
-                    }
-                    break;
-                case "talkInstructor":
-                    switch (yourChoice) {
-                        case "c1":
-                            dock();
-                            break;
-                        case "c2":
-                            lobby();
-                            break;
-                        case "c3":
-                            if(inventory.contains("Key")){
-                                ending();
-                            } else {
-                                choice3.setContentAreaFilled(false);
-                            }
-                            break;
-                        case "c4":
-                            showMap("talkInstructor");
-                            break;
-                    }
-                    break;
-                case "lobby":
-                    switch (yourChoice) {
-                        case "c1":
-                            hall();
-                            break;
-                        case "c2":
-                            talkInstructor();
-                            break;
-                        case "c4":
-                            showMap("lobby");
-                            break;
-                    }
-                    break;
-                case "hall":
-                    switch (yourChoice) {
-                        case "c1":
-                            lobby();
-                            break;
-                        case "c2":
-                            restaurant();
-                            break;
-                        case "c4":
-                            showMap("hall");
-                            break;
-                    }
-                    break;
-                case "restaurant":
-                    switch (yourChoice) {
-                        case "c1":
-                            hall();
-                            break;
-                        case "c2":
-                            gameFloor();
-                            break;
-
-                        case "c4":
-                            showMap("restaurant");
-                            break;
-                    }
-                    break;
-                case "gameFloor":
-                    switch (yourChoice) {
-                        case "c1":
-                            theater();
-                            break;
-                        case "c2":
-                            restaurant();
-                            break;
-                        case "c3":
-                            blackJackStart();
-                            break;
-                        case "c4":
-                            showMap("gameFloor");
-                            break;
-                    }
-                    break;
-                case "blackjackstart":
-                    switch (yourChoice) {
-                        case "c1":
-                            blackjackDeal();
-                            blackJackRound();
-                            break;
-                        case "c2":
-                            gameFloor();
-                            break;
-                    }
-                    break;
-                case "blackjackfirsthand":
-                    switch (yourChoice) {
-                        case "c1":
-                            hitMe();
-                            blackJackRound();
-                            break;
-                        case "c2":
-                            checkCards();
-                            break;
-                    }
-                    break;
-                case "checkcards":
-                    switch (yourChoice) {
-                        case "c1":
-                            gameFloor();
-                            break;
-                    }
-                    break;
-                case "theater":
-                    switch (yourChoice) {
-                        case "c1":
-                            gameFloor();
-                            break;
-                        case "c2": //if beaten 21
-                            magicQuizAsk();
-                            break;
-                        case "c4": showMap("theater");
-                            break;
-                    }
-                    break;
-                case "magicQuizAsk":
-                    switch (yourChoice) {
-                        case "c1":
-                            magicQuestionOne();
-                            break;
-                        case "c2":
-                            theater();
-                            break;
-                    }
-                    break;
-                case "magicQuestionOne":
-                    switch (yourChoice) {
-                        case "c1": case "c3": case "c4":
-                            wrongAnswer();
-                            magicQuestionTwo();
-                            break;
-                        case "c2":
-                            correctAnswer();
-                            magicQuestionTwo();
-                            break;
-
-                    }
-                    break;
-                case "magicQuestionTwo":
-                    switch (yourChoice) {
-                        case "c1": case "c2": case "c3":
-                            wrongAnswer();
-                            magicQuestionThree();
-                            break;
-                        case "c4":
-                            correctAnswer();
-                            magicQuestionThree();
-                            break;
-                    }
-                    break;
-                case "magicQuestionThree":
-                    switch (yourChoice) {
-                        case "c1":
-                            correctAnswer();
-                            magicQuestionFour();
-                            break;
-                        case "c2": case "c3": case "c4":
-                            wrongAnswer();
-                            magicQuestionFour();
-                            break;
-                    }
-                    break;
-                case "magicQuestionFour":
-                    switch (yourChoice) {
-                        case "c1": case "c3": case "c4":
-                            wrongAnswer();
-                            magicQuestionFive();
-                            break;
-                        case "c2":
-                            correctAnswer();
-                            magicQuestionFive();
-                            break;
-                    }
-                    break;
-                case "magicQuestionFive":
-                    switch (yourChoice) {
-                        case "c1": case "c2": case "c4":
-                            wrongAnswer();
-                            magicQuestionEnd();
-                            break;
-                        case "c3":
-                            correctAnswer();
-                            magicQuestionEnd();
-                            break;
-
-                    }
-                    break;
-                case "magicQuestionEnd":
-                    switch (yourChoice) {
-                        case "c1":
-                            theater();
-                            break;
-                    }
-                    break;
-                case "ending":
-                    switch(yourChoice){
-                        case "c1":
-                            scoreBoard();
-                            break;
-                    }
-            }
-        }
-    }
 }
 
