@@ -8,7 +8,6 @@ public class BlackJackGame {
     private int playerHand = 0;
     private int card = 0;
     private int losses = 0;
-    private Boolean blackjackPlayed = true;
 
     // ctor
     public BlackJackGame(GameFrame view){
@@ -40,16 +39,7 @@ public class BlackJackGame {
         this.losses = losses;
     }
 
-    public Boolean getBlackjackPlayed() {
-        return blackjackPlayed;
-    }
-
-    public void setBlackjackPlayed(Boolean blackjackPlayed) {
-        this.blackjackPlayed = blackjackPlayed;
-    }
-
-
-
+    // business methods
     public void blackJackStart() {
         setPlayerHand(0);
         setDealerHand(0);
