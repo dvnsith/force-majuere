@@ -11,12 +11,14 @@ public class SetUp {
     private final GameFrame gameFrame;
     private final ReadFile readFile = new ReadFile();
     private final MagicGame magicGame;
+    private final JavaScriptGame jsGame;
     private JSONObject jsonObject;
 
     // Ctor
     public SetUp(GameFrame view){
         gameFrame = view;
         magicGame = new MagicGame(view);
+        jsGame = new JavaScriptGame(view);
     }
 
     // accessor methods
@@ -60,7 +62,7 @@ public class SetUp {
                 // show lobby image
                 imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/lobby.jpg";
                 break;
-            case "nelly":
+            case "nelly": case "jsStart": case "jsMid": case "jsEnd":
                 // show talkInstructor image
                 imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/nelly.jpg";
                 break;
@@ -69,6 +71,7 @@ public class SetUp {
                 imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/hall.jpg";
                 break;
             case "restaurant":
+            case "restaurantOrder":
             case "karl":
                 // show restaurant image
                 imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.png" : "/images/restaurant.jpg";
@@ -116,24 +119,63 @@ public class SetUp {
         while(true){
             setJsonObject(readFile.retrieveJson("data/location.json"));
             HashMap<String, String> gameMap = (HashMap<String, String>) getJsonObject().get(pos);
-            String choiceTwo, choiceThree;
+            String choiceOne, choiceTwo, choiceThree;
 
             for(Object room : getJsonObject().keySet()){
                 if(room.toString().equals(pos)){
                     String mainTxt = gameMap.get("maintext");
+                    choiceOne = gameMap.get("c1");
                     choiceTwo = gameMap.get("c2");
                     choiceThree = gameMap.get("c3");
                     if(pos.matches("rennie")){
                         mainTxt = gameFrame.getPlayer() + gameMap.get("maintext");
-                        if(gameFrame.inventory.contains("Key")){
+                        if(gameFrame.inventory.contains("Blueprint")){
                             choiceThree = "leave this island";
                         }
                     }
-                    if(pos.matches("theater") && gameFrame.getBlackjackPlayed().equals(true)){
-                        choiceTwo = "Talk to Magician Chad";
+                    //Todo add story stuff
+
+                    // if pos = lobby && getBlackJack = true
+                        // choice three = investigate noise (goes to nelly)
+                    if(pos.matches("lobby") && gameFrame.getBlackjackPlayed().equals(true)){
+                        mainTxt = "Please see Nelly";
+                        choiceThree = "Investigate the issue";
                         System.out.println("Blackjack played: " + gameFrame.getBlackjackPlayed());
                     }
-                    gameFrame.setTexts(pos,mainTxt,gameMap.get("c1"),choiceTwo,choiceThree,gameMap.get("c4"));/* set valuue of room here*/
+                    if(pos.matches("lobby") && jsGame.getJsGameDone().equals(true)){
+                        mainTxt = "Now that you know the magic phrase, see chad @ theater";
+                    }
+
+                    // if pos = theater && boolean beatNellysGame = true
+                            // magicWord panel => takes user input (just like username) when clicked
+                                //if button is valid => go to chad
+                                // if button is invalid => go back to theater and try again
+
+                    // if pos = dock && inventory contains key
+                        // choice two = ending()
+                        // mainText = "some message about key and boat"
+
+
+                    if(pos.matches("theater") && gameFrame.getMagicQuizDone().equals(true)){
+                        choiceTwo = "";
+                        mainTxt = "Looks like the show is over";
+                    }
+
+                    if(pos.matches("theater") && gameFrame.getJsGameDone()){
+                        choiceTwo = "Talk to Magician Chad";
+                        System.out.println("JS Game played: " + jsGame.getJsGameDone());
+                    }
+
+                    if(pos.matches("restaurant") && gameFrame.getLosses() >= 5){
+                        choiceThree = "Order spaghetti & pepsi";
+                        mainTxt = "Long day? How about we give you an order of Spaghetti and Pepsi. It's on the house!";
+                        gameFrame.setLosses(0);
+                    } else if(pos.matches("restaurant") && gameFrame.getBlackjackPlayed().equals(true)){
+                        mainTxt = "There seems to be an issue in the restaurant, you can hear the chef shouting from the back, there appears to be an issue with the ordering system. You can investigate the issue, head to the game floor, or return to the hallway.";
+                        choiceThree = "Investigate the issue";
+                    }
+
+                    gameFrame.setTexts(pos,mainTxt,choiceOne,choiceTwo,choiceThree,gameMap.get("c4"));/* set valuue of room here*/
                 }
             }
             break;

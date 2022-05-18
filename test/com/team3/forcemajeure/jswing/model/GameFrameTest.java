@@ -1,8 +1,8 @@
 package com.team3.forcemajeure.jswing.model;
 
-import org.junit.jupiter.api.*;
+import org.junit.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.*;
 
 class GameFrameTest {
 
@@ -10,35 +10,35 @@ class GameFrameTest {
     void getCurrentRoomTheaterToGameFloor() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setCurrentRoom() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getMainText() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getFirstChoice() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getSecondChoice() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getThirdChoice() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getFourthChoice() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getPlayerPT() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setTexts() {
     }
 }
