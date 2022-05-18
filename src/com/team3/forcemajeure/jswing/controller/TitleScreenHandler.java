@@ -9,8 +9,8 @@ public class TitleScreenHandler implements ActionListener {
 
     private final GameFrame gameFrame;
 
-    public TitleScreenHandler(GameFrame pView){
-        gameFrame = pView;
+    public TitleScreenHandler(GameFrame view){
+        gameFrame = view;
     }
     public void actionPerformed(ActionEvent event) {
 
