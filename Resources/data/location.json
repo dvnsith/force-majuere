@@ -21,17 +21,6 @@
     "c4": "Show Map"
   },
 
-  "sign": {
-    "pos": "sign",
-    "id": "13",
-    "npc": "false",
-    "maintext": "You Read the Sign.",
-    "c1": "",
-    "c2": "Return to the Dock",
-    "c3": "",
-    "c4":"Show Map"
-  },
-
   "beach": {
     "pos": "beach",
     "id": "02",
@@ -145,6 +134,15 @@
     "c2": "Start Challenge",
     "c3": "",
     "c4": "Show Map"
+  },
+  "sign": {
+    "pos": "sign",
+    "id": "13",
+    "npc": "false",
+    "maintext": "You Read the Sign.",
+    "c1": "Return to the Dock",
+    "c2": "",
+    "c3": "",
+    "c4":"Show Map"
   }
-
 }

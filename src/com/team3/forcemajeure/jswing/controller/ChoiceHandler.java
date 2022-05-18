@@ -45,17 +45,16 @@ public class ChoiceHandler implements ActionListener {
                         break;
                 }
                 break;
-            case "sign":
-                switch(yourChoice){
-                    case "c2":
-                        setUp.dock();
-                        break;
-                    case "c4":
-                        gameFrame.showMap("dock");
-                }
             case "map":
-                switch (yourChoice){
+                switch (yourChoice) {
                     case "c4": gameFrame.setTexts(gameFrame.getCurrentRoom(), gameFrame.getMainText(), gameFrame.getFirstChoice(),gameFrame.getSecondChoice(), gameFrame.getThirdChoice(), gameFrame.getFourthChoice());// get previous method of scene
+                        break;
+                }
+                break;
+            case "sign":
+                switch(yourChoice) {
+                    case "c1":
+                        setUp.dock();
                         break;
                 }
                 break;

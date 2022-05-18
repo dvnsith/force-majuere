@@ -53,7 +53,7 @@ public class SetUp {
                 imagePath = isMap ? "/images/map/VisitDock/DockMap.jpg" : "/images/dock.jpg";
                 break;
             case "sign":
-                imagePath = isMap ? "/images/map/VisitDock/DockMap.jpg" : "/images/dock.jpg";
+                imagePath = isMap ? "/images/map/VisitDock/DockMap.jpg" : "/images/docksign.jpg";
                 break;
             case "beach":
                 imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/beach.jpg";
@@ -111,6 +111,7 @@ public class SetUp {
                 break;
         }
         // load image to retrieve path in resources directory
+        System.out.println(gameFrame.getMainText());
         URL imageUrl = getClass().getResource(imagePath);
         Image bgImage = Toolkit.getDefaultToolkit().getImage(imageUrl);
         return new ImageIcon(bgImage);
