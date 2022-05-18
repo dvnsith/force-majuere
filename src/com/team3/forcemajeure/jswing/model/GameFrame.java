@@ -41,8 +41,10 @@ public class GameFrame {
     private Color mintGreen = new Color(46, 226, 109);
     private Color seaGreen = new Color(12, 168, 153);
     private Color goldenRod = new Color(195, 178, 70);
-
-
+    private int losses = 0;
+    private Boolean jsGameDone = false;
+    private Boolean magicQuizDone = false;
+    
     // Ctor - creates the frame for the game
     private GameFrame() {
         window = new JFrame();
@@ -216,6 +218,32 @@ public class GameFrame {
         this.blackjackPlayed = blackjackPlayed;
     }
 
+    public int getLosses() {
+        return losses;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+
+    public Boolean getJsGameDone() {
+        return jsGameDone;
+    }
+
+    public void setJsGameDone(Boolean jsGameDone) {
+        this.jsGameDone = jsGameDone;
+    }
+
+    public Boolean getMagicQuizDone() {
+        return magicQuizDone;
+    }
+
+    public void setMagicQuizDone(Boolean magicQuizDone) {
+        this.magicQuizDone = magicQuizDone;
+    }
+
+
     //Business Methods
     /* creates the components to be added onto the frame */
     public void createGameScreen() {
@@ -315,6 +343,7 @@ public class GameFrame {
         choice1.setVisible(true);
         choice2.setVisible(true);
         choice3.setVisible(true);
+        choice4.setVisible(true);
         mapLabel.setVisible(false);
         imageBgLabel.setVisible(true);
         position = pos;

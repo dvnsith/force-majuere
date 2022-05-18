@@ -39,7 +39,7 @@
     "maintext": "You are in a massive resort lobby. It is extravagantly decorated. As you are looking through the lobby, you hear a familiar voice.",
     "c1": "Go to the Hall",
     "c2": "Go to the Beach",
-    "c3": "Investigate Voice",
+    "c3": "",
     "c4":  "See Map"
   },
 
@@ -58,10 +58,10 @@
     "pos": "restaurant",
     "id": "05",
     "npc": "true",
-    "maintext": "There seems to be an issue in the restaurant, you can hear the chef shouting from the back, there appears to be an issue with the ordering system. You can investigate the issue, head to the game floor, or return to the hallway.",
-    "c1": "Investigate the issue",
+    "maintext": "Welcome to the Italy's very own virtual restaurant",
+    "c1": "Go to Hall",
     "c2": "Go to the Game Floor",
-    "c3": "Go to the Hall",
+    "c3": "",
     "c4":  "See Map"
   },
 
@@ -80,7 +80,7 @@
     "id": "07",
     "npc": "true",
     "maintext": "The theater is abuzz with patrons awaiting to watch the show. You see a Python slither across the stage. A large rabbit shapped bulge in its stomach.",
-    "c1": "Investigate the issue",
+    "c1": "Go to game floor",
     "c2": "",
     "c3": "",
     "c4":  "See Map"
