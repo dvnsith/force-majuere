@@ -36,7 +36,7 @@ public class SetUp {
         gameFrame.ptLabelNumber.setText("" + gameFrame.getPlayerPT());
         gameFrame.skipLabel.setText("Skips: " + magicGame.getSkips());
         //start off with dock
-        dock();
+        prelude();
     }
 
     /* create image for game background and map */
@@ -45,8 +45,14 @@ public class SetUp {
         //isMap then set map to image else set bg of room to image
         // When time is available: refactor to hashmap
         switch (roomName){
+            case "prelude":
+                imagePath = isMap ? "/images/vrset.jpg" : "/images/vrset.jpg";
+                break;
             case "dock":
                 // show dock image
+                imagePath = isMap ? "/images/map/VisitDock/DockMap.jpg" : "/images/dock.jpg";
+                break;
+            case "sign":
                 imagePath = isMap ? "/images/map/VisitDock/DockMap.jpg" : "/images/dock.jpg";
                 break;
             case "beach":
@@ -163,8 +169,15 @@ public class SetUp {
     public void miniGame(){
         createPanelScene("miniGame");}
 
+    public void prelude(){
+        createPanelScene("prelude");
+    }
+
     public void dock() {
         createPanelScene("dock");
+    }
+    public void sign(){
+        createPanelScene("sign");
     }
     public void beach() {
         createPanelScene("beach");

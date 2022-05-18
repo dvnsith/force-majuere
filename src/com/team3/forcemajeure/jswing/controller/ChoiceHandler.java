@@ -25,16 +25,34 @@ public class ChoiceHandler implements ActionListener {
         String yourChoice = event.getActionCommand();
 
         switch (gameFrame.position) {
+            case "prelude":
+                switch (yourChoice) {
+                    case "c2":
+                        setUp.dock();
+                        break;
+                }
+                break;
             case "dock":
                 switch (yourChoice) {
                     case "c1":
                         setUp.beach();
+                        break;
+                    case "c2":
+                        setUp.sign();
                         break;
                     case "c4":
                         gameFrame.showMap("dock");
                         break;
                 }
                 break;
+            case "sign":
+                switch(yourChoice){
+                    case "c2":
+                        setUp.dock();
+                        break;
+                    case "c4":
+                        gameFrame.showMap("dock");
+                }
             case "map":
                 switch (yourChoice){
                     case "c4": gameFrame.setTexts(gameFrame.getCurrentRoom(), gameFrame.getMainText(), gameFrame.getFirstChoice(),gameFrame.getSecondChoice(), gameFrame.getThirdChoice(), gameFrame.getFourthChoice());// get previous method of scene

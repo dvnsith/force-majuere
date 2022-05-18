@@ -1,24 +1,35 @@
 {
   "prelude": {
-    "pos": "You place the ",
+    "pos": "prelude",
     "id": "00",
     "npc": "false",
-    "main": "y",
-    "c1": "wait, what?",
-    "c2": "c2",
-    "c3": "c3",
-    "c4":  "c4"
+    "maintext": "So you've arrived. At your final test. You cannot believe it, a year ago you were working multiple jobs from dishwasher to line cook... and now you're here. The culmination of your work thus far. You take a deep breath and put on the headset.",
+    "c1": "",
+    "c2": "Start Simulation",
+    "c3": "",
+    "c4":  ""
   },
 
   "dock": {
     "pos": "dock",
     "id": "01",
     "npc": "false",
-    "maintext": "You are standing on a dock that outlooks a crystal-blue sea. You see a sign. You hear a familiar voice.",
+    "maintext": "You are standing on a dock that outlooks a crystal-blue sea. You see a sign in your periphery. ",
     "c1": "Check out the Beach",
-    "c2": "",
+    "c2": "Read the Sign",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
+  },
+
+  "sign": {
+    "pos": "sign",
+    "id": "13",
+    "npc": "false",
+    "maintext": "You Read the Sign.",
+    "c1": "",
+    "c2": "Return to the Dock",
+    "c3": "",
+    "c4":"Show Map"
   },
 
   "beach": {
@@ -29,7 +40,7 @@
     "c1": "Go to the Resort Lobby",
     "c2": "Go to the Dock",
     "c3": "Talk to Rennie",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
 
   "lobby": {
@@ -40,7 +51,7 @@
     "c1": "Go to the Hall",
     "c2": "Go to the Beach",
     "c3": "Investigate Voice",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
 
   "hall": {
@@ -51,7 +62,7 @@
     "c1": "Go to the Italian Restaurant",
     "c2": "Go to the Game Floor",
     "c3": "Go to the Lobby",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
 
   "restaurant": {
@@ -62,7 +73,7 @@
     "c1": "Investigate the issue",
     "c2": "Go to the Game Floor",
     "c3": "Go to the Hall",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
 
   "gameFloor":  {
@@ -73,7 +84,7 @@
     "c1": "Check out the Black Jack tables",
     "c2": "Go to the Theater",
     "c3": "Go to the Restaurant",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
   "theater":  {
     "pos": "theater",
@@ -83,7 +94,7 @@
     "c1": "Investigate the issue",
     "c2": "",
     "c3": "",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
   "rennie": {
     "pos": "rennie",
@@ -93,7 +104,7 @@
     "c1": "No, Go Explore More",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "nelly": {
     "pos": "nelly",
@@ -103,7 +114,7 @@
     "c1": "I want to explore some more! (Go back to Lobby)",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "karl": {
     "pos": "karl",
@@ -113,7 +124,7 @@
     "c1": "I can't help a brother out right now.",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "jay": {
     "pos": "jay",
@@ -123,7 +134,7 @@
     "c1": "I'm not ready to play a solo, right now. Explore more",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "chad": {
     "pos": "chad",
@@ -133,7 +144,7 @@
     "c1": "After that? I need to step away and explore more.",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   }
 
 }

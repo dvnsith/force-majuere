@@ -315,6 +315,7 @@ public class GameFrame {
         choice1.setVisible(true);
         choice2.setVisible(true);
         choice3.setVisible(true);
+        choice4.setVisible(true);
         mapLabel.setVisible(false);
         imageBgLabel.setVisible(true);
         position = pos;
@@ -322,8 +323,17 @@ public class GameFrame {
         //if room is null then set bgImage to dock else
         //get bg of image based on room
         if(getPreviousRoom() == null){
-            gameBgImage = setUp.setImage("dock", false);
-            setPreviousRoom("dock");
+            gameBgImage = setUp.setImage("prelude", false);
+            setPreviousRoom("prelude");
+            choice2.setBackground(darkTeal);
+            choice2.setForeground(skyBlue);
+            choice2.setFont(choiceFont);
+            choice2.setActionCommand("c2");
+            choice1.setVisible(false);
+            choice2.setVisible(true);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
+            mapLabel.setVisible(false);
 
         } else {
             gameBgImage = setUp.setImage(pos, false);
