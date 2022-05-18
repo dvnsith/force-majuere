@@ -1,6 +1,6 @@
 //package com.team3.forcemajeure;
 //
-//import com.team3.forcemajeure.jswing.GameFrame;
+//import com.team3.forcemajeure.jswing.model.GameFrame;
 //import com.team3.forcemajeure.util.Audio;
 //import com.team3.forcemajeure.util.Data;
 //import com.team3.forcemajeure.util.TextParser;
