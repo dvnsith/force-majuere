@@ -22,7 +22,7 @@ public class Data {
     private static Map<String, String> textMap;
     private static Map<String, Room> roomMap;
     public static Map<String, Endings> endingMap;
-    public static Map<String, NPC> npcMap;
+//    public static Map<String, NPC> npcMap;
     public static Inventory inventory;
     public static final String[] TEXT_FILE_NAMES =
             new String[] {"help", "intro", "mainMenu", "playerMap"};
@@ -32,12 +32,12 @@ public class Data {
     static {
         textMap = new HashMap<>();
         roomMap = new HashMap<>();
-        npcMap = new HashMap<>();
+//        npcMap = new HashMap<>();
         endingMap = new HashMap<>();
         inventory = new Inventory("map");
 
         loadRoomMap();
-        loadNPCMap();
+//        loadNPCMap();
         loadTextMap();
         loadEndingsMap();
         loadInventory();
@@ -98,32 +98,32 @@ public class Data {
         }
     }
 
-    public static void loadNPCMap() {
-        Type type = new TypeToken<Map<String, NPC>>() {}.getType();
-        InputStream inputStream;
-        Reader reader;
-
-        if (directoryExists("saved")) {
-            String userDir = System.getProperty("user.dir") + File.separator;
-            File rooms = new File(userDir + "saved/npcs.json");
-
-            try {
-                inputStream = new FileInputStream(rooms);
-                reader = new InputStreamReader(new BufferedInputStream(inputStream));
-                setNpcMap(gson.fromJson(reader, type));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                inputStream = getClassLoader().getResourceAsStream("data/npcs.json");
-                reader = new InputStreamReader(Objects.requireNonNull(inputStream));
-                setNpcMap(gson.fromJson(reader, type));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    public static void loadNPCMap() {
+//        Type type = new TypeToken<Map<String, NPC>>() {}.getType();
+//        InputStream inputStream;
+//        Reader reader;
+//
+//        if (directoryExists("saved")) {
+//            String userDir = System.getProperty("user.dir") + File.separator;
+//            File rooms = new File(userDir + "saved/npcs.json");
+//
+//            try {
+//                inputStream = new FileInputStream(rooms);
+//                reader = new InputStreamReader(new BufferedInputStream(inputStream));
+//                setNpcMap(gson.fromJson(reader, type));
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            try {
+//                inputStream = getClassLoader().getResourceAsStream("data/npcs.json");
+//                reader = new InputStreamReader(Objects.requireNonNull(inputStream));
+//                setNpcMap(gson.fromJson(reader, type));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     //  Endings map never changes, so load from resources
     public static void loadEndingsMap() {
@@ -172,18 +172,18 @@ public class Data {
             createDirectory("saved");
         }
         saveRoomMap();
-        saveNpcMap();
+//        saveNpcMap();
         saveInventory();
     }
 
     private static void saveRoomMap() {
         convertMapToJsonAndSaveToDir(roomMap, "saved/rooms.json");
     }
+//
+//    private static void saveNpcMap() {
+//        convertMapToJsonAndSaveToDir(npcMap, "saved/npcs.json");
+//    }
 
-    private static void saveNpcMap() {
-        convertMapToJsonAndSaveToDir(npcMap, "saved/npcs.json");
-    }
-    
     private static void saveInventory() {
         convertInventoryToJsonAndSaveToDir(getInventory(), "saved/inventory.json");
     }
@@ -204,13 +204,13 @@ public class Data {
         Data.roomMap = roomMap;
     }
 
-    public static Map<String, NPC> getNpcMap() {
-        return npcMap;
-    }
+//    public static Map<String, NPC> getNpcMap() {
+//        return npcMap;
+//    }
 
-    public static void setNpcMap(Map<String, NPC> npcMap) {
-        Data.npcMap = npcMap;
-    }
+//    public static void setNpcMap(Map<String, NPC> npcMap) {
+//        Data.npcMap = npcMap;
+//    }
 
     public static Map<String, Endings> getEndingMap() {
         return endingMap;
