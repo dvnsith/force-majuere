@@ -34,12 +34,12 @@ public class GameFrame {
     private TitleScreenHandler tsHandler = new TitleScreenHandler(this);
     private SetUp setUp = new SetUp(this);
     private Boolean blackjackPlayed = false;
-    Color bg = Color.black;
-    Color skyBlue = new Color(177, 251, 244);
-    Color darkTeal = new Color(15, 56, 67);
-    Color mintGreen = new Color(46, 226, 109);
-    Color seaGreen = new Color(12, 168, 153);
-    Color goldenRod = new Color(195, 178, 70);
+    private Color bg = Color.black;
+    private Color skyBlue = new Color(177, 251, 244);
+    private Color darkTeal = new Color(15, 56, 67);
+    private Color mintGreen = new Color(46, 226, 109);
+    private Color seaGreen = new Color(12, 168, 153);
+    private Color goldenRod = new Color(195, 178, 70);
 
 
     // Ctor - creates the frame for the game
