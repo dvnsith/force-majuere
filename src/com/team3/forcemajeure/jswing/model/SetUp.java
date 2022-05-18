@@ -12,14 +12,14 @@ public class SetUp {
     private final BlackJackGame blackJackGame;
     private JSONObject jsonObject;
 
-    //Ctor
+    // Ctor
     public SetUp(GameFrame view){
         gameFrame = view;
         magicGame = new MagicGame(view);
         blackJackGame = new BlackJackGame(view);
     }
 
-    //Accessor
+    // accessor methods
     public JSONObject getJsonObject() {
         return jsonObject;
     }
@@ -28,8 +28,7 @@ public class SetUp {
         this.jsonObject = jsonObject;
     }
 
-
-    //Business Methods
+    // Business Methods
     /* create player's data */
     public void playerSetup() {
         gameFrame.inventory.add("Map");
@@ -94,8 +93,6 @@ public class SetUp {
         return anImage;
     }
 
-
-
     /* pulls the JSON data and creates a panel based on room location */
     public void createPanelScene(String pos){
 
@@ -123,7 +120,6 @@ public class SetUp {
             }
             break;
         }
-
     }
 
     public void talkInstructor(String position) {
@@ -182,8 +178,5 @@ public class SetUp {
         //show bgImage of closing scene and show scoreboard when leaving the island
         System.out.println("Here is the scoreboard");
     }
-
-
-
 
 }
