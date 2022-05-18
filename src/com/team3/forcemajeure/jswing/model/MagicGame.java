@@ -27,14 +27,13 @@ public class MagicGame {
         this.skips = skips;
     }
 
-
     // Business methods
     public void magicQuizAsk() {
         if (!getMagicQuizDone()) {
             game.setTexts("magicQuizAsk", "Hello " + game.getPlayer() + ", would you like to answer some questions? ", "Sure!", "No Thanks", "", "");
             game.choice3.setVisible(false);
-            game.choice4.setVisible(false);}
-
+            game.choice4.setVisible(false);
+        }
         else if (getMagicQuizDone()) {
             game.setTexts("magicQuizAsk", "It seems like you've already answered my questions. Head to another person to chat", "", "Return to Theater", "", "");
             game.choice1.setVisible(false);
