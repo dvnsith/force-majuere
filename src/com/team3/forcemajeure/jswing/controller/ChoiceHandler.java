@@ -11,7 +11,7 @@ public class ChoiceHandler implements ActionListener {
     private final BlackJackGame blackJackGame;
     private final SetUp setUp;
 
-    //Ctor
+    // Ctor
     public ChoiceHandler(GameFrame view) {
         gameFrame = view;
         magicGame = new MagicGame(view);
@@ -19,7 +19,7 @@ public class ChoiceHandler implements ActionListener {
         setUp = new SetUp(view);
     }
 
-    //Business methods
+    // Business methods
     public void actionPerformed(ActionEvent event) {
 
         String yourChoice = event.getActionCommand();
@@ -233,9 +233,7 @@ public class ChoiceHandler implements ActionListener {
                         break;
                     case "c2":
                         //if beaten 21
-                        if(gameFrame.getBlackjackPlayed().equals(true)){
-                            magicGame.magicQuizAsk();
-                        }
+                        magicGame.magicQuizAsk();
                         break;
                     case "c4":
                         gameFrame.showMap("theater");
@@ -254,7 +252,7 @@ public class ChoiceHandler implements ActionListener {
                 break;
             case "magicQuestionOne":
                 switch (yourChoice) {
-                    case "c1": case "c3": case "c4":
+                    case "c1": case "c3":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionTwo();
                         break;
@@ -262,17 +260,24 @@ public class ChoiceHandler implements ActionListener {
                         magicGame.correctAnswerEasy();
                         magicGame.magicQuestionTwo();
                         break;
-
+                    case "c4":
+                        magicGame.skipQuestion();
+                        magicGame.magicQuestionTwo();
+                        break;
                 }
                 break;
             case "magicQuestionTwo":
                 switch (yourChoice) {
-                    case "c1": case "c2": case "c3":
+                    case "c1": case "c3":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionThree();
                         break;
-                    case "c4":
+                    case "c2":
                         magicGame.correctAnswerEasy();
+                        magicGame.magicQuestionThree();
+                        break;
+                    case "c4":
+                        magicGame.skipQuestion();
                         magicGame.magicQuestionThree();
                         break;
                 }
@@ -283,35 +288,46 @@ public class ChoiceHandler implements ActionListener {
                         magicGame.correctAnswerEasy();
                         magicGame.magicQuestionFour();
                         break;
-                    case "c2": case "c3": case "c4":
+                    case "c2": case "c3":
                         magicGame.wrongAnswer();
+                        magicGame.magicQuestionFour();
+                        break;
+                    case "c4":
+                        magicGame.skipQuestion();
                         magicGame.magicQuestionFour();
                         break;
                 }
                 break;
             case "magicQuestionFour":
                 switch (yourChoice) {
-                    case "c1": case "c3": case "c4":
+                    case "c1": case "c3":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionFive();
                         break;
                     case "c2":
-                        magicGame.correctAnswerEasy();
+                        magicGame.correctAnswerHard();
+                        magicGame.magicQuestionFive();
+                        break;
+                    case "c4":
+                        magicGame.skipQuestion();
                         magicGame.magicQuestionFive();
                         break;
                 }
                 break;
             case "magicQuestionFive":
                 switch (yourChoice) {
-                    case "c1": case "c2": case "c4":
+                    case "c1": case "c2":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionEnd();
                         break;
                     case "c3":
-                        magicGame.correctAnswerEasy();
+                        magicGame.correctAnswerHard();
                         magicGame.magicQuestionEnd();
                         break;
-
+                    case "c4":
+                        magicGame.skipQuestion();
+                        magicGame.magicQuestionEnd();
+                        break;
                 }
                 break;
             case "magicQuestionEnd":
@@ -327,6 +343,7 @@ public class ChoiceHandler implements ActionListener {
                         setUp.scoreBoard();
                         break;
                 }
+                break;
         }
     }
 }

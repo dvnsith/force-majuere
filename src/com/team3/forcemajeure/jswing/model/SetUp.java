@@ -3,20 +3,20 @@ package com.team3.forcemajeure.jswing.model;
 import com.team3.forcemajeure.util.ReadFile;
 import org.json.simple.JSONObject;
 import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
 import java.util.HashMap;
 
 public class SetUp {
     private final GameFrame gameFrame;
     private final ReadFile readFile = new ReadFile();
     private final MagicGame magicGame;
-    private final BlackJackGame blackJackGame;
     private JSONObject jsonObject;
 
     // Ctor
     public SetUp(GameFrame view){
         gameFrame = view;
         magicGame = new MagicGame(view);
-        blackJackGame = new BlackJackGame(view);
     }
 
     // accessor methods
@@ -41,37 +41,37 @@ public class SetUp {
 
     /* create image for game background and map */
     public ImageIcon setImage(String roomName, boolean isMap){
-        ImageIcon anImage = new ImageIcon();
+        String imagePath;
         //isMap then set map to image else set bg of room to image
         // When time is available: refactor to hashmap
         switch (roomName){
             case "dock":
                 // show dock image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/DockMap.jpg") : new ImageIcon("resources/images/dock.jpg") ;
+                imagePath = isMap ? "/images/map/VisitDock/DockMap.jpg" : "/images/dock.jpg";
                 break;
             case "beach":
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/BeachMap.jpg") : new ImageIcon("resources/images/beach.jpg");
+                imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/beach.jpg";
                 break;
             case "rennie":
                 // show talkInstructor image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/BeachMap.jpg") : new ImageIcon("resources/images/rennie.jpg");
+                imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/rennie.jpg";
                 break;
             case "lobby":
                 // show lobby image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/LobbyMap.jpg") : new ImageIcon("resources/images/lobby.jpg");
+                imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/lobby.jpg";
                 break;
             case "nelly":
                 // show talkInstructor image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/LobbyMap.jpg") : new ImageIcon("resources/images/nelly.jpg");
+                imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/nelly.jpg";
                 break;
             case "hall":
                 // show hall image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/HallMap.png") : new ImageIcon("resources/images/hall.jpg");
+                imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/hall.jpg";
                 break;
             case "restaurant":
             case "karl":
                 // show restaurant image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/RestaurantMap.png") : new ImageIcon("resources/images/restaurant.jpg");
+                imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.png" : "/images/restaurant.jpg";
                 break;
             case "gameFloor":
             case "jay":
@@ -79,18 +79,35 @@ public class SetUp {
             case "blackjackfirsthand":
             case "blackjackstart":
                 // show theater image
-                anImage = isMap ? new ImageIcon("resources/images/map/VisitDock/GameFloorMap.jpg") :  new ImageIcon("resources/images/casinofloor.jpg");
+                imagePath = isMap ? "/images/map/VisitDock/GameFloorMap.jpg" : "/images/casinofloor.jpg";
                 break;
             case "theater":
                 // show theater image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/TheaterMap.jpg") : new ImageIcon("resources/images/theaterstage.jpg");
+                imagePath = isMap ? "/images/map/VisitDock/TheaterMap.jpg" : "/images/theaterstage.jpg";
                 break;
             case "chad":
+            case "magicQuizAsk":
+            case "magicQuestionOne":
+            case "magicQuestionTwo":
+            case "magicQuestionThree":
+            case "magicQuestionFour":
+            case "magicQuestionFive":
+            case "magicQuestionEnd":
                 // show theater image
-                anImage =  isMap ? new ImageIcon("resources/images/map/VisitDock/TheaterMap.jpg") : new ImageIcon("resources/images/chad.jpg");
+                imagePath = isMap ? "/images/map/VisitDock/TheaterMap.jpg" : "/images/chad.jpg";
+                break;
+            case "ending":
+                // show theater image
+                imagePath = isMap ? "/images/map/VisitDock/TheaterMap.jpg" : "/images/rennie.jpg";
+                break;
+            default:
+                imagePath = ("Unexpected value: " + roomName);
                 break;
         }
-        return anImage;
+        // load image to retrieve path in resources directory
+        URL imageUrl = getClass().getResource(imagePath);
+        Image bgImage = Toolkit.getDefaultToolkit().getImage(imageUrl);
+        return new ImageIcon(bgImage);
     }
 
     /* pulls the JSON data and creates a panel based on room location */
@@ -114,6 +131,7 @@ public class SetUp {
                     }
                     if(pos.matches("theater") && gameFrame.getBlackjackPlayed().equals(true)){
                         choiceTwo = "Talk to Magician Chad";
+                        System.out.println("Blackjack played: " + gameFrame.getBlackjackPlayed());
                     }
                     gameFrame.setTexts(pos,mainTxt,gameMap.get("c1"),choiceTwo,choiceThree,gameMap.get("c4"));/* set valuue of room here*/
                 }
