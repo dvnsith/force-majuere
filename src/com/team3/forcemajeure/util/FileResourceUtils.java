@@ -2,7 +2,7 @@ package com.team3.forcemajeure.util;
 
 import com.google.gson.Gson;
 
-import com.team3.forcemajeure.Main;
+import com.team3.forcemajeure.jswing.view.Main;
 
 import java.io.*;
 import java.net.URISyntaxException;
