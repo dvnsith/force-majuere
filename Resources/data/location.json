@@ -110,7 +110,7 @@
     "id": "10",
     "inventory": "spaghetti",
     "maintext": "Momma Mia! I have no idea what happened, at one moment we were able to get these tickets in and now, it looks like somethings wrong! Can you help?",
-    "c1": "I can't help a brother out right now. Explore more",
+    "c1": "I can't help a brother out right now.",
     "c2": "Start Challenge",
     "c3": "",
     "c4": "See Map"
