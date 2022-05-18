@@ -87,7 +87,6 @@ public class BlackJackGame {
     public void checkCards() {
         if (getPlayerHand() > getDealerHand()) {
             gameFrame.setBlackjackPlayed(true);
-            setBlackjackPlayed(true);
             gameFrame.setPlayerPT(gameFrame.getPlayerPT() + 3);
             gameFrame.ptLabelNumber.setText("" + gameFrame.getPlayerPT());
             gameFrame.setTexts("checkcards", "Dealers Hand : " + getDealerHand() +" \n It's your lucky day! You get 3 points", "Return to Game Floor", "", "", "");
