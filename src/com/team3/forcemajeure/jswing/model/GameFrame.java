@@ -16,8 +16,11 @@ public class GameFrame {
     private JPanel menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
     public JLabel inventoryLabel, inventoryLabelName,ptLabelNumber,skipLabel;
     private JLabel userNameLabel, titleNameLabel, ptLabel;
-    private Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
-    private Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
+    private Font titleFont = new Font("Impact", Font.PLAIN, 80);
+    private Font menuBarFont = new Font("Impact", Font.PLAIN, 20);
+    private Font choiceFont = new Font("Impact", Font.PLAIN, 16);
+    private Font narrativeFont = new Font("Impact", Font.PLAIN, 22);
+    private Font smallFont = new Font("Impact", Font.PLAIN, 16);
     public JButton soundButton, startButton, choice1, choice2, choice3, choice4;
     private JTextArea mainTextArea;
     private int playerPT;
@@ -91,14 +94,15 @@ public class GameFrame {
         startButtonPanel.setBackground(seaGreen);
 
         startButton = new JButton("START");
-        startButton.setBackground(goldenRod);
-        startButton.setForeground(seaGreen);
-        startButton.setFont(normalFont);
+        startButton.setBackground(darkTeal);
+        startButton.setForeground(skyBlue);
+        startButton.setFont(choiceFont);
         startButton.addActionListener(tsHandler);
         startButton.setFocusPainted(false);
 
         userNameLabel = new JLabel("Enter username");
-        userNameLabel.setForeground(skyBlue);
+        userNameLabel.setForeground(goldenRod);
+        userNameLabel.setFont(menuBarFont);
         JTextField textField = new JTextField();
         textField.setPreferredSize(new Dimension(200,40));
         startButton.addActionListener(e -> {
@@ -220,14 +224,14 @@ public class GameFrame {
 
         mainTextPanel = new JPanel();
         mainTextPanel.setBounds(220, 75, 600, 425);
-        mainTextPanel.setBackground(Color.black);
+        mainTextPanel.setBackground(seaGreen);
         con.add(mainTextPanel);
         mainTextArea = new JTextArea(
                 "Oops...the text is not showing.");
         mainTextArea.setBounds(225, 500, 500, 300);
         mainTextArea.setBackground(seaGreen);
         mainTextArea.setForeground(darkTeal);
-        mainTextArea.setFont(normalFont);
+        mainTextArea.setFont(narrativeFont);
         mainTextArea.setLineWrap(true);
         mainTextArea.setWrapStyleWord(true);
         mainTextArea.setEditable(false);
@@ -242,7 +246,7 @@ public class GameFrame {
         choice1 = new JButton("Choice 1");
         choice1.setBackground(darkTeal);
         choice1.setForeground(skyBlue);
-        choice1.setFont(normalFont);
+        choice1.setFont(choiceFont);
         choice1.setFocusPainted(false);
         choice1.addActionListener(choiceHandler);
         choice1.setActionCommand("c1");
@@ -250,7 +254,7 @@ public class GameFrame {
         choice2 = new JButton("Choice 2");
         choice2.setBackground(darkTeal);
         choice2.setForeground(skyBlue);
-        choice2.setFont(normalFont);
+        choice2.setFont(choiceFont);
         choice2.setFocusPainted(false);
         choice2.addActionListener(choiceHandler);
         choice2.setActionCommand("c2");
@@ -258,7 +262,7 @@ public class GameFrame {
         choice3 = new JButton("Choice 3");
         choice3.setBackground(darkTeal);
         choice3.setForeground(skyBlue);
-        choice3.setFont(normalFont);
+        choice3.setFont(choiceFont);
         choice3.setFocusPainted(false);
         choice3.addActionListener(choiceHandler);
         choice3.setActionCommand("c3");
@@ -266,7 +270,7 @@ public class GameFrame {
         choice4 = new JButton("Choice 4");
         choice4.setBackground(darkTeal);
         choice4.setForeground(skyBlue);
-        choice4.setFont(normalFont);
+        choice4.setFont(choiceFont);
         choice4.setFocusPainted(false);
         choice4.addActionListener(choiceHandler);
         choice4.setActionCommand("c4");
@@ -278,24 +282,24 @@ public class GameFrame {
         playerPanel.setLayout(new GridLayout(1, 4));
         con.add(playerPanel);
         ptLabel = new JLabel("Points:");
-        ptLabel.setFont(normalFont);
+        ptLabel.setFont(menuBarFont);
         ptLabel.setForeground(skyBlue);
         playerPanel.add(ptLabel);
         ptLabelNumber = new JLabel();
-        ptLabelNumber.setFont(normalFont);
+        ptLabelNumber.setFont(menuBarFont);
         ptLabelNumber.setForeground(skyBlue);
         playerPanel.add(ptLabelNumber);
         inventoryLabel = new JLabel("Inventory:");
-        inventoryLabel.setFont(normalFont);
+        inventoryLabel.setFont(menuBarFont);
         inventoryLabel.setForeground(skyBlue);
         inventoryLabel.setBackground(darkTeal);
         playerPanel.add(inventoryLabel);
         inventoryLabelName = new JLabel();
-        inventoryLabelName.setFont(normalFont);
+        inventoryLabelName.setFont(menuBarFont);
         inventoryLabelName.setForeground(skyBlue);
         playerPanel.add(inventoryLabelName);
         skipLabel = new JLabel();
-        skipLabel.setFont(normalFont);
+        skipLabel.setFont(menuBarFont);
         skipLabel.setForeground(skyBlue);
         playerPanel.add(skipLabel);
         setUp.playerSetup();
