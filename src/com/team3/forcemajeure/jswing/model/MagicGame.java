@@ -1,7 +1,7 @@
 package com.team3.forcemajeure.jswing.model;
 
 public class MagicGame {
-    public final GameFrame game;
+    private final GameFrame game;
     private Boolean magicQuizDone = false;
     private int skips = 3;
 

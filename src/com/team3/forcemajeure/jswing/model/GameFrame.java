@@ -1,8 +1,6 @@
 package com.team3.forcemajeure.jswing.model;
 
-
-import com.team3.forcemajeure.jswing.controller.ChoiceHandler;
-import com.team3.forcemajeure.jswing.controller.TitleScreenHandler;
+import com.team3.forcemajeure.jswing.controller.*;
 import com.team3.forcemajeure.util.SoundPlayer;
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +8,7 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class GameFrame {
-
+    private static final GameFrame INSTANCE = new GameFrame();
     private JFrame window;
     private Container con;
     private JPanel menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
@@ -43,7 +41,7 @@ public class GameFrame {
 
 
     // Ctor - creates the frame for the game
-    public GameFrame() {
+    private GameFrame() {
         window = new JFrame();
         window.setSize(1000, 800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -122,6 +120,9 @@ public class GameFrame {
         window.setVisible(true);
     }
 
+    public static GameFrame getInstance() {
+        return INSTANCE;
+    }
     //Accessor
     public String getPlayer() {
         return player;
@@ -299,7 +300,6 @@ public class GameFrame {
         skipLabel.setForeground(skyBlue);
         playerPanel.add(skipLabel);
         setUp.playerSetup();
-
 
     }
 

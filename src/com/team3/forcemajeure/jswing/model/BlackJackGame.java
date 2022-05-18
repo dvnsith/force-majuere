@@ -14,7 +14,7 @@ public class BlackJackGame {
         gameFrame = view;
     }
 
-    //accessor method
+    // accessor methods
     public int getDealerHand() {
         return dealerHand;
     }
