@@ -9,13 +9,14 @@ public class SetUp {
     private final GameFrame gameFrame;
     private final ReadFile readFile = new ReadFile();
     private final MagicGame magicGame;
-
+    private final BlackJackGame blackJackGame;
     private JSONObject jsonObject;
+
     //Ctor
     public SetUp(GameFrame view){
         gameFrame = view;
         magicGame = new MagicGame(view);
-
+        blackJackGame = new BlackJackGame(view);
     }
 
     //Accessor
@@ -101,18 +102,23 @@ public class SetUp {
         while(true){
             setJsonObject(readFile.retrieveJson("data/location.json"));
             HashMap<String, String> gameMap = (HashMap<String, String>) getJsonObject().get(pos);
-            String choiceThree = gameMap.get("c3");
+            String choiceTwo, choiceThree;
+
             for(Object room : getJsonObject().keySet()){
                 if(room.toString().equals(pos)){
                     String mainTxt = gameMap.get("maintext");
+                    choiceTwo = gameMap.get("c2");
                     choiceThree = gameMap.get("c3");
                     if(pos.matches("rennie")){
                         mainTxt = gameFrame.getPlayer() + gameMap.get("maintext");
                         if(gameFrame.inventory.contains("Key")){
-                            choiceThree = "leave this B";
+                            choiceThree = "leave this island";
                         }
                     }
-                    gameFrame.setTexts(pos,mainTxt,gameMap.get("c1"),gameMap.get("c2"),choiceThree,gameMap.get("c4"));/* set valuue of room here*/
+                    if(pos.matches("theater") && gameFrame.getBlackjackPlayed().equals(true)){
+                        choiceTwo = "Talk to Magician Chad";
+                    }
+                    gameFrame.setTexts(pos,mainTxt,gameMap.get("c1"),choiceTwo,choiceThree,gameMap.get("c4"));/* set valuue of room here*/
                 }
             }
             break;
@@ -168,7 +174,8 @@ public class SetUp {
 
     public void ending() {
         //if points greater than X amount then show ending
-        gameFrame.setTexts("ending", "YOOOOO do you have the key?", "leave the island", "", "","");
+        gameFrame.setTexts("ending", "You unlock the boat with the key and the screen pixelates to black. As you take your VR goggles off, you're feeling exhausted from the challenges. Inside you feel a huge sense of accomplishment in your spirit. \n" +
+                "You feel ready for whatever challenges may come across your journey as an SDE as you remember your training. ", "Leave the Island", "", "","");
     }
 
     public void scoreBoard(){

@@ -52,8 +52,6 @@ public class ChoiceHandler implements ActionListener {
                     case "c3":
                         if(gameFrame.inventory.contains("Key")){
                             setUp.ending();
-                        } else {
-                            gameFrame.choice3.setContentAreaFilled(false);
                         }
                         break;
                     case "c4":
@@ -101,13 +99,11 @@ public class ChoiceHandler implements ActionListener {
                     case "c2":
                         setUp.miniGame();
                         break;
-                    case "c3":
-                        if(gameFrame.inventory.contains("Key")){
-                            setUp.ending();
-                        } else {
-                            gameFrame.choice3.setContentAreaFilled(false);
-                        }
-                        break;
+//                    case "c3":
+//                        if(gameFrame.inventory.contains("Key")){
+//                            setUp.ending();
+//                        }
+//                        break;
                     case "c4":
                         gameFrame.showMap("lobby");
                         break;
@@ -221,10 +217,28 @@ public class ChoiceHandler implements ActionListener {
                     case "c1":
                         setUp.gameFloor();
                         break;
-                    case "c2": //if beaten 21
-                        magicGame.magicQuizAsk();
+                    case "c2":
+                        if (gameFrame.getBlackjackPlayed().equals(true)){
+                            setUp.talkInstructor("chad");
+                        }
                         break;
                     case "c4": gameFrame.showMap("theater");
+                        break;
+                }
+                break;
+            case "chad":
+                switch (yourChoice){
+                    case "c1":
+                        setUp.theater();
+                        break;
+                    case "c2":
+                        //if beaten 21
+                        if(gameFrame.getBlackjackPlayed().equals(true)){
+                            magicGame.magicQuizAsk();
+                        }
+                        break;
+                    case "c4":
+                        gameFrame.showMap("theater");
                         break;
                 }
                 break;

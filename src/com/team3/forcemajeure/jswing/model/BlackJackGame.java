@@ -8,7 +8,14 @@ public class BlackJackGame {
     private int playerHand = 0;
     private int card = 0;
     private int losses = 0;
+    private Boolean blackjackPlayed = true;
 
+    // ctor
+    public BlackJackGame(GameFrame view){
+        gameFrame = view;
+    }
+
+    //accessor method
     public int getDealerHand() {
         return dealerHand;
     }
@@ -33,10 +40,14 @@ public class BlackJackGame {
         this.losses = losses;
     }
 
-
-    public BlackJackGame(GameFrame view){
-        gameFrame = view;
+    public Boolean getBlackjackPlayed() {
+        return blackjackPlayed;
     }
+
+    public void setBlackjackPlayed(Boolean blackjackPlayed) {
+        this.blackjackPlayed = blackjackPlayed;
+    }
+
 
 
     public void blackJackStart() {
@@ -85,6 +96,8 @@ public class BlackJackGame {
 
     public void checkCards() {
         if (getPlayerHand() > getDealerHand()) {
+            gameFrame.setBlackjackPlayed(true);
+            setBlackjackPlayed(true);
             gameFrame.setPlayerPT(gameFrame.getPlayerPT() + 3);
             gameFrame.ptLabelNumber.setText("" + gameFrame.getPlayerPT());
             gameFrame.setTexts("checkcards", "Dealers Hand : " + getDealerHand() +" \n It's your lucky day! You get 3 points", "Return to Game Floor", "", "", "");
@@ -100,7 +113,7 @@ public class BlackJackGame {
             gameFrame.choice2.setVisible(false);
             gameFrame.choice3.setVisible(false);
             gameFrame.choice4.setVisible(false);
-        } else if (getPlayerHand() == getDealerHand()) {
+        } else {
             gameFrame.setTexts("checkcards", "Dealers Hand : " + getDealerHand() + "\n Didn't they tell you? The House always wins. We won't take any points off though.", "Return to Game Floor", "", "", "");
         }
     }

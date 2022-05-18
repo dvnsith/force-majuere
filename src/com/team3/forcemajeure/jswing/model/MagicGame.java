@@ -4,6 +4,7 @@ public class MagicGame {
     public final GameFrame game;
     private Boolean magicQuizDone = false;
     private int skips = 3;
+
     // Ctor
     public MagicGame(GameFrame view){
         game = view;
@@ -31,64 +32,76 @@ public class MagicGame {
     public void magicQuizAsk() {
         if (!getMagicQuizDone()) {
             game.setTexts("magicQuizAsk", "Hello " + game.getPlayer() + ", would you like to answer some questions? ", "Sure!", "No Thanks", "", "");
-        }
+            game.choice3.setVisible(false);
+            game.choice4.setVisible(false);}
 
         else if (getMagicQuizDone()) {
             game.setTexts("magicQuizAsk", "It seems like you've already answered my questions. Head to another person to chat", "", "Return to Theater", "", "");
-        }
+            game.choice1.setVisible(false);
+            game.choice3.setVisible(false);
+            game.choice4.setVisible(false);
+             }
     }
     // For each question we check to make sure that the player still has some skips left.
     public void magicQuestionOne() {
+        game.choice4.setVisible(true);
         if (getSkips() > 0) {
-            game.setTexts("magicQuestionOne", "Question 1: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "Skip");
+            game.setTexts("magicQuestionOne", "Question 1: Which of the following is the correct extension of the Python file?", ".python", ".py", ".p", "Skip");
         }
         else if (getSkips() >= 3) {
-            game.setTexts("magicQuestionOne", "Question 1: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "");
+            game.setTexts("magicQuestionOne", "Question 1: Which of the following is the correct extension of the Python file?", ".python", ".py", ".p", "");
+
         }
     }
     public void magicQuestionTwo() {
         if (getSkips() > 0) {
-            game.setTexts("magicQuestionTwo", "Question 2: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "Skip");
+            game.setTexts("magicQuestionTwo", "Question 2: Which character is used in Python to make a single line comment?", "//", "#", "!", "Skip");
         }
         else if (getSkips() <= 0) {
-            game.setTexts("magicQuestionTwo", "Question 2: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "");
+            game.setTexts("magicQuestionTwo", "Question 2: Which character is used in Python to make a single line comment?", "//", "#", "!", "");
+
         }
     }
     public void magicQuestionThree() {
         if (getSkips() > 0) {
-            game.setTexts("magicQuestionThree", "Question 3: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "Skip");
+            game.setTexts("magicQuestionThree", "Question 3: Which of the following functions is a built-in function in python language?", "print()", "System.out.println", "val()", "Skip");
+            game.choice4.setVisible(true);
         }
         else if (getSkips() <= 0) {
-            game.setTexts("magicQuestionThree", "Question 3: Which is the correct answer?", "Correct", "Incorrect", "Incorrect", "");
+            game.setTexts("magicQuestionThree", "Question 3: Which of the following functions is a built-in function in python language?", "print()", "System.out.println", "Val()", "");
             game.choice4.setVisible(false);
         }
     }
     public void magicQuestionFour() {
         if (getSkips() > 0) {
-            game.setTexts("magicQuestionFour", "Question 4: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "Skip");
+            game.setTexts("magicQuestionFour", "Question 4: What would be the output of the following function? \nlen([\"hello\",2, 4, 6])", "Error", "4", "3", "Skip");
+            game.choice4.setVisible(true);
         }
         else if (getSkips() <= 0) {
-            game.setTexts("magicQuestionFour", "Question 4: Which is the correct answer?", "Incorrect", "Correct", "Incorrect", "");
+            game.setTexts("magicQuestionFour", "Question 4: What would be the output of the following function? \nlen([\"hello\",2, 4, 6])", "Error", "4", "3", "");
+            game.choice4.setVisible(false);
         }
     }
     public void magicQuestionFive() {
         if (getSkips() > 0) {
-            game.setTexts("magicQuestionFive", "Question 5: Which is the correct answer?", "Incorrect", "Incorrect", "Correct", "Skip");
+            game.setTexts("magicQuestionFive", "Question 5: print(\"abc. DEF\".capitalize())", "Abc. Def", "ABC. DEF", "Abc. def", "Skip");
+            game.choice4.setVisible(true);
         }
         else if (getSkips() <= 0) {
-            game.setTexts("magicQuestionFive", "Question 5: Which is the correct answer?", "Incorrect", "Incorrect", "Correct", "");
+            game.setTexts("magicQuestionFive", "Question 5:  print(\"abc. DEF\".capitalize())", "Abc. Def", "ABC. DEF", "Abc. def", "");
+            game.choice4.setVisible(false);
         }
     }
-        // Evaluating the players score, they need to get past the threshold in order to consider this a win
+    // Evaluating the players score, they need to get past the threshold in order to consider this a win
     public void magicQuestionEnd() {
-        if(game.getPlayerPT() >= 12 ) {
+        if(game.getPlayerPT() >= 10 ) {
             game.inventory.add("Key");
             game.inventoryLabelName.setText(game.inventory.get(0) + ", " + game.inventory.get(1));
-            game.setTexts("magicQuestionEnd","Your total points: " + game.getPlayerPT() + " out of 24 total points, you did well enough to succeed here!","Return to Theater","","","");
+            game.setTexts("magicQuestionEnd","Your total points: " + game.getPlayerPT() + " , you did well enough to succeed here! You've received a key off the island.","Return to Theater","","","");
             setMagicQuizDone(true);
         }
-        else if(game.getPlayerPT() < 12){
-            game.setTexts("magicQuestionEnd","You got " + game.getPlayerPT() + " points. You probably should study up and give this another go, you need to get at least 8 points at the finish.","Return to Theater","","","");
+        else if(game.getPlayerPT() < 10){
+            game.setTexts("magicQuestionEnd","You got " + game.getPlayerPT() + " points. You probably should study up and give this another go, you need to get at least 10 points at the finish.","Return to Theater","","","");
         }
     }
 

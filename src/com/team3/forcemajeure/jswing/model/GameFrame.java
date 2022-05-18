@@ -1,6 +1,6 @@
 package com.team3.forcemajeure.jswing.model;
 
-import com.team3.forcemajeure.jswing.GameFrameOriginal;
+
 import com.team3.forcemajeure.jswing.controller.ChoiceHandler;
 import com.team3.forcemajeure.jswing.controller.TitleScreenHandler;
 import com.team3.forcemajeure.util.SoundPlayer;
@@ -33,12 +33,94 @@ public class GameFrame {
     private ChoiceHandler choiceHandler = new ChoiceHandler(this);
     private TitleScreenHandler tsHandler = new TitleScreenHandler(this);
     private SetUp setUp = new SetUp(this);
+    private Boolean blackjackPlayed = false;
     Color bg = Color.black;
     Color skyBlue = new Color(177, 251, 244);
     Color darkTeal = new Color(15, 56, 67);
     Color mintGreen = new Color(46, 226, 109);
     Color seaGreen = new Color(12, 168, 153);
     Color goldenRod = new Color(195, 178, 70);
+
+
+    // Ctor - creates the frame for the game
+    public GameFrame() {
+        window = new JFrame();
+        window.setSize(1000, 800);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.getContentPane().setBackground(seaGreen);
+        window.setLayout(null);
+        window.setIconImage(logo.getImage());
+        con = window.getContentPane();
+
+        Clip themeSong = sound.play("start",true,0, GameFrame.class);
+        //add sound to game play
+        soundButton = new JButton("🔈 on/off");
+        soundButton.setBackground(darkTeal);
+        soundButton.setForeground(skyBlue);
+        soundButton.setBounds(15,7,50,50);
+        soundButton.addActionListener(e -> {
+            if(isSoundOn()) {
+                System.out.println("Sound Off");
+                setSoundOn(false);
+                themeSong.stop();
+            } else {
+                System.out.println("Sound on");
+                setSoundOn(true);
+                themeSong.start();
+            }
+        });
+
+        menuPanel = new JPanel();
+        menuPanel.setBounds(15,7,200,50);
+        menuPanel.setBackground(seaGreen);
+
+        userNamePanel = new JPanel();
+        userNamePanel.setBounds(350,250,250,125);
+        userNamePanel.setBackground(seaGreen);
+        userNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        titleNamePanel = new JPanel();
+        titleNamePanel.setBounds(175, 100, 600, 150);
+        titleNamePanel.setBackground(seaGreen);
+        titleNameLabel = new JLabel("Force Majeure");
+        titleNameLabel.setForeground(skyBlue);
+        titleNameLabel.setFont(titleFont);
+
+        startButtonPanel = new JPanel();
+        startButtonPanel.setBounds(370, 400, 200, 100);
+        startButtonPanel.setBackground(seaGreen);
+
+        startButton = new JButton("START");
+        startButton.setBackground(goldenRod);
+        startButton.setForeground(seaGreen);
+        startButton.setFont(normalFont);
+        startButton.addActionListener(tsHandler);
+        startButton.setFocusPainted(false);
+
+        userNameLabel = new JLabel("Enter username");
+        userNameLabel.setForeground(skyBlue);
+        JTextField textField = new JTextField();
+        textField.setPreferredSize(new Dimension(200,40));
+        startButton.addActionListener(e -> {
+            if(e.getSource() == startButton){
+                setPlayer(textField.getText());
+
+            }
+        });
+
+        menuPanel.add(soundButton);
+        userNamePanel.add(userNameLabel);
+        userNamePanel.add(textField);
+        titleNamePanel.add(titleNameLabel);
+        startButtonPanel.add(startButton);
+
+        con.add(menuPanel);
+        con.add(userNamePanel);
+        con.add(titleNamePanel);
+        con.add(startButtonPanel);
+
+        window.setVisible(true);
+    }
 
     //Accessor
     public String getPlayer() {
@@ -121,86 +203,13 @@ public class GameFrame {
         this.playerPT = playerPT;
     }
 
-    // Ctor - creates the frame for the game
-    public GameFrame() {
-        window = new JFrame();
-        window.setSize(1000, 800);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.getContentPane().setBackground(seaGreen);
-        window.setLayout(null);
-        window.setIconImage(logo.getImage());
-        con = window.getContentPane();
-
-        Clip themeSong = sound.play("start",true,0, GameFrameOriginal.class);
-        //add sound to game play
-        soundButton = new JButton("🔈 on/off");
-        soundButton.setBackground(darkTeal);
-        soundButton.setForeground(skyBlue);
-        soundButton.setBounds(15,7,50,50);
-        soundButton.addActionListener(e -> {
-            if(isSoundOn()) {
-                System.out.println("Sound Off");
-                setSoundOn(false);
-                themeSong.stop();
-            } else {
-                System.out.println("Sound on");
-                setSoundOn(true);
-                themeSong.start();
-            }
-        });
-
-        menuPanel = new JPanel();
-        menuPanel.setBounds(15,7,200,50);
-        menuPanel.setBackground(seaGreen);
-
-        userNamePanel = new JPanel();
-        userNamePanel.setBounds(350,250,250,125);
-        userNamePanel.setBackground(seaGreen);
-        userNamePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        titleNamePanel = new JPanel();
-        titleNamePanel.setBounds(175, 100, 600, 150);
-        titleNamePanel.setBackground(seaGreen);
-        titleNameLabel = new JLabel("Force Majeure");
-        titleNameLabel.setForeground(skyBlue);
-        titleNameLabel.setFont(titleFont);
-
-        startButtonPanel = new JPanel();
-        startButtonPanel.setBounds(370, 400, 200, 100);
-        startButtonPanel.setBackground(seaGreen);
-
-        startButton = new JButton("START");
-        startButton.setBackground(goldenRod);
-        startButton.setForeground(seaGreen);
-        startButton.setFont(normalFont);
-        startButton.addActionListener(tsHandler);
-        startButton.setFocusPainted(false);
-
-        userNameLabel = new JLabel("Enter username");
-        userNameLabel.setForeground(skyBlue);
-        JTextField textField = new JTextField();
-        textField.setPreferredSize(new Dimension(200,40));
-        startButton.addActionListener(e -> {
-            if(e.getSource() == startButton){
-                setPlayer(textField.getText());
-
-            }
-        });
-
-        menuPanel.add(soundButton);
-        userNamePanel.add(userNameLabel);
-        userNamePanel.add(textField);
-        titleNamePanel.add(titleNameLabel);
-        startButtonPanel.add(startButton);
-
-        con.add(menuPanel);
-        con.add(userNamePanel);
-        con.add(titleNamePanel);
-        con.add(startButtonPanel);
-
-        window.setVisible(true);
+    public Boolean getBlackjackPlayed() {
+        return blackjackPlayed;
     }
 
+    public void setBlackjackPlayed(Boolean blackjackPlayed) {
+        this.blackjackPlayed = blackjackPlayed;
+    }
 
     //Business Methods
     /* creates the components to be added onto the frame */

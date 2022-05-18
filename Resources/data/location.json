@@ -15,8 +15,8 @@
     "id": "01",
     "npc": "false",
     "maintext": "You are standing on a dock that outlooks a crystal-blue sea. You see a sign. You hear a familiar voice.",
-    "c1": "Investigate Voice",
-    "c2": "Check out the Beach",
+    "c1": "Check out the Beach",
+    "c2": "",
     "c3": "",
     "c4": "See Map"
   },
@@ -28,7 +28,7 @@
     "maintext": "You are surrounded by sugar-white beaches. The sand is warm on your toes. You see the dock and a massive resort ahead.",
     "c1": "Go to the Resort Lobby",
     "c2": "Go to the Dock",
-    "c3": "",
+    "c3": "Talk to Rennie",
     "c4":  "See Map"
   },
 
@@ -73,7 +73,7 @@
     "c1": "Check out the Black Jack tables",
     "c2": "Go to the Theater",
     "c3": "Go to the Restaurant",
-    "c4":  "Go to the Hall"
+    "c4":  "See Map"
   },
   "theater":  {
     "pos": "theater",
@@ -81,9 +81,9 @@
     "npc": "true",
     "maintext": "The theater is abuzz with patrons awaiting to watch the show. You see a Python slither across the stage. A large rabbit shapped bulge in its stomach.",
     "c1": "Investigate the issue",
-    "c2": "Return to Game Floor",
+    "c2": "",
     "c3": "",
-    "c4":  "Show Map"
+    "c4":  "See Map"
   },
   "rennie": {
     "pos": "rennie",
@@ -93,7 +93,7 @@
     "c1": "No, Go Explore More",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "Show Map"
+    "c4": "See Map"
   },
   "nelly": {
     "pos": "nelly",
@@ -103,7 +103,7 @@
     "c1": "I want to explore some more! (Go back to Lobby)",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "Show Map"
+    "c4": "See Map"
   },
   "karl": {
     "pos": "karl",
@@ -113,7 +113,7 @@
     "c1": "I can't help a brother out right now. Explore more",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "Show Map"
+    "c4": "See Map"
   },
   "jay": {
     "pos": "jay",
@@ -123,7 +123,7 @@
     "c1": "I'm not ready to play a solo, right now. Explore more",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "Show Map"
+    "c4": "See Map"
   },
   "chad": {
     "pos": "chad",
@@ -133,7 +133,7 @@
     "c1": "After that? I need to step away and explore more.",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "Show Map"
+    "c4": "See Map"
   }
 
 }
