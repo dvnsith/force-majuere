@@ -1,10 +1,11 @@
 package com.team3.forcemajeure.jswing.model;
 
 public class MagicGame {
-    private final GameFrame game;
+    private GameFrame game;
     private Boolean magicQuizDone = false;
     private int skips = 3;
 
+    public MagicGame(){}
     // Ctor
     public MagicGame(GameFrame view){
         game = view;
@@ -27,20 +28,19 @@ public class MagicGame {
         this.skips = skips;
     }
 
-
     // Business methods
     public void magicQuizAsk() {
-        if (!getMagicQuizDone()) {
+        if (!game.getMagicQuizDone()) {
             game.setTexts("magicQuizAsk", "Hello " + game.getPlayer() + ", would you like to answer some questions? ", "Sure!", "No Thanks", "", "");
             game.choice3.setVisible(false);
             game.choice4.setVisible(false);
         }
-        else if (getMagicQuizDone()) {
+        else if (game.getMagicQuizDone()) {
             game.setTexts("magicQuizAsk", "It seems like you've already answered my questions. Head to another person to chat", "", "Return to Theater", "", "");
             game.choice1.setVisible(false);
             game.choice3.setVisible(false);
             game.choice4.setVisible(false);
-        }
+             }
     }
     // For each question we check to make sure that the player still has some skips left.
     public void magicQuestionOne() {
@@ -98,7 +98,7 @@ public class MagicGame {
             game.inventory.add("Key");
             game.inventoryLabelName.setText(game.inventory.get(0) + ", " + game.inventory.get(1));
             game.setTexts("magicQuestionEnd","Your total points: " + game.getPlayerPT() + " , you did well enough to succeed here! You've received a key off the island.","Return to Theater","","","");
-            setMagicQuizDone(true);
+            game.setMagicQuizDone(true);
         }
         else if(game.getPlayerPT() < 10){
             game.setTexts("magicQuestionEnd","You got " + game.getPlayerPT() + " points. You probably should study up and give this another go, you need to get at least 10 points at the finish.","Return to Theater","","","");

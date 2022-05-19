@@ -1,24 +1,24 @@
 {
   "prelude": {
-    "pos": "You place the ",
+    "pos": "prelude",
     "id": "00",
     "npc": "false",
-    "main": "y",
-    "c1": "wait, what?",
-    "c2": "c2",
-    "c3": "c3",
-    "c4":  "c4"
+    "maintext": "So you've arrived. At your final test. You cannot believe it, a year ago you were working multiple jobs from dishwasher to line cook... and now you're here. The culmination of your work thus far. You take a deep breath and put on the headset.",
+    "c1": "",
+    "c2": "Start Simulation",
+    "c3": "",
+    "c4":  ""
   },
 
   "dock": {
     "pos": "dock",
     "id": "01",
     "npc": "false",
-    "maintext": "You are standing on a dock that outlooks a crystal-blue sea. You see a sign. You hear a familiar voice.",
+    "maintext": "You are standing on a dock that outlooks a crystal-blue sea. You see a sign in your periphery. ",
     "c1": "Check out the Beach",
-    "c2": "",
+    "c2": "Read the Sign",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
 
   "beach": {
@@ -29,7 +29,7 @@
     "c1": "Go to the Resort Lobby",
     "c2": "Go to the Dock",
     "c3": "Talk to Rennie",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
 
   "lobby": {
@@ -39,7 +39,7 @@
     "maintext": "You are in a massive resort lobby. It is extravagantly decorated. As you are looking through the lobby, you hear a familiar voice.",
     "c1": "Go to the Hall",
     "c2": "Go to the Beach",
-    "c3": "Investigate Voice",
+    "c3": "",
     "c4":  "See Map"
   },
 
@@ -51,17 +51,17 @@
     "c1": "Go to the Italian Restaurant",
     "c2": "Go to the Game Floor",
     "c3": "Go to the Lobby",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
 
   "restaurant": {
     "pos": "restaurant",
     "id": "05",
     "npc": "true",
-    "maintext": "There seems to be an issue in the restaurant, you can hear the chef shouting from the back, there appears to be an issue with the ordering system. You can investigate the issue, head to the game floor, or return to the hallway.",
-    "c1": "Investigate the issue",
+    "maintext": "Welcome to the Italy's very own virtual restaurant",
+    "c1": "Go to Hall",
     "c2": "Go to the Game Floor",
-    "c3": "Go to the Hall",
+    "c3": "",
     "c4":  "See Map"
   },
 
@@ -73,17 +73,17 @@
     "c1": "Check out the Black Jack tables",
     "c2": "Go to the Theater",
     "c3": "Go to the Restaurant",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
   "theater":  {
     "pos": "theater",
     "id": "07",
     "npc": "true",
     "maintext": "The theater is abuzz with patrons awaiting to watch the show. You see a Python slither across the stage. A large rabbit shapped bulge in its stomach.",
-    "c1": "Investigate the issue",
+    "c1": "Go to game floor",
     "c2": "",
     "c3": "",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
   "rennie": {
     "pos": "rennie",
@@ -93,7 +93,7 @@
     "c1": "No, Go Explore More",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "nelly": {
     "pos": "nelly",
@@ -103,17 +103,17 @@
     "c1": "I want to explore some more! (Go back to Lobby)",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "karl": {
     "pos": "karl",
     "id": "10",
     "inventory": "spaghetti",
     "maintext": "Momma Mia! I have no idea what happened, at one moment we were able to get these tickets in and now, it looks like somethings wrong! Can you help?",
-    "c1": "I can't help a brother out right now. Explore more",
+    "c1": "I can't help a brother out right now.",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "jay": {
     "pos": "jay",
@@ -123,7 +123,7 @@
     "c1": "I'm not ready to play a solo, right now. Explore more",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "chad": {
     "pos": "chad",
@@ -133,7 +133,16 @@
     "c1": "After that? I need to step away and explore more.",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
+  },
+  "sign": {
+    "pos": "sign",
+    "id": "13",
+    "npc": "false",
+    "maintext": "You Read the Sign.",
+    "c1": "Return to the Dock",
+    "c2": "",
+    "c3": "",
+    "c4":"Show Map"
   }
-
 }

@@ -1,13 +1,16 @@
 package com.team3.forcemajeure.jswing.model;
 
+import javax.swing.*;
+import java.awt.*;
+import java.net.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlackJackGame {
+    private SetUp setup;
     private GameFrame gameFrame;
     private int dealerHand = 0;
     private int playerHand = 0;
     private int card = 0;
-    private int losses = 0;
 
     // ctor
     public BlackJackGame(){}
@@ -36,24 +39,15 @@ public class BlackJackGame {
         return card;
     }
 
-    public int getLosses() {
-        return losses;
-    }
-
-    public void setLosses(int losses) {
-        this.losses = losses;
-    }
-
-
     // business methods
     public void blackJackStart() {
         setPlayerHand(0);
         setDealerHand(0);
-        if (getLosses() < 5) {
+        if (gameFrame.getLosses() < 5) {
             gameFrame.setTexts("blackjackstart", "Do you want to play blackjack?", "Yes", "No", "", "");
             gameFrame.choice3.setVisible(false);
             gameFrame.choice4.setVisible(false);
-        } else if (getLosses() >= 5) {
+        } else if (gameFrame.getLosses() >= 5) {
             gameFrame.setTexts("blackjackstart", "I think it's best you lay off the tables for today. You have too many losses", "", "Return to Game Floor", "", "");
             gameFrame.choice1.setVisible(false);
             gameFrame.choice3.setVisible(false);
@@ -77,7 +71,7 @@ public class BlackJackGame {
         } else if (getPlayerHand() > 21) {
             gameFrame.setPlayerPT(gameFrame.getPlayerPT() - 2);
             gameFrame.ptLabelNumber.setText("" + gameFrame.getPlayerPT());
-            setLosses(getLosses() + 1);
+            gameFrame.setLosses(gameFrame.getLosses() + 1);
             gameFrame.setTexts("checkcards", "Your hand: " + getPlayerHand() + "\n You busted! Better luck next time", "Return to Game Floor", "", "", "");
             gameFrame.choice2.setVisible(false);
             gameFrame.choice3.setVisible(false);
@@ -103,7 +97,7 @@ public class BlackJackGame {
         } else if (getPlayerHand() < getDealerHand()) {
             gameFrame.setPlayerPT(gameFrame.getPlayerPT() - 2);
             gameFrame.ptLabelNumber.setText("" + gameFrame.getPlayerPT());
-            setLosses(getLosses() + 1);
+            gameFrame.setLosses(gameFrame.getLosses() + 1);
             gameFrame.setTexts("checkcards", "Dealers Hand : " + getDealerHand() + "\n Better luck next time.", "Return to Game Floor", "", "", "");
             gameFrame.choice2.setVisible(false);
             gameFrame.choice3.setVisible(false);
