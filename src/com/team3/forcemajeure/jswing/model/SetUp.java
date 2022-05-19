@@ -15,9 +15,8 @@ public class SetUp {
     private JSONObject jsonObject;
 
     // Ctors
-    public SetUp(){
 
-    }
+    public SetUp(){}
 
     public SetUp(GameFrame view){
         gameFrame = view;
