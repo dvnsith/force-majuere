@@ -66,7 +66,7 @@ public class ChoiceHandler implements ActionListener {
             case "rennie":
                 switch (yourChoice) {
                     case "c1":
-                        setUp.dock();
+                        setUp.beach();
                         break;
                     case "c2":
                         setUp.miniGame();
@@ -209,7 +209,7 @@ public class ChoiceHandler implements ActionListener {
                         setUp.talkInstructor("jay");
                         break;
                     case "c2": //set pre theater method
-                        if(gameFrame.getMagicWordCorrect()){
+                        if(gameFrame.getJsGameDone()){
                             setUp.theater();
                         } else {
                             setUp.preTheater();
