@@ -1,10 +1,11 @@
 package com.team3.forcemajeure.jswing.model;
 
 public class MagicGame {
-    private final GameFrame game;
+    private GameFrame game;
     private Boolean magicQuizDone = false;
     private int skips = 3;
 
+    public MagicGame(){}
     // Ctor
     public MagicGame(GameFrame view){
         game = view;
