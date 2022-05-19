@@ -231,9 +231,6 @@ public class ChoiceHandler implements ActionListener {
                     case "c2":
                         blackJackGame.blackJackStart();
                         break;
-                    case "c4":
-                        gameFrame.showMap("gameFloor");
-                        break;
                 }
                 break;
             case "blackjackstart":

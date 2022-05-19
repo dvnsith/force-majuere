@@ -206,6 +206,7 @@ public class SetUp {
         switch (position) {
             case "rennie":
                 createPanelScene("rennie");
+                gameFrame.choice3.setVisible(false);
                 break;
             case "nelly":
                 createPanelScene("nelly");
@@ -215,6 +216,8 @@ public class SetUp {
                 break;
             case "jay":
                 createPanelScene("jay");
+                gameFrame.choice3.setVisible(false);
+                gameFrame.choice4.setVisible(false);
                 break;
             case "chad":
                 createPanelScene("chad");
