@@ -3,7 +3,7 @@ package com.team3.forcemajeure.jswing.model;
 public class JavaScriptGame {
     private GameFrame gameFrame;
     private Boolean jsGameDone = false;
-
+    private String magicWord = "booger";
     // Ctors
     public JavaScriptGame(){
 
@@ -37,7 +37,7 @@ public class JavaScriptGame {
         gameFrame.choice4.setVisible(false);
     }
     public void testEnd(){
-        gameFrame.setTexts("jsEnd", "this is the end to js", "back to lobby","","","");
+        gameFrame.setTexts("jsEnd", "this is the end to js, the magic word is \"" + gameFrame.getMagicWord() + "\".", "back to lobby","","","");
         System.out.println("from JS jsEnd");
         gameFrame.choice2.setVisible(false);
         gameFrame.choice3.setVisible(false);

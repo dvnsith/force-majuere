@@ -1,8 +1,6 @@
 package com.team3.forcemajeure.jswing.model;
 
-import javax.swing.*;
-import java.awt.*;
-import java.net.*;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlackJackGame {
@@ -11,6 +9,7 @@ public class BlackJackGame {
     private int dealerHand = 0;
     private int playerHand = 0;
     private int card = 0;
+
 
     // ctor
     public BlackJackGame(){}

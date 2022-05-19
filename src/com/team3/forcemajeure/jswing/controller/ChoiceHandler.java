@@ -32,7 +32,7 @@ public class ChoiceHandler implements ActionListener {
         switch (gameFrame.position) {
             case "prelude":
                 switch (yourChoice) {
-                    case "c2":
+                    case "c1":
                         setUp.dock();
                         break;
                 }
@@ -123,11 +123,6 @@ public class ChoiceHandler implements ActionListener {
                     case "c2":
                         javaScriptGame.testStart();
                         break;
-//                    case "c3":
-//                        if(gameFrame.inventory.contains("Key")){
-//                            setUp.ending();
-//                        }
-//                        break;
                     case "c4":
                         gameFrame.showMap("lobby");
                         break;
@@ -282,8 +277,6 @@ public class ChoiceHandler implements ActionListener {
                     case "c2":
                         if (gameFrame.getJsGameDone().equals(true) && gameFrame.getMagicQuizDone().equals(false)){
                             setUp.talkInstructor("chad");
-                        } else if(gameFrame.getMagicQuizDone().equals(true)){
-                            magicGame.magicQuizAsk();
                         }
                         break;
                     case "c4": gameFrame.showMap("theater");
