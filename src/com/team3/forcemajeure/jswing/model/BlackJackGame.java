@@ -3,13 +3,17 @@ package com.team3.forcemajeure.jswing.model;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlackJackGame {
-    private final GameFrame gameFrame;
+    private GameFrame gameFrame;
     private int dealerHand = 0;
     private int playerHand = 0;
     private int card = 0;
 //    private int losses = 0;
 
     // ctor
+    public BlackJackGame(){
+
+    }
+
     public BlackJackGame(GameFrame view){
         gameFrame = view;
     }
@@ -31,13 +35,6 @@ public class BlackJackGame {
         this.playerHand = playerHand;
     }
 
-//    public int getLosses() {
-//        return losses;
-//    }
-//
-//    public void setLosses(int losses) {
-//        this.losses = losses;
-//    }
 
     // business methods
     public void blackJackStart() {

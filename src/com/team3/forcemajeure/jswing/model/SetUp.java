@@ -8,13 +8,17 @@ import java.net.URL;
 import java.util.HashMap;
 
 public class SetUp {
-    private final GameFrame gameFrame;
+    private GameFrame gameFrame;
     private final ReadFile readFile = new ReadFile();
-    private final MagicGame magicGame;
-    private final JavaScriptGame jsGame;
+    private MagicGame magicGame;
+    private JavaScriptGame jsGame;
     private JSONObject jsonObject;
 
-    // Ctor
+    // Ctors
+    public SetUp(){
+
+    }
+
     public SetUp(GameFrame view){
         gameFrame = view;
         magicGame = new MagicGame(view);
@@ -84,7 +88,7 @@ public class SetUp {
                 // show theater image
                 imagePath = isMap ? "/images/map/VisitDock/GameFloorMap.jpg" : "/images/casinofloor.jpg";
                 break;
-            case "theater":
+            case "theater": case "preTheater":
                 // show theater image
                 imagePath = isMap ? "/images/map/VisitDock/TheaterMap.jpg" : "/images/theaterstage.jpg";
                 break;
@@ -133,17 +137,17 @@ public class SetUp {
                             choiceThree = "leave this island";
                         }
                     }
-                    //Todo add story stuff
 
                     // if pos = lobby && getBlackJack = true
                         // choice three = investigate noise (goes to nelly)
                     if(pos.matches("lobby") && gameFrame.getBlackjackPlayed().equals(true)){
-                        mainTxt = "Please see Nelly";
-                        choiceThree = "Investigate the issue";
+                        if(jsGame.getJsGameDone().equals(true)){
+                            mainTxt = "Now that you know the magic phrase, see chad @ theater";
+                        } else {
+                            mainTxt = "Please see Nelly";
+                            choiceThree = "Investigate the issue";
+                        }
                         System.out.println("Blackjack played: " + gameFrame.getBlackjackPlayed());
-                    }
-                    if(pos.matches("lobby") && jsGame.getJsGameDone().equals(true)){
-                        mainTxt = "Now that you know the magic phrase, see chad @ theater";
                     }
 
                     // if pos = theater && boolean beatNellysGame = true
@@ -156,13 +160,13 @@ public class SetUp {
                         // mainText = "some message about key and boat"
 
 
-                    if(pos.matches("theater") && gameFrame.getMagicQuizDone().equals(true)){
-                        choiceTwo = "";
-                        mainTxt = "Looks like the show is over";
-                    }
-
                     if(pos.matches("theater") && gameFrame.getJsGameDone()){
-                        choiceTwo = "Talk to Magician Chad";
+                        if(gameFrame.getMagicQuizDone().equals(true)){
+                            choiceTwo = "";
+                            mainTxt = "Looks like the show is over";
+                        } else {
+                            choiceTwo = "Talk to Magician Chad";
+                        }
                         System.out.println("JS Game played: " + jsGame.getJsGameDone());
                     }
 
@@ -176,6 +180,7 @@ public class SetUp {
                     }
 
                     gameFrame.setTexts(pos,mainTxt,choiceOne,choiceTwo,choiceThree,gameMap.get("c4"));/* set valuue of room here*/
+
                 }
             }
             break;
@@ -226,6 +231,12 @@ public class SetUp {
 
     public void theater() {
         createPanelScene("theater");
+
+    }
+
+    public void preTheater() {
+        createPanelScene("preTheater");
+
     }
 
     public void ending() {
