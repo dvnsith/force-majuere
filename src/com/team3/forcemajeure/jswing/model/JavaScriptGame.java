@@ -1,13 +1,19 @@
 package com.team3.forcemajeure.jswing.model;
 
 public class JavaScriptGame {
-    private final GameFrame gameFrame;
+    private GameFrame gameFrame;
     private Boolean jsGameDone = false;
+
+    // Ctors
+    public JavaScriptGame(){
+
+    }
 
     public JavaScriptGame(GameFrame view){
         gameFrame = view;
     }
 
+    // Accessors
     public Boolean getJsGameDone() {
         return jsGameDone;
     }

@@ -6,13 +6,16 @@ import java.awt.event.ActionListener;
 
 public class ChoiceHandler implements ActionListener {
 
-    private final GameFrame gameFrame;
-    private final MagicGame magicGame;
-    private final BlackJackGame blackJackGame;
-    private final JavaScriptGame javaScriptGame;
-    private final SetUp setUp;
+    private GameFrame gameFrame;
+    private MagicGame magicGame;
+    private BlackJackGame blackJackGame;
+    private JavaScriptGame javaScriptGame;
+    private SetUp setUp;
 
     // Ctor
+    public ChoiceHandler(){
+
+    }
     public ChoiceHandler(GameFrame view) {
         gameFrame = view;
         magicGame = new MagicGame(view);
@@ -188,8 +191,12 @@ public class ChoiceHandler implements ActionListener {
                     case "c1":
                         setUp.talkInstructor("jay");
                         break;
-                    case "c2":
-                        setUp.theater();
+                    case "c2": //set pre theater method
+                        if(gameFrame.getMagicWordCorrect()){
+                            setUp.theater();
+                        } else {
+                            setUp.preTheater();
+                        }
                         break;
                     case "c3":
                         setUp.restaurant();
@@ -238,6 +245,18 @@ public class ChoiceHandler implements ActionListener {
                 switch (yourChoice) {
                     case "c1":
                         setUp.gameFloor();
+                        break;
+                }
+                break;
+            case "preTheater":
+                switch (yourChoice) {
+                    case "c1":
+                        setUp.gameFloor();
+                        break;
+                    case "c2":
+                        if(gameFrame.getMagicWordCorrect()){
+                            setUp.theater();
+                        }
                         break;
                 }
                 break;
