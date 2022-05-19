@@ -15,7 +15,6 @@ public class SetUp {
     private JSONObject jsonObject;
 
     // Ctors
-
     public SetUp(){}
 
     public SetUp(GameFrame view){
@@ -51,7 +50,7 @@ public class SetUp {
         // When time is available: refactor to hashmap
         switch (roomName){
             case "prelude":
-                imagePath = isMap ? "/images/vrset.jpg" : "/images/vrset.jpg";
+                imagePath = "/images/vrset.jpg";
                 break;
             case "dock":
                 // show dock image
@@ -80,11 +79,11 @@ public class SetUp {
                 imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/hall.jpg";
                 break;
             case "karl":
-                imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.png" : "/images/karl.jpg";
+                imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.jpg" : "/images/karl.jpg";
+                break;
             case "restaurant":
-            case "restaurantOrder":
                 // show restaurant image
-                imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.png" : "/images/restaurant.jpg";
+                imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.jpg" : "/images/restaurant.jpg";
                 break;
             case "jay":
                 imagePath = isMap ? "/images/map/VisitDock/GameFloorMap.jpg" : "/images/blackjack.jpg";
@@ -138,7 +137,7 @@ public class SetUp {
         while(true){
             setJsonObject(readFile.retrieveJson("data/location.json"));
             HashMap<String, String> gameMap = (HashMap<String, String>) getJsonObject().get(pos);
-            String choiceOne, choiceTwo, choiceThree;
+            String choiceOne, choiceTwo, choiceThree, choiceFour;
 
             for(Object room : getJsonObject().keySet()){
                 if(room.toString().equals(pos)){
@@ -146,6 +145,12 @@ public class SetUp {
                     choiceOne = gameMap.get("c1");
                     choiceTwo = gameMap.get("c2");
                     choiceThree = gameMap.get("c3");
+                    choiceFour = gameMap.get("c4");
+
+                    if(pos.matches("prelude")){
+                        mainTxt = gameFrame.getPlayer()  + mainTxt;
+                    }
+
                     if(pos.matches("rennie")){
                         mainTxt = gameFrame.getPlayer() + gameMap.get("maintext");
                         if(gameFrame.inventory.contains("Blueprint")){
@@ -165,10 +170,6 @@ public class SetUp {
                         System.out.println("Blackjack played: " + gameFrame.getBlackjackPlayed());
                     }
 
-                    // if pos = theater && boolean beatNellysGame = true
-                            // magicWord panel => takes user input (just like username) when clicked
-                                //if button is valid => go to chad
-                                // if button is invalid => go back to theater and try again
 
                     // if pos = dock && inventory contains key
                         // choice two = ending()
@@ -194,7 +195,7 @@ public class SetUp {
                         choiceThree = "Investigate the issue";
                     }
 
-                    gameFrame.setTexts(pos,mainTxt,choiceOne,choiceTwo,choiceThree,gameMap.get("c4"));/* set valuue of room here*/
+                    gameFrame.setTexts(pos,mainTxt,choiceOne,choiceTwo,choiceThree,choiceFour);/* set valuue of room here*/
 
                 }
             }
