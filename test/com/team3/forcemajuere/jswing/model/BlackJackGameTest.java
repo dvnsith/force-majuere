@@ -1,20 +1,26 @@
 package com.team3.forcemajuere.jswing.model;
 
 import com.team3.forcemajeure.jswing.model.BlackJackGame;
-import javax.swing.*;
 import com.team3.forcemajeure.jswing.model.GameFrame;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+
 
 import static org.junit.Assert.*;
+import org.junit.jupiter.api.*;
 
 public class BlackJackGameTest {
-    GameFrame gameFrame = new GameFrame();
+
     BlackJackGame blackJackGame = new BlackJackGame();
 //    GameFrame gameFrame = new GameFrame();
     public BlackJackGameTest() {}
-    public GameFrame() {}
+//    GameFrame gameFrame = new GameFrame();
+
+
+//    @BeforeEach
+//    void setUp(){
+//        GameFrame.getInstance();
+//        gameFrame.createGameScreen();
+//    }
 
 
     @Test
@@ -41,13 +47,13 @@ public class BlackJackGameTest {
         blackJackGame.hitMe();
         assertTrue(testCard > blackJackGame.getCard());
     }
-    @Test
-    public void playerCardLoseShouldAddLoss() throws Exception {
-        blackJackGame.setDealerHand(21);
-        blackJackGame.setPlayerHand(15);
-        blackJackGame.checkCards();
-        assertEquals(1,blackJackGame.getLosses());
-    }
+//    @Test
+//    public void playerCardLoseShouldAddLoss() throws Exception {
+//        blackJackGame.setDealerHand(21);
+//        blackJackGame.setPlayerHand(15);
+//        blackJackGame.checkCards();
+//        assertEquals(1,blackJackGame.getLosses());
+//    }
 //    @Test
 //    public void lossesEqualFiveShouldDenyGame() throws Exception{
 //        String lossString = "I think it's best you lay off the tables for today. You have too many losses";
