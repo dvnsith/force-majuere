@@ -1,8 +1,12 @@
 package com.team3.forcemajeure.jswing.model;
 
+import javax.swing.*;
+import java.awt.*;
+import java.net.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlackJackGame {
+    private SetUp setup;
     private GameFrame gameFrame;
     private int dealerHand = 0;
     private int playerHand = 0;
@@ -49,6 +53,8 @@ public class BlackJackGame {
             gameFrame.choice1.setVisible(false);
             gameFrame.choice3.setVisible(false);
             gameFrame.choice4.setVisible(false);
+
+
         }
     }
 

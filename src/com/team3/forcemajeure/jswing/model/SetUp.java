@@ -15,9 +15,8 @@ public class SetUp {
     private JSONObject jsonObject;
 
     // Ctors
-    public SetUp(){
 
-    }
+    public SetUp(){}
 
     public SetUp(GameFrame view){
         gameFrame = view;
@@ -42,7 +41,7 @@ public class SetUp {
         gameFrame.ptLabelNumber.setText("" + gameFrame.getPlayerPT());
         gameFrame.skipLabel.setText("Skips: " + magicGame.getSkips());
         //start off with dock
-        dock();
+        prelude();
     }
 
     /* create image for game background and map */
@@ -51,9 +50,15 @@ public class SetUp {
         //isMap then set map to image else set bg of room to image
         // When time is available: refactor to hashmap
         switch (roomName){
+            case "prelude":
+                imagePath = isMap ? "/images/vrset.jpg" : "/images/vrset.jpg";
+                break;
             case "dock":
                 // show dock image
                 imagePath = isMap ? "/images/map/VisitDock/DockMap.jpg" : "/images/dock.jpg";
+                break;
+            case "sign":
+                imagePath = isMap ? "/images/map/VisitDock/DockMap.jpg" : "/images/docksign.jpg";
                 break;
             case "beach":
                 imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/beach.jpg";
@@ -74,14 +79,23 @@ public class SetUp {
                 // show hall image
                 imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/hall.jpg";
                 break;
+            case "karl":
+                imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.png" : "/images/karl.jpg";
             case "restaurant":
             case "restaurantOrder":
-            case "karl":
                 // show restaurant image
                 imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.png" : "/images/restaurant.jpg";
                 break;
-            case "gameFloor":
             case "jay":
+                imagePath = isMap ? "/images/map/VisitDock/GameFloorMap.jpg" : "/images/blackjack.jpg";
+                break;
+            case "winBlackJack":
+                imagePath = isMap ? "/images/map/VisitDock/GameFloor.jpg" : "images/win.jpeg";
+                break;
+            case "loseBlackJack":
+                imagePath = isMap ? "/images/map/VisitDock/GameFloor.jpg" : "images/lose.jpeg";
+                break;
+            case "gameFloor":
             case "checkcards":
             case "blackjackfirsthand":
             case "blackjackstart":
@@ -112,6 +126,7 @@ public class SetUp {
                 break;
         }
         // load image to retrieve path in resources directory
+        System.out.println(gameFrame.getMainText());
         URL imageUrl = getClass().getResource(imagePath);
         Image bgImage = Toolkit.getDefaultToolkit().getImage(imageUrl);
         return new ImageIcon(bgImage);
@@ -210,8 +225,15 @@ public class SetUp {
     public void miniGame(){
         createPanelScene("miniGame");}
 
+    public void prelude(){
+        createPanelScene("prelude");
+    }
+
     public void dock() {
         createPanelScene("dock");
+    }
+    public void sign(){
+        createPanelScene("sign");
     }
     public void beach() {
         createPanelScene("beach");

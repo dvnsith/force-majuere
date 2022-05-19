@@ -48,7 +48,7 @@ public class GameFrame {
     private Boolean magicWordCorrect = false;
 
     // Ctor - creates the frame for the game
-    private GameFrame() {
+    GameFrame() {
         window = new JFrame();
         window.setSize(1000, 800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -262,6 +262,8 @@ public class GameFrame {
         this.magicWordCorrect = magicWordCorrect;
     }
 
+
+
     //Business Methods
     /* creates the components to be added onto the frame */
     public void createGameScreen() {
@@ -406,11 +408,11 @@ public class GameFrame {
             mainTextPanel.setVisible(true);
             magicTextPanel.setVisible(false);
 
-            //if room is null then set bgImage to dock else
-            //get bg of image based on room
-            if (getPreviousRoom() == null) {
-                gameBgImage = setUp.setImage("dock", false);
-                setPreviousRoom("dock");
+        //if room is null then set bgImage to dock else
+        //get bg of image based on room
+        if(getPreviousRoom() == null){
+            gameBgImage = setUp.setImage("prelude", false);
+            setPreviousRoom("prelude");
 
             } else {
                 gameBgImage = setUp.setImage(pos, false);
