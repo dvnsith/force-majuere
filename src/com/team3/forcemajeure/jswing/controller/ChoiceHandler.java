@@ -254,7 +254,7 @@ public class ChoiceHandler implements ActionListener {
                 break;
             case "magicQuestionOne":
                 switch (yourChoice) {
-                    case "c1": case "c3": case "c4":
+                    case "c1": case "c3":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionTwo();
                         break;
@@ -262,17 +262,25 @@ public class ChoiceHandler implements ActionListener {
                         magicGame.correctAnswerEasy();
                         magicGame.magicQuestionTwo();
                         break;
+                    case "c4":
+                        magicGame.skipQuestion();
+                        magicGame.magicQuestionTwo();
+                        break;
 
                 }
                 break;
             case "magicQuestionTwo":
                 switch (yourChoice) {
-                    case "c1": case "c2": case "c3":
+                    case "c1": case "c3":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionThree();
                         break;
-                    case "c4":
+                    case "c2":
                         magicGame.correctAnswerEasy();
+                        magicGame.magicQuestionThree();
+                        break;
+                    case "c4":
+                        magicGame.skipQuestion();
                         magicGame.magicQuestionThree();
                         break;
                 }
@@ -283,32 +291,44 @@ public class ChoiceHandler implements ActionListener {
                         magicGame.correctAnswerEasy();
                         magicGame.magicQuestionFour();
                         break;
-                    case "c2": case "c3": case "c4":
+                    case "c2": case "c3":
                         magicGame.wrongAnswer();
+                        magicGame.magicQuestionFour();
+                        break;
+                    case "c4":
+                        magicGame.skipQuestion();
                         magicGame.magicQuestionFour();
                         break;
                 }
                 break;
             case "magicQuestionFour":
                 switch (yourChoice) {
-                    case "c1": case "c3": case "c4":
+                    case "c1": case "c3":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionFive();
                         break;
                     case "c2":
-                        magicGame.correctAnswerEasy();
+                        magicGame.correctAnswerHard();
+                        magicGame.magicQuestionFive();
+                        break;
+                    case "c4":
+                        magicGame.skipQuestion();
                         magicGame.magicQuestionFive();
                         break;
                 }
                 break;
             case "magicQuestionFive":
                 switch (yourChoice) {
-                    case "c1": case "c2": case "c4":
+                    case "c1": case "c2":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionEnd();
                         break;
                     case "c3":
-                        magicGame.correctAnswerEasy();
+                        magicGame.correctAnswerHard();
+                        magicGame.magicQuestionEnd();
+                        break;
+                    case "c4":
+                        magicGame.skipQuestion();
                         magicGame.magicQuestionEnd();
                         break;
 
