@@ -79,14 +79,23 @@ public class SetUp {
                 // show hall image
                 imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/hall.jpg";
                 break;
+            case "karl":
+                imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.png" : "/images/karl.jpg";
             case "restaurant":
             case "restaurantOrder":
-            case "karl":
                 // show restaurant image
                 imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.png" : "/images/restaurant.jpg";
                 break;
-            case "gameFloor":
             case "jay":
+                imagePath = isMap ? "/images/map/VisitDock/GameFloorMap.jpg" : "/images/blackjack.jpg";
+                break;
+            case "winBlackJack":
+                imagePath = isMap ? "/images/map/VisitDock/GameFloor.jpg" : "images/win.jpeg";
+                break;
+            case "loseBlackJack":
+                imagePath = isMap ? "/images/map/VisitDock/GameFloor.jpg" : "images/lose.jpeg";
+                break;
+            case "gameFloor":
             case "checkcards":
             case "blackjackfirsthand":
             case "blackjackstart":
