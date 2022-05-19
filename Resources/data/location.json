@@ -75,11 +75,21 @@
     "c3": "Go to the Restaurant",
     "c4":  "See Map"
   },
+  "preTheater":  {
+    "pos": "preTheater",
+    "id": "07",
+    "npc": "true",
+    "maintext": "Please enter the magic word to watch the show",
+    "c1": "Go to game floor",
+    "c2": "submit magic word",
+    "c3": "",
+    "c4":  ""
+  },
   "theater":  {
     "pos": "theater",
     "id": "07",
     "npc": "true",
-    "maintext": "The theater is abuzz with patrons awaiting to watch the show. You see a Python slither across the stage. A large rabbit shapped bulge in its stomach.",
+    "maintext": "This is the theater",
     "c1": "Go to game floor",
     "c2": "",
     "c3": "",
