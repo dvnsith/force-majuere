@@ -4,7 +4,6 @@ package com.team3.forcemajeure.jswing.model;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlackJackGame {
-    private SetUp setup;
     private GameFrame gameFrame;
     private int dealerHand = 0;
     private int playerHand = 0;

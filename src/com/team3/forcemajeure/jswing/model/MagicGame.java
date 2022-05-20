@@ -92,7 +92,7 @@ public class MagicGame {
     // Evaluating the players score, they need to get past the threshold in order to consider this a win
     public void magicQuestionEnd() {
         if(game.getPlayerPT() >= 10 ) {
-            game.inventory.add("Key");
+            game.inventory.add("Blueprint");
             game.inventoryLabelName.setText(game.inventory.get(0) + ", " + game.inventory.get(1));
             game.setTexts("magicQuestionEnd","Your total points: " + game.getPlayerPT() + " , you did well enough to succeed here! You've received a key off the island.","Return to Theater","","","");
             game.setMagicQuizDone(true);

@@ -66,15 +66,14 @@ public class ChoiceHandler implements ActionListener {
                         setUp.beach();
                         break;
                     case "c2":
-                        setUp.miniGame();
-                        break;
-                    case "c3":
-                        if(gameFrame.inventory.contains("Key")){
-                            setUp.ending();
+                        if(gameFrame.inventory.contains("Blueprint")){
+                            setUp.getKey();
                         }
                         break;
                     case "c4":
-                        gameFrame.showMap("beach");
+                        if(gameFrame.getMagicQuizDone().equals(false) || gameFrame.inventory.contains("Blueprint")){
+                            gameFrame.showMap("rennie");
+                        }
                         break;
                 }
                 break;
@@ -103,7 +102,7 @@ public class ChoiceHandler implements ActionListener {
                         setUp.beach();
                         break;
                     case "c3":
-                        if(gameFrame.getBlackjackPlayed().equals(true)){
+                        if(gameFrame.getBlackjackPlayed().equals(true) && gameFrame.getJsGameDone().equals(false)){
                             setUp.talkInstructor("nelly");
                         }
                         break;
@@ -121,7 +120,7 @@ public class ChoiceHandler implements ActionListener {
                         javaScriptGame.jsGameStart();
                         break;
                     case "c4":
-                        gameFrame.showMap("lobby");
+                        gameFrame.showMap("nelly");
                         break;
                 }
                 break;
@@ -269,11 +268,9 @@ public class ChoiceHandler implements ActionListener {
                     case "c3":
                         if (gameFrame.getBlackjackPlayed().equals(true)) {
                             setUp.talkInstructor("karl");
-                            break;
-                        } else if (gameFrame.getThirdChoice().equals("Order Spaghetti & Pepsi")) {
-                            setUp.restaurant();
-                            break;
+//
                         }
+                        break;
                     case "c4":
                         gameFrame.showMap("restaurant");
                         break;
@@ -288,7 +285,7 @@ public class ChoiceHandler implements ActionListener {
                         soGame.soGameStart();
                         break;
                     case "c4":
-                        gameFrame.showMap("restaurant");
+                        gameFrame.showMap("karl");
                         break;
                 }
                 break;
@@ -436,10 +433,11 @@ public class ChoiceHandler implements ActionListener {
                         setUp.talkInstructor("jay");
                         break;
                     case "c2": //set pre theater method
-                        if(gameFrame.getJsGameDone()){
-                            setUp.preTheater();
+                        if(gameFrame.getMagicWordCorrect()){
+                            setUp.theater();
                         } else {
-                            setUp.theater();}
+                            setUp.preTheater();
+                        }
                         break;
                     case "c3":
                         setUp.restaurant();
@@ -576,7 +574,7 @@ public class ChoiceHandler implements ActionListener {
                         magicGame.correctAnswerEasy();
                         magicGame.magicQuestionFour();
                         break;
-                    case "c2":
+                    case "c2": case "c3":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionFour();
                         break;

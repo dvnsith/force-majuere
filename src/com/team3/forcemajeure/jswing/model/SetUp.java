@@ -153,73 +153,92 @@ public class SetUp {
     /* pulls the JSON data and creates a panel based on room location */
     public void createPanelScene(String pos) {
 
-        while (true) {
+        while(true){
             setJsonObject(readFile.retrieveJson("data/location.json"));
             HashMap<String, String> gameMap = (HashMap<String, String>) getJsonObject().get(pos);
             String choiceOne, choiceTwo, choiceThree, choiceFour;
 
-            for (Object room : getJsonObject().keySet()) {
-                if (room.toString().equals(pos)) {
+            for(Object room : getJsonObject().keySet()){
+                if(room.toString().equals(pos)){
                     String mainTxt = gameMap.get("maintext");
                     choiceOne = gameMap.get("c1");
                     choiceTwo = gameMap.get("c2");
                     choiceThree = gameMap.get("c3");
                     choiceFour = gameMap.get("c4");
 
-                    if (pos.matches("prelude")) {
+                    if(pos.matches("prelude")){
                         mainTxt = gameFrame.getPlayer() + mainTxt;
                     }
 
-                    if (pos.matches("rennie")) {
-                        mainTxt = gameFrame.getPlayer() + gameMap.get("maintext");
-                        if (gameFrame.inventory.contains("Blueprint")) {
-                            choiceThree = "leave this island";
+                    if(pos.matches("rennie")){
+                        if(gameFrame.inventory.contains("Blueprint")){
+                            choiceTwo = "Get key";
+                            mainTxt = "In exchange for this blueprint, I will hand you over the key to success";
+                        } else if(gameFrame.inventory.contains("Key")) {
+
+                        } else {
+                            mainTxt = gameFrame.getPlayer() + gameMap.get("maintext");
+                        }
+
+                    }
+
+                    // if pos = lobby && getBlackJack = true
+                        // choice three = investigate noise (goes to nelly)
+                    if(pos.matches("lobby") && gameFrame.getBlackjackPlayed().equals(true)) {
+                        if(gameFrame.getJsGameDone().equals(true) && gameFrame.getMagicQuizDone().equals(true)){
+                            mainTxt = "Looks like Nelly has gone to work on other projects for this island. The blueprint will lead you to the key of success.";
+                        } else if (gameFrame.getJsGameDone().equals(true) && gameFrame.getMagicQuizDone().equals(false)) {
+                            mainTxt = "With this newfound information, you need to hurry to the theater so you can make it in time for the magic show.";;
+                        } else {
+                            mainTxt = "As you make your way back into the lobby to turn in your ticket, you hear a familiar voice near the renovation project call out \"" + gameFrame.getPlayer() + ", come over here. I need some help please\"";
+                            choiceThree = "Check out the voice";
                         }
 
                     }
 
 
-                    if (pos.matches("lobby") && gameFrame.getJsGameDone().equals(true)) {
-                        mainTxt = "With this newfound information, you need to hurry to the theater so you can make it in time for the magic show.";
-                        choiceOne = "Return to the Lobby.";
-                        gameFrame.choice3.setVisible(false);
+
+                    if(pos.matches("beach") && gameFrame.getMagicQuizDone().equals(true)){
+                        mainTxt = "You hear the sound of music to celebrate your SDE journey. There is one last thing you have to do. Go see Rennie";
                     }
-                    else if(pos.matches("lobby") && gameFrame.getBlackjackPlayed().equals(true)) {
-                        mainTxt = "As you make your way back into the lobby to turn in your ticket, you hear a familiar voice near the renovation project call out '" + gameFrame.getPlayer() + ", come over here. I need some help please'";
-                        choiceThree = "Check out the voice";
-                        }
 
                     if(pos.matches("gameFloor") && gameFrame.getBlackjackPlayed().equals(true)){
                         mainTxt = ("You've won a ticket for the magic show ticket drawing. You need to go to the lobby and check to see if you've won!");
                     }
 
+
                     if(pos.matches("theater") && gameFrame.getJsGameDone()){
                         if(gameFrame.getMagicQuizDone().equals(true)){
                             choiceTwo = "";
                             mainTxt = "Looks like the show is over";
+                        } else {
+                            choiceTwo = "Go to the magician";
+                        }
+                        System.out.println("JS Game played: " + jsGame.getJsGameDone());
+                    }
+
+                    if (pos.matches("restaurant")) {
+
+                        if (gameFrame.getLosses() >= 5) {
+                            mainTxt = "Hey, you're looking down. Some spaghetti and pepsi should get back in the right spirits. It's on the house! Come visit us after you've won a hand at blackjack and give us a review.";
+                            gameFrame.setLosses(0);
+                        }
+                        if (gameFrame.getBlackjackPlayed().equals(true) && gameFrame.getSoGameDone().equals(false)) {
+                            mainTxt = "'So glad you're here, can you come assist our chef in the back?', said the host. 'There's currently a culinary catastrophe going on! Hold off on that review too for now please.' \n You ponder to yourself if it's necessary to help here.";
+                            choiceThree = "Investigate the issue";
+                            gameFrame.choice3.setVisible(true);
+                        }
+                        if (gameFrame.getSoGameDone().equals(true)) {
+                            mainTxt = "A sign hangs on the door that says:\n\n**CLOSED**\nSetting IDEs & Rebuilding Furniture\n\n";
+                            choiceOne = "Return to Hall";
+                            choiceTwo = "Return to Game Floor";
+                            gameFrame.choice3.setVisible(false);
+                            gameFrame.choice4.setVisible(false);
                         }
                     }
 
-                    if (pos.matches("restaurant") && gameFrame.getLosses() >= 5) {
-                        choiceThree = "Order Spaghetti & Pepsi";
-                        gameFrame.setMainText("Hey, you're looking down. Some spaghetti and pepsi should get back in the right spirits. It's on the house! Come visit us after you've won a hand at blackjack and give us a review.");
-                        gameFrame.setLosses(0);
-                    }
-                    if (pos.matches("restaurant") && gameFrame.getBlackjackPlayed().equals(true) && gameFrame.getSoGameDone().equals(false)) {
-                        mainTxt = "'So glad you're here, can you come assist our chef in the back?', said the host. 'There's currently a culinary catastrophe going on! Hold off on that review too for now please.' \n You ponder to yourself if it's necessary to help here.";
-                        choiceThree = "Investigate the issue";
-                        gameFrame.choice3.setVisible(true);
-                    }
-                    if (pos.matches("restaurant") && gameFrame.getSoGameDone().equals(true)) {
-                        mainTxt = "A sign hangs on the door that says:\n\n**CLOSED**\nSetting IDEs & Rebuilding Furniture\n\n";
-                        choiceOne = "Return to Hall";
-                        choiceTwo = "Return to Game Floor";
-                        gameFrame.choice3.setVisible(false);
-                        gameFrame.choice4.setVisible(false);
-                    }
 
-
-                    gameFrame.setTexts(pos, mainTxt, choiceOne, choiceTwo, choiceThree, choiceFour);/* set valuue of room here*/
+                    gameFrame.setTexts(pos,mainTxt,choiceOne,choiceTwo,choiceThree,choiceFour);/* set valuue of room here*/
 
                 }
             }
@@ -230,9 +249,11 @@ public class SetUp {
     public void talkInstructor(String position) {
         switch (position) {
             case "rennie":
-                createPanelScene("rennie");
-                gameFrame.choice2.setVisible(false);
-                gameFrame.choice3.setVisible(false);
+                if(gameFrame.inventory.contains("Key")){
+                    getKey();
+                } else {
+                    createPanelScene("rennie");
+                }
                 break;
             case "nelly":
                 createPanelScene("nelly");
@@ -253,8 +274,17 @@ public class SetUp {
         }
     }
 
-    public void miniGame(){
-        createPanelScene("miniGame");}
+    public void getKey(){
+        // set main text with key
+        gameFrame.setTexts("rennie", "Now that you've go the key...", "Go back","Get ready to leave", "", "");
+        gameFrame.choice3.setVisible(false);
+        gameFrame.choice4.setVisible(false);
+
+        gameFrame.inventory.remove("Blueprint");
+        gameFrame.inventory.add("Key");
+        gameFrame.inventoryLabelName.setText(gameFrame.inventory.get(0) + ", " + gameFrame.inventory.get(1) + " ");
+    }
+
 
     public void prelude(){
         createPanelScene("prelude");
@@ -274,12 +304,9 @@ public class SetUp {
     }
     public void lobby() {
         if (gameFrame.getBlackjackPlayed().equals(true)){
-            createPanelScene("lobby");
-        }
-        else {
-            createPanelScene("lobby");
             gameFrame.choice3.setVisible(false);
         }
+        createPanelScene("lobby");
     }
     public void hall() {
         createPanelScene("hall");
@@ -293,7 +320,10 @@ public class SetUp {
 
     public void theater() {
         createPanelScene("theater");
-
+        gameFrame.choice3.setVisible(false);
+        if(gameFrame.getMagicQuizDone()){
+            gameFrame.choice2.setVisible(false);
+        }
     }
 
     public void preTheater() {
@@ -304,7 +334,11 @@ public class SetUp {
     public void ending() {
         //if points greater than X amount then show ending
         gameFrame.setTexts("ending", "You unlock the boat with the key and the screen pixelates to black. As you take your VR goggles off, you're feeling exhausted from the challenges. Inside you feel a huge sense of accomplishment in your spirit. \n" +
-                "You feel ready for whatever challenges may come across your journey as an SDE as you remember your training. ", "Leave the Island", "", "","");
+                "You feel ready for whatever challenges may come across your journey as an SDE as you remember your training. ", "scoreboard", "", "","");
+        gameFrame.choice1.setVisible(true);
+        gameFrame.choice2.setVisible(false);
+        gameFrame.choice3.setVisible(false);
+        gameFrame.choice4.setVisible(false);
     }
 
     public void scoreBoard(){

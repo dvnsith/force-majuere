@@ -15,8 +15,7 @@ public class JavaScriptGame {
 
 
     // Ctors
-    public JavaScriptGame() {
-    }
+    public JavaScriptGame(){}
 
     public JavaScriptGame(GameFrame view) {
         gameFrame = view;
@@ -55,6 +54,8 @@ public class JavaScriptGame {
             // gameFrame.mainTextArea.setFont(gameFrame.getChoiceFont());
             gameFrame.choice1.setVisible(true);
             gameFrame.choice2.setVisible(true);
+            gameFrame.choice3.setVisible(false);
+            gameFrame.choice3.setVisible(false);
     }
 
     public void jsQuestionOne() {
@@ -63,6 +64,7 @@ public class JavaScriptGame {
                     "What do you think?", "I agree, it is 2", "No, that's not right", "", "Skip Question");
             gameFrame.choice1.setVisible(true);
             gameFrame.choice2.setVisible(true);
+            gameFrame.choice3.setVisible(false);
             gameFrame.choice4.setVisible(true);
         } else if (player.getSkips() <= 0) {
             gameFrame.setTexts("jsQuestionOne", "Am I seeing this right?\nIt looks like there are 2 elements named 'trail'. " +
@@ -145,14 +147,14 @@ public class JavaScriptGame {
         if (gameFrame.getPlayerPT() >= 10) {
             password();
             gameFrame.setTexts("jsEnd", "Well, I think that's it! Thanks for the help!\nAnd for looking out, like always.\nI have this " +
-                            "'magic word' that can get you into\nThe Fantastical Fesser's Show. The password is:\n" + gameFrame.getMagicWord() + "\nNow go out there and kill it\nOh, and keep an eye out for my blueprints and bring them back to me.",
+                            "'magic word' that can get you into\nThe Fantastical Feeser's Show. The password is:\n" + "\"" + gameFrame.getMagicWord() + "\"" + "\nNow go out there and kill it\nOh, and keep an eye out for my blueprints and bring them back to me.",
                     "Return to Lobby", "", "", "");
             gameFrame.choice1.setVisible(true);
             gameFrame.choice2.setVisible(false);
             gameFrame.choice3.setVisible(false);
             gameFrame.choice4.setVisible(false);
         } else if (gameFrame.getPlayerPT() < 10) {
-            gameFrame.setTexts("jsEnd2", "I think you may need to go ahead and hit the docs, " + player.getName() + "\nI'm going to need you to come back and try again!",
+            gameFrame.setTexts("jsEnd2", "I think you may need to go ahead and hit the docs, " + gameFrame.getPlayer() + "\nI'm going to need you to come back and try again!",
                     "Return to Lobby", "Try Again", "", "");
             gameFrame.choice1.setVisible(true);
             gameFrame.choice2.setVisible(true);
