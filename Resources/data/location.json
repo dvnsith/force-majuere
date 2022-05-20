@@ -118,9 +118,9 @@
     "pos": "karl",
     "id": "10",
     "inventory": "spaghetti",
-    "maintext": "Momma Mia! I have no idea what happened, at one moment we were able to get these tickets in and now, it looks like somethings wrong! Can you help?",
-    "c1": "I can't help a brother out right now.",
-    "c2": "Start Challenge",
+    "maintext": "\n'IT'S COMING OUT FASTER THAN I CAN CATCH IT'.\n'CAN YOU GIVE ME A HAND?!'\nChef Luigi Larson yells at you from the back of the restaurant.'",
+    "c1": "Don't help a brother out",
+    "c2": "Help a brother out",
     "c3": "",
     "c4": "Show Map"
   },

@@ -1,9 +1,12 @@
 package com.team3.forcemajeure.jswing.model;
 
+import com.team3.forcemajeure.util.*;
+
 public class MagicGame {
     private GameFrame game;
     private Boolean magicQuizDone = false;
-    private int skips = 3;
+    private Player player = new Player();
+
 
     public MagicGame(){}
     // Ctor
@@ -20,13 +23,7 @@ public class MagicGame {
         this.magicQuizDone = magicQuizDone;
     }
 
-    public int getSkips() {
-        return skips;
-    }
 
-    public void setSkips(int skips) {
-        this.skips = skips;
-    }
 
     // Business methods
     public void magicQuizAsk() {
@@ -45,49 +42,49 @@ public class MagicGame {
     // For each question we check to make sure that the player still has some skips left.
     public void magicQuestionOne() {
         game.choice4.setVisible(true);
-        if (getSkips() > 0) {
+        if (player.getSkips() > 0) {
             game.setTexts("magicQuestionOne", "Question 1: Which of the following is the correct extension of the Python file?", ".python", ".py", ".p", "Skip");
         }
-        else if (getSkips() >= 3) {
+        else if (player.getSkips() >= 3) {
             game.setTexts("magicQuestionOne", "Question 1: Which of the following is the correct extension of the Python file?", ".python", ".py", ".p", "");
 
         }
     }
     public void magicQuestionTwo() {
-        if (getSkips() > 0) {
+        if (player.getSkips() > 0) {
             game.setTexts("magicQuestionTwo", "Question 2: Which character is used in Python to make a single line comment?", "//", "#", "!", "Skip");
         }
-        else if (getSkips() <= 0) {
+        else if (player.getSkips() <= 0) {
             game.setTexts("magicQuestionTwo", "Question 2: Which character is used in Python to make a single line comment?", "//", "#", "!", "");
 
         }
     }
     public void magicQuestionThree() {
-        if (getSkips() > 0) {
+        if (player.getSkips() > 0) {
             game.setTexts("magicQuestionThree", "Question 3: Which of the following functions is a built-in function in python language?", "print()", "System.out.println", "val()", "Skip");
             game.choice4.setVisible(true);
         }
-        else if (getSkips() <= 0) {
+        else if (player.getSkips() <= 0) {
             game.setTexts("magicQuestionThree", "Question 3: Which of the following functions is a built-in function in python language?", "print()", "System.out.println", "Val()", "");
             game.choice4.setVisible(false);
         }
     }
     public void magicQuestionFour() {
-        if (getSkips() > 0) {
+        if (player.getSkips() > 0) {
             game.setTexts("magicQuestionFour", "Question 4: What would be the output of the following function? \nlen([\"hello\",2, 4, 6])", "Error", "4", "3", "Skip");
             game.choice4.setVisible(true);
         }
-        else if (getSkips() <= 0) {
+        else if (player.getSkips() <= 0) {
             game.setTexts("magicQuestionFour", "Question 4: What would be the output of the following function? \nlen([\"hello\",2, 4, 6])", "Error", "4", "3", "");
             game.choice4.setVisible(false);
         }
     }
     public void magicQuestionFive() {
-        if (getSkips() > 0) {
+        if (player.getSkips() > 0) {
             game.setTexts("magicQuestionFive", "Question 5: print(\"abc. DEF\".capitalize())", "Abc. Def", "ABC. DEF", "Abc. def", "Skip");
             game.choice4.setVisible(true);
         }
-        else if (getSkips() <= 0) {
+        else if (player.getSkips() <= 0) {
             game.setTexts("magicQuestionFive", "Question 5:  print(\"abc. DEF\".capitalize())", "Abc. Def", "ABC. DEF", "Abc. def", "");
             game.choice4.setVisible(false);
         }
@@ -107,9 +104,13 @@ public class MagicGame {
 
     // Skips give the player the ability to skip the question without hurting the players score.
     public void skipQuestion() {
+        player.setSkips(player.getSkips()-1);
+        game.skipLabel.setText("Skips: " + player.getSkips());
+    }
+    /*public void skipQuestion() {
         setSkips(getSkips()-1);
         game.skipLabel.setText("Skips: " + getSkips());
-    }
+    }*/
     // The first 3 questions will be easy and the last two will be hard. Easy questions give less points when correct.
     public void correctAnswerEasy() {
         game.setPlayerPT(game.getPlayerPT()+4);

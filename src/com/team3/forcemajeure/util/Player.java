@@ -6,7 +6,7 @@ import java.util.*;
 
         private String name;
         private String location;
-        private int npcVisitTotal;
+        private int skips = 3;
         private int points;
         private ArrayList<String> inventory = new ArrayList<>();
 
@@ -26,14 +26,6 @@ import java.util.*;
             this.location = location;
         }
 
-        public int getNpcVisitTotal() {
-            return npcVisitTotal;
-        }
-
-        public void setNpcVisitTotal(int npcVisitTotal) {
-            this.npcVisitTotal = npcVisitTotal;
-        }
-
         public int getPoints() {
             return points;
         }
@@ -50,6 +42,12 @@ import java.util.*;
             this.inventory = inventory;
         }
 
+        public int getSkips() {
+            return skips;
+        }
 
+        public void setSkips(int skips) {
+            this.skips = skips;
+        }
     }
 
