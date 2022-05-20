@@ -1,7 +1,7 @@
 package com.team3.forcemajeure.jswing.model;
 
 import com.team3.forcemajeure.util.*;
-import org.junit.jupiter.api.*;
+//import org.junit.jupiter.api.*;
 
 import java.util.*;
 
@@ -48,10 +48,10 @@ public class JavaScriptGame {
     }
 
     public void jsGameStart() {
-            gameFrame.setTexts("jsStart", player.getName() + " !You should know that as a developer that you are constantly using blueprints when designing web applications and pages." +
+            gameFrame.setTexts("jsStart", gameFrame.getPlayer() + " ! You should know that as a developer that you are constantly using blueprints when designing web applications and pages." +
                     "\nYou see, I have this new idea but need help finding the blueprints for the site. " +
                     "I'm on a time crunch and need some quick help.\nLet me run some questions by you, let me know if you think I am on the right path. " +
-                    "\nReady for a challenge?", "Let build!", "Let me check W3Schools first", "", "");
+                    "\nReady for a challenge?", "Let's' build!", "Let me check W3Schools first", "", "");
             // gameFrame.mainTextArea.setFont(gameFrame.getChoiceFont());
             gameFrame.choice1.setVisible(true);
             gameFrame.choice2.setVisible(true);
@@ -145,16 +145,19 @@ public class JavaScriptGame {
         if (gameFrame.getPlayerPT() >= 10) {
             password();
             gameFrame.setTexts("jsEnd", "Well, I think that's it! Thanks for the help!\nAnd for looking out, like always.\nI have this " +
-                            "'magic word' that can get you into\nThe Fantastical Fesser's Show. The password is:\n" + gameFrame.getMagicWord() + "\nNow go out there and kill it\nOh, and" + player.getName() +
-                            ", keep an eye out for my blueprints. I want you to see them.",
+                            "'magic word' that can get you into\nThe Fantastical Fesser's Show. The password is:\n" + gameFrame.getMagicWord() + "\nNow go out there and kill it\nOh, and keep an eye out for my blueprints and bring them back to me.",
                     "Return to Lobby", "", "", "");
             gameFrame.choice1.setVisible(true);
-
+            gameFrame.choice2.setVisible(false);
+            gameFrame.choice3.setVisible(false);
+            gameFrame.choice4.setVisible(false);
         } else if (gameFrame.getPlayerPT() < 10) {
             gameFrame.setTexts("jsEnd2", "I think you may need to go ahead and hit the docs, " + player.getName() + "\nI'm going to need you to come back and try again!",
                     "Return to Lobby", "Try Again", "", "");
             gameFrame.choice1.setVisible(true);
             gameFrame.choice2.setVisible(true);
+            gameFrame.choice3.setVisible(false);
+            gameFrame.choice4.setVisible(false);
             gameFrame.setJsGameDone(false);
 
         }
