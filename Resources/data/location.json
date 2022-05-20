@@ -3,9 +3,9 @@
     "pos": "prelude",
     "id": "00",
     "npc": "false",
-    "maintext": "So you've arrived. At your final test. You cannot believe it, a year ago you were working multiple jobs from dishwasher to line cook... and now you're here. The culmination of your work thus far. You take a deep breath and put on the headset.",
-    "c1": "",
-    "c2": "Start Simulation",
+    "maintext": ", so you've arrived. At your final test. You cannot believe it, a year ago you were working multiple jobs from dishwasher to line cook... and now you're here. The culmination of your work thus far. You take a deep breath and put on the headset.",
+    "c1": "Start Simulation",
+    "c2": "",
     "c3": "",
     "c4":  ""
   },
@@ -62,9 +62,8 @@
     "c1": "Go to Hall",
     "c2": "Go to the Game Floor",
     "c3": "",
-    "c4":  "See Map"
+    "c4": "See Map"
   },
-
   "gameFloor":  {
     "pos": "gameFloor",
     "id": "06",
@@ -75,11 +74,21 @@
     "c3": "Go to the Restaurant",
     "c4":  "Show Map"
   },
+  "preTheater":  {
+    "pos": "preTheater",
+    "id": "07",
+    "npc": "true",
+    "maintext": "Please enter the magic word to watch the show",
+    "c1": "Go to game floor",
+    "c2": "submit magic word",
+    "c3": "",
+    "c4":  ""
+  },
   "theater":  {
     "pos": "theater",
     "id": "07",
     "npc": "true",
-    "maintext": "The theater is abuzz with patrons awaiting to watch the show. You see a Python slither across the stage. A large rabbit shapped bulge in its stomach.",
+    "maintext": "This is the theater",
     "c1": "Go to game floor",
     "c2": "",
     "c3": "",
@@ -119,7 +128,7 @@
     "pos": "jay",
     "id": "11",
     "inventory": "duck race medal",
-    "maintext": " , Jay smiles a warm smile. When I'm not shredding air guitar or I moonlight as a Black Jack Dealer. Ready to find out what your next challenge is? ",
+    "maintext": "Jay smiles a warm smile. When I'm not shredding air guitar, I moonlight as a Black Jack Dealer. Ready to find out what your next challenge is? ",
     "c1": "I'm not ready to play a solo, right now. Explore more",
     "c2": "Start Challenge",
     "c3": "",

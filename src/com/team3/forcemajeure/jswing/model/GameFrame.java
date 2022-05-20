@@ -4,6 +4,7 @@ import com.team3.forcemajeure.jswing.controller.*;
 import com.team3.forcemajeure.util.SoundPlayer;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 
@@ -11,9 +12,8 @@ public class GameFrame {
     private static final GameFrame INSTANCE = new GameFrame();
     private JFrame window;
     private Container con;
-    private JPanel jsTextPanel, jsMenuPanel, jsUserNamePanel, jsTitleNamePanel, jsStartButtonPanel, jsMainTextPanel, jsChoiceButtonPanel, jsPlayerPanel;
     private JPanel magicTextPanel, menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
-    public JLabel magicLabel, inventoryLabel, inventoryLabelName,ptLabelNumber,skipLabel;
+    public JLabel  inventoryLabel, inventoryLabelName,ptLabelNumber,skipLabel;
     private JLabel userNameLabel, titleNameLabel, ptLabel;
     private Font titleFont = new Font("Impact", Font.PLAIN, 80);
     private Font menuBarFont = new Font("Impact", Font.PLAIN, 15);
@@ -25,6 +25,7 @@ public class GameFrame {
     private JTextArea mainTextArea, magicTextArea, jsTextArea;
     private int playerPT;
     public String position;
+
     private String magicWord, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
     public ArrayList<String> inventory = new ArrayList<>();
     private Boolean soundOn = true;
@@ -106,10 +107,15 @@ public class GameFrame {
         userNameLabel = new JLabel("Enter username");
         userNameLabel.setForeground(goldenRod);
         userNameLabel.setFont(menuBarFont);
+        textField= new JTextField();
         textField.setPreferredSize(new Dimension(200,40));
         startButton.addActionListener(e -> {
             if(e.getSource() == startButton){
-                setPlayer(textField.getText());
+                if(textField.getText() == null || textField.getText().equals("")){
+                    setPlayer("Unnamed player");
+                } else {
+                    setPlayer(textField.getText());
+                }
             }
         });
 
@@ -137,7 +143,7 @@ public class GameFrame {
     }
 
     public void setPlayer(String player) {
-        this.player = player;
+            this.player = player;
     }
 
     public boolean isSoundOn() {
@@ -296,11 +302,11 @@ public class GameFrame {
     //Business Methods
     /* creates the components to be added onto the frame */
     public void createGameScreen() {
+        magicWord = "BOOGER";
+        setMagicWord(magicWord);
         userNamePanel.setVisible(false);
         titleNamePanel.setVisible(false);
         startButtonPanel.setVisible(false);
-//        magicTextPanel.setVisible(false);
-
 
         mainTextPanel = new JPanel();
         mainTextPanel.setBounds(220, 75, 600, 425);
@@ -318,6 +324,7 @@ public class GameFrame {
 
         mainTextPanel.add(mainTextArea);
 
+        magicTextField = new JTextField();
         magicTextPanel = new JPanel();
         magicTextPanel.setBounds(220, 75, 600, 425);
         magicTextPanel.setBackground(seaGreen);
@@ -372,7 +379,6 @@ public class GameFrame {
         choiceButtonPanel.add(choice4);
 
 
-
         playerPanel = new JPanel();
         playerPanel.setBounds(250, 0, 680, 50);
         playerPanel.setBackground(seaGreen);
@@ -407,61 +413,78 @@ public class GameFrame {
     /* set up panel to display room's text and image */
     public void setTexts(String pos, String mainText, String choiceOne, String choiceTwo, String choiceThree,
                          String choiceFour) {
+
         if(pos.equals("preTheater")){
-            textField.setVisible(true);
+            magicTextField.setVisible(true);
             mainTextPanel.setVisible(false);
             magicTextPanel.setVisible(true);
             imageBgLabel.setVisible(true);
             gameBgImage = setUp.setImage("preTheater", false);
-
-            textField.setPreferredSize(new Dimension(200,40));
+            magicTextField.setPreferredSize(new Dimension(200,40));
             imageBgLabel.setIcon(gameBgImage);
-            magicTextPanel.add(textField);
+            magicTextPanel.add(magicTextField);
             magicTextPanel.add(imageBgLabel);
             magicTextArea.setText(mainText);
-
             setPreviousRoom(getCurrentRoom());
+
             choice2.addActionListener(e -> {
+                String response = null;
+                String magicTxtField =  magicTextField.getText().toUpperCase().stripLeading().stripTrailing();
                 if (e.getSource() == choice2) {
-                    if(textField.getText().equals("booger")){
-                        System.out.println(textField.getText());
+//                    magicTextField.getText().toUpperCase().stripLeading().stripTrailing();
+                    if(magicTxtField.equals(getMagicWord())){
                         setMagicWordCorrect(true);
                     } else {
-                        System.out.println("sorry no match here");
+                        response = ("Sorry, " + magicTxtField + " is not the magic word.");
+                        if(magicTxtField.equals("I'M AN IDIOT") || magicTxtField.equals("IM AN IDIOT")){
+                            response = ("You're an idiot!");
+                        }
+                        if(magicTxtField.equals("42")){
+                            response = ("Yes, we know that is the meaning of life but it's not the magic word");
+                        }
+                        if(magicTxtField.equals("")){
+                            response = ("No word was given");
+                        }
+                        magicTextArea.setText(response);
                     }
                 }
             });
 
+            choice3.setVisible(false);
+            choice4.setVisible(false);
         } else {
             textField.setVisible(false);
             mainTextPanel.setVisible(true);
             magicTextPanel.setVisible(false);
+            choice2.setVisible(true);
+            choice3.setVisible(true);
+            choice4.setVisible(true);
 
         //if room is null then set bgImage to dock else
         //get bg of image based on room
         if(getPreviousRoom() == null){
             gameBgImage = setUp.setImage("prelude", false);
             setPreviousRoom("prelude");
+            choice2.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
 
             } else {
                 gameBgImage = setUp.setImage(pos, false);
                 setPreviousRoom(getCurrentRoom());
+            choice2.setVisible(true);
+            choice3.setVisible(true);
+            choice4.setVisible(true);
             }
             mainTextPanel.add(imageBgLabel);
             mainTextArea.setText(mainText);
         }
         position = pos;
         choice1.setVisible(true);
-        choice2.setVisible(true);
-        choice3.setVisible(true);
-        choice4.setVisible(true);
         mapLabel.setVisible(false);
         imageBgLabel.setVisible(true);
         setCurrentRoom(pos);
         imageBgLabel.setIcon(gameBgImage);
-//        mainTextPanel.add(imageBgLabel);
-//        magicTextPanel.add(imageBgLabel);
-//        mainTextArea.setText(mainText);
         choice1.setText(choiceOne);
         choice2.setText(choiceTwo);
         choice3.setText(choiceThree);
@@ -494,7 +517,6 @@ public class GameFrame {
         choice2.setVisible(false);
         choice3.setVisible(false);
         choice4.setText("exit map");
-        System.out.println("MAGIC WORD INPUT: " + getMagicWord());
     }
 
 }
