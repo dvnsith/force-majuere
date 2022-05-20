@@ -3,11 +3,9 @@ package com.team3.forcemajeure.jswing.model;
 public class JavaScriptGame {
     private GameFrame gameFrame;
     private Boolean jsGameDone = false;
-    private String magicWord = "booger";
-    // Ctors
-    public JavaScriptGame(){
 
-    }
+    // Ctors
+    public JavaScriptGame(){}
 
     public JavaScriptGame(GameFrame view){
         gameFrame = view;

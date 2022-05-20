@@ -4,7 +4,6 @@ import com.team3.forcemajeure.jswing.controller.*;
 import com.team3.forcemajeure.util.SoundPlayer;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 
@@ -25,7 +24,6 @@ public class GameFrame {
     private JTextArea mainTextArea, magicTextArea;
     private int playerPT;
     public String position;
-
     private String magicWord, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
     public ArrayList<String> inventory = new ArrayList<>();
     private Boolean soundOn = true;
@@ -57,6 +55,7 @@ public class GameFrame {
         window.getContentPane().setBackground(seaGreen);
         window.setLayout(null);
         window.setIconImage(logo.getImage());
+        window.setResizable(false);
         con = window.getContentPane();
 
         Clip themeSong = sound.play("start",true,0, GameFrame.class);
@@ -111,10 +110,11 @@ public class GameFrame {
         textField.setPreferredSize(new Dimension(200,40));
         startButton.addActionListener(e -> {
             if(e.getSource() == startButton){
-                if(textField.getText() == null || textField.getText().equals("")){
-                    setPlayer("Unnamed player");
+                String username = textField.getText().stripLeading().stripTrailing();
+                if(username.length() > 0){
+                    setPlayer(username);
                 } else {
-                    setPlayer(textField.getText());
+                    setPlayer("Unnamed player");
                 }
             }
         });
@@ -271,8 +271,7 @@ public class GameFrame {
     //Business Methods
     /* creates the components to be added onto the frame */
     public void createGameScreen() {
-        magicWord = "BOOGER";
-        setMagicWord(magicWord);
+        setMagicWord("DUCKRACE");
         userNamePanel.setVisible(false);
         titleNamePanel.setVisible(false);
         startButtonPanel.setVisible(false);
@@ -388,6 +387,8 @@ public class GameFrame {
             mainTextPanel.setVisible(false);
             magicTextPanel.setVisible(true);
             imageBgLabel.setVisible(true);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
             gameBgImage = setUp.setImage("preTheater", false);
             magicTextField.setPreferredSize(new Dimension(200,40));
             imageBgLabel.setIcon(gameBgImage);
@@ -400,7 +401,6 @@ public class GameFrame {
                 String response = null;
                 String magicTxtField =  magicTextField.getText().toUpperCase().stripLeading().stripTrailing();
                 if (e.getSource() == choice2) {
-//                    magicTextField.getText().toUpperCase().stripLeading().stripTrailing();
                     if(magicTxtField.equals(getMagicWord())){
                         setMagicWordCorrect(true);
                     } else {
@@ -418,9 +418,6 @@ public class GameFrame {
                     }
                 }
             });
-
-            choice3.setVisible(false);
-            choice4.setVisible(false);
         } else {
             textField.setVisible(false);
             mainTextPanel.setVisible(true);
@@ -472,16 +469,12 @@ public class GameFrame {
         setCurrentRoom(currentRoomName);
         imageBgLabel.setVisible(false);
         mapLabel.setVisible(true);
-
         gameMapImage = setUp.setImage(getCurrentRoom(), true);
-
         choiceButtonPanel.setOpaque(true);
-
         mapLabel.setIcon(gameMapImage);
         mainTextPanel.add(mapLabel);
         position = "map";
         mainTextArea.setText("");
-
         choice1.setVisible(false);
         choice2.setVisible(false);
         choice3.setVisible(false);

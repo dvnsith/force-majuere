@@ -116,6 +116,7 @@ public class SetUp {
                 // show theater image
                 imagePath = isMap ? "/images/map/VisitDock/TheaterMap.jpg" : "/images/chad.jpg";
                 break;
+            case "preending":
             case "ending":
                 // show theater image
                 imagePath = isMap ? "/images/map/VisitDock/TheaterMap.jpg" : "/images/rennie.jpg";
@@ -152,24 +153,38 @@ public class SetUp {
                     }
 
                     if(pos.matches("rennie")){
-                        mainTxt = gameFrame.getPlayer() + gameMap.get("maintext");
                         if(gameFrame.inventory.contains("Blueprint")){
-                            choiceThree = "leave this island";
+                            choiceTwo = "Get key";
+                            mainTxt = "In exchange for this blueprint, I will hand you over the key to success";
+                        } else if(gameFrame.inventory.contains("Key")) {
+
+                        } else {
+                            mainTxt = gameFrame.getPlayer() + gameMap.get("maintext");
                         }
                     }
 
+//                    if(pos.matches("preending")) {
+//
+//                    }
+
                     // if pos = lobby && getBlackJack = true
                         // choice three = investigate noise (goes to nelly)
-                    if(pos.matches("lobby") && gameFrame.getBlackjackPlayed().equals(true)){
-                        if(jsGame.getJsGameDone().equals(true)){
-                            mainTxt = "Now that you know the magic phrase, see chad @ theater";
+                    if(pos.matches("lobby") && gameFrame.getBlackjackPlayed().equals(true)) {
+                        if(gameFrame.getJsGameDone().equals(true) && gameFrame.getMagicQuizDone().equals(true)){
+                            mainTxt = "Looks like Nelly has gone to work on other projects for this island. The blueprint will lead you to the key of success.";
+                        } else if (gameFrame.getJsGameDone().equals(true) && gameFrame.getMagicQuizDone().equals(false)) {
+                            mainTxt = "The show is about to begin. Start making your way to the theater";
                         } else {
                             mainTxt = "Please see Nelly";
                             choiceThree = "Investigate the issue";
                         }
-                        System.out.println("Blackjack played: " + gameFrame.getBlackjackPlayed());
+
                     }
 
+
+                    if(pos.matches("beach") && gameFrame.getMagicQuizDone().equals(true)){
+                        mainTxt = "You hear the sound of music to celebrate your SDE journey. There is one last thing you have to do. Go see Rennie";
+                    }
 
                     // if pos = dock && inventory contains key
                         // choice two = ending()
@@ -189,7 +204,6 @@ public class SetUp {
                     if(pos.matches("restaurant") && gameFrame.getLosses() >= 5){
                         choiceThree = "Order spaghetti & pepsi";
                         mainTxt = "Long day? How about we give you an order of Spaghetti and Pepsi. It's on the house!";
-                        gameFrame.setLosses(0);
                     } else if(pos.matches("restaurant") && gameFrame.getBlackjackPlayed().equals(true)){
                         mainTxt = "There seems to be an issue in the restaurant, you can hear the chef shouting from the back, there appears to be an issue with the ordering system. You can investigate the issue, head to the game floor, or return to the hallway.";
                         choiceThree = "Investigate the issue";
@@ -206,8 +220,11 @@ public class SetUp {
     public void talkInstructor(String position) {
         switch (position) {
             case "rennie":
-                createPanelScene("rennie");
-                gameFrame.choice3.setVisible(false);
+                if(gameFrame.inventory.contains("Key")){
+                    getKey();
+                } else {
+                    createPanelScene("rennie");
+                }
                 break;
             case "nelly":
                 createPanelScene("nelly");
@@ -225,6 +242,22 @@ public class SetUp {
                 break;
         }
     }
+    public void preending(){
+        gameFrame.setTexts("preending", "Hold on to this key, as it will guide you throughout your career.", "Continue", "", "","");
+        gameFrame.choice2.setVisible(false);
+        gameFrame.choice3.setVisible(false);
+        gameFrame.choice4.setVisible(false);
+    }
+    public void getKey(){
+        // set main text with key
+        gameFrame.setTexts("rennie", "Now that you've go the key...", "Go back","Get ready to leave", "", "");
+        gameFrame.choice3.setVisible(false);
+        gameFrame.choice4.setVisible(false);
+
+        gameFrame.inventory.remove("Blueprint");
+        gameFrame.inventory.add("Key");
+        gameFrame.inventoryLabelName.setText(gameFrame.inventory.get(0) + ", " + gameFrame.inventory.get(1) + " ");
+    }
 
     public void miniGame(){
         createPanelScene("miniGame");}
@@ -238,9 +271,14 @@ public class SetUp {
     }
     public void sign(){
         createPanelScene("sign");
+        gameFrame.choice1.setVisible(false);
+        gameFrame.choice2.setVisible(false);
     }
     public void beach() {
         createPanelScene("beach");
+//        if(gameFrame.getMagicQuizDone().equals(true)){
+//            gameFrame.setMainText("You hear the sound of music to celebrate your SDE journey. There is one last thing you have to do. Go see Rennie");
+//        }
     }
     public void lobby() {
         createPanelScene("lobby");
@@ -257,6 +295,7 @@ public class SetUp {
 
     public void theater() {
         createPanelScene("theater");
+        gameFrame.choice3.setVisible(false);
 
     }
 
@@ -268,7 +307,11 @@ public class SetUp {
     public void ending() {
         //if points greater than X amount then show ending
         gameFrame.setTexts("ending", "You unlock the boat with the key and the screen pixelates to black. As you take your VR goggles off, you're feeling exhausted from the challenges. Inside you feel a huge sense of accomplishment in your spirit. \n" +
-                "You feel ready for whatever challenges may come across your journey as an SDE as you remember your training. ", "Leave the Island", "", "","");
+                "You feel ready for whatever challenges may come across your journey as an SDE as you remember your training. ", "scoreboard", "", "","");
+        gameFrame.choice1.setVisible(true);
+        gameFrame.choice2.setVisible(false);
+        gameFrame.choice3.setVisible(false);
+        gameFrame.choice4.setVisible(false);
     }
 
     public void scoreBoard(){

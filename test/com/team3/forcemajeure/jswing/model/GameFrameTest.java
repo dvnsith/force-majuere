@@ -1,11 +1,6 @@
 package com.team3.forcemajeure.jswing.model;
 
-import com.team3.forcemajeure.jswing.controller.*;
-import org.json.simple.*;
 import org.junit.jupiter.api.*;
-
-import java.awt.*;
-import java.awt.event.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 

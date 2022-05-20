@@ -58,7 +58,7 @@ public class ChoiceHandler implements ActionListener {
                 break;
             case "sign":
                 switch(yourChoice) {
-                    case "c1":
+                    case "c3":
                         setUp.dock();
                         break;
                 }
@@ -69,15 +69,16 @@ public class ChoiceHandler implements ActionListener {
                         setUp.beach();
                         break;
                     case "c2":
-                        setUp.miniGame();
-                        break;
-                    case "c3":
-                        if(gameFrame.inventory.contains("Key")){
-                            setUp.ending();
+                        if(gameFrame.inventory.contains("Blueprint")){
+                            setUp.getKey();
+                        } else if(gameFrame.inventory.contains("Key")){
+                            setUp.preending();
                         }
                         break;
                     case "c4":
-                        gameFrame.showMap("beach");
+                        if(gameFrame.getMagicQuizDone().equals(false) || gameFrame.inventory.contains("Blueprint")){
+                            gameFrame.showMap("rennie");
+                        }
                         break;
                 }
                 break;
@@ -90,7 +91,7 @@ public class ChoiceHandler implements ActionListener {
                         setUp.dock();
                         break;
                     case "c3":
-                        setUp.talkInstructor("rennie");
+                            setUp.talkInstructor("rennie");
                         break;
                     case "c4":
                         gameFrame.showMap("beach");
@@ -106,7 +107,7 @@ public class ChoiceHandler implements ActionListener {
                         setUp.beach();
                         break;
                     case "c3":
-                        if(gameFrame.getBlackjackPlayed().equals(true)){
+                        if(gameFrame.getBlackjackPlayed().equals(true) && gameFrame.getJsGameDone().equals(false)){
                             setUp.talkInstructor("nelly");
                         }
                         break;
@@ -124,7 +125,7 @@ public class ChoiceHandler implements ActionListener {
                         javaScriptGame.testStart();
                         break;
                     case "c4":
-                        gameFrame.showMap("lobby");
+                        gameFrame.showMap("nelly");
                         break;
                 }
                 break;
@@ -176,8 +177,10 @@ public class ChoiceHandler implements ActionListener {
                     case "c3":
                         if(gameFrame.getBlackjackPlayed().equals(true)) {
                             setUp.talkInstructor("karl");
-                        } else if(gameFrame.getThirdChoice().equals("Order spaghetti & pepsi")){
+                        } else if(gameFrame.getBlackjackPlayed().equals(false) && gameFrame.getThirdChoice().equals("Order spaghetti & pepsi")){
+                            gameFrame.setLosses(0);
                             setUp.gameFloor();
+
                         }
                         break;
                     case "c4":
@@ -194,7 +197,7 @@ public class ChoiceHandler implements ActionListener {
                         setUp.miniGame();
                         break;
                     case "c4":
-                        gameFrame.showMap("restaurant");
+                        gameFrame.showMap("karl");
                         break;
                 }
                 break;
@@ -204,7 +207,7 @@ public class ChoiceHandler implements ActionListener {
                         setUp.talkInstructor("jay");
                         break;
                     case "c2": //set pre theater method
-                        if(gameFrame.getJsGameDone()){
+                        if(gameFrame.getMagicWordCorrect()){
                             setUp.theater();
                         } else {
                             setUp.preTheater();
@@ -392,6 +395,13 @@ public class ChoiceHandler implements ActionListener {
                 switch (yourChoice) {
                     case "c1":
                         setUp.theater();
+                        break;
+                }
+                break;
+            case "preending":
+                switch(yourChoice){
+                    case "c1":
+                        setUp.ending();
                         break;
                 }
                 break;
