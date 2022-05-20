@@ -1,6 +1,6 @@
 package com.team3.forcemajeure.jswing.model;
 
-import com.team3.forcemajeure.util.ReadFile;
+import com.team3.forcemajeure.util.*;
 import org.json.simple.JSONObject;
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +13,7 @@ public class SetUp {
     private MagicGame magicGame;
     private JavaScriptGame jsGame;
     private JSONObject jsonObject;
+    Player player = new Player();
 
     // Ctors
 
@@ -39,7 +40,7 @@ public class SetUp {
         gameFrame.inventory.add("Map");
         gameFrame.inventoryLabelName.setText(gameFrame.inventory.get(0));
         gameFrame.ptLabelNumber.setText("" + gameFrame.getPlayerPT());
-        gameFrame.skipLabel.setText("Skips: " + magicGame.getSkips());
+        gameFrame.skipLabel.setText("Skips: " + player.getSkips());
         //start off with dock
         prelude();
     }
@@ -71,9 +72,15 @@ public class SetUp {
                 // show lobby image
                 imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/lobby.jpg";
                 break;
-            case "nelly": case "jsStart": case "jsMid": case "jsEnd":
+            case "nelly": case "jsStart": case "jsQuestionThree": case "jsQuestionFour": case "jsQuestionTwo": case "jsEnd":
                 // show talkInstructor image
-                imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/nelly.jpg";
+                imagePath = isMap ? "/images/map/VisitDock/LobbyMap.jpg" : "/images/nelly.jpg";
+                break;
+            case "jsQuestionOne":
+                imagePath = isMap ? "/images/map/VisitDock/LobbyMap.jpg" : "/images/js1.png";
+                break;
+            case "jsQuestionFive":
+                imagePath = isMap ? "/images/map/VisitDock/LobbyMap.jpg" : "/images/js2.png";
                 break;
             case "hall":
                 // show hall image
@@ -157,13 +164,15 @@ public class SetUp {
                         // choice three = investigate noise (goes to nelly)
                     if(pos.matches("lobby") && gameFrame.getBlackjackPlayed().equals(true)){
                         if(jsGame.getJsGameDone().equals(true)){
-                            mainTxt = "Now that you know the magic phrase, see chad @ theater";
-                        } else {
+                            mainTxt = "Now that you know the magic phrase, go check out the Fantastical Feeser's Show.";
+                            choiceOne = "Return to the lobby.";
+                         } else {
                             mainTxt = "Please see Nelly";
                             choiceThree = "Investigate the issue";
                         }
                         System.out.println("Blackjack played: " + gameFrame.getBlackjackPlayed());
                     }
+
 
                     // if pos = theater && boolean beatNellysGame = true
                             // magicWord panel => takes user input (just like username) when clicked
@@ -193,6 +202,7 @@ public class SetUp {
                         mainTxt = "There seems to be an issue in the restaurant, you can hear the chef shouting from the back, there appears to be an issue with the ordering system. You can investigate the issue, head to the game floor, or return to the hallway.";
                         choiceThree = "Investigate the issue";
                     }
+
 
                     gameFrame.setTexts(pos,mainTxt,choiceOne,choiceTwo,choiceThree,gameMap.get("c4"));/* set valuue of room here*/
 

@@ -1,9 +1,9 @@
 package com.team3.forcemajeure.jswing.model;
 
 import com.team3.forcemajeure.jswing.controller.*;
+import com.team3.forcemajeure.util.*;
 import org.json.simple.*;
 import org.junit.jupiter.api.*;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -14,6 +14,7 @@ class GameFrameTest {
     SetUp setUp = new SetUp();
     GameFrame gameFrame = new GameFrame();
     BlackJackGame blackJackGame = new BlackJackGame();
+    Player player = new Player();
 
 
     @BeforeEach
@@ -163,5 +164,18 @@ class GameFrameTest {
         System.out.println("Expected: " + expected + "\nActual: " + result);
 
     }
+    @Test
+    void AssertEqualsPlayerPointValueIncreasesWhenPointsAreAddedInGamePlay(){
+        String initial = gameFrame.ptLabelNumber.getText();
+        gameFrame.setPlayerPT(12);
+        gameFrame.ptLabelNumber.setText("" + gameFrame.getPlayerPT());
+        String response = gameFrame.ptLabelNumber.getText();
+        String expected = String.valueOf("" + "12");
+        assertEquals(expected, response);
+        System.out.println("Expected: " + expected + "\nActual: " + response);
+
+    }
+
+
 
 }

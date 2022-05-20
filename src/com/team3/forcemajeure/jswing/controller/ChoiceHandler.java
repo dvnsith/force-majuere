@@ -11,6 +11,8 @@ public class ChoiceHandler implements ActionListener {
     private BlackJackGame blackJackGame;
     private JavaScriptGame javaScriptGame;
     private SetUp setUp;
+    private int skips;
+
 
     // Ctor
     public ChoiceHandler(){
@@ -121,29 +123,100 @@ public class ChoiceHandler implements ActionListener {
                         setUp.lobby();
                         break;
                     case "c2":
-                        javaScriptGame.testStart();
+                        javaScriptGame.jsGameStart();
                         break;
-//                    case "c3":
-//                        if(gameFrame.inventory.contains("Key")){
-//                            setUp.ending();
-//                        }
-//                        break;
                     case "c4":
                         gameFrame.showMap("lobby");
                         break;
                 }
                 break;
             case "jsStart":
-                switch (yourChoice){
+                switch (yourChoice) {
                     case "c1":
-                        javaScriptGame.testMid();
+                        javaScriptGame.jsQuestionOne();
+                        break;
+                    case "c2":
+                        setUp.lobby();
                         break;
                 }
                 break;
-            case "jsMid":
+            case "jsQuestionOne":
                 switch (yourChoice){
                     case "c1":
-                        javaScriptGame.testEnd();
+                        javaScriptGame.correctImagesAnswer();
+                        javaScriptGame.jsQuestionTwo();
+                        break;
+                    case "c2":
+                        javaScriptGame.wrongAnswer();
+                        javaScriptGame.jsQuestionTwo();
+                        break;
+                    case "c4":
+                        javaScriptGame.skipQuestion();
+                        javaScriptGame.jsQuestionTwo();
+                        break;
+                }
+                break;
+            case "jsQuestionTwo":
+                switch (yourChoice){
+                    case "c1":
+                        javaScriptGame.wrongAnswer();
+                        javaScriptGame.jsQuestionThree();
+                        break;
+                    case "c2":
+                        javaScriptGame.correctAnswer();
+                        javaScriptGame.jsQuestionThree();
+                        break;
+                    case "c4":
+                        javaScriptGame.skipQuestion();
+                        javaScriptGame.jsQuestionThree();
+                        break;
+                }
+                break;
+            case "jsQuestionThree":
+                switch (yourChoice){
+                    case "c1":
+                        javaScriptGame.wrongAnswer();
+                        javaScriptGame.jsQuestionFour();
+                        break;
+                    case "c2":
+                        javaScriptGame.correctAnswer();
+                        javaScriptGame.jsQuestionFour();
+                        break;
+                    case "c4":
+                        javaScriptGame.skipQuestion();
+                        javaScriptGame.jsQuestionFour();
+                        break;
+                }
+                break;
+            case "jsQuestionFour":
+                switch (yourChoice){
+                    case "c1":
+                        javaScriptGame.correctAnswer();
+                        javaScriptGame.jsQuestionFive();
+                        break;
+                    case "c2":
+                        javaScriptGame.wrongAnswer();
+                        javaScriptGame.jsQuestionFive();
+                        break;
+                    case "c4":
+                        javaScriptGame.skipQuestion();
+                        javaScriptGame.jsQuestionFive();
+                        break;
+                }
+                break;
+            case "jsQuestionFive":
+                switch (yourChoice){
+                    case "c1":
+                        javaScriptGame.wrongAnswer();
+                        javaScriptGame.jsEnd();
+                        break;
+                    case "c2":
+                        javaScriptGame.correctImagesAnswer();
+                        javaScriptGame.jsEnd();
+                        break;
+                    case "c4":
+                        javaScriptGame.skipQuestion();
+                        javaScriptGame.jsEnd();
                         break;
                 }
                 break;
@@ -151,6 +224,9 @@ public class ChoiceHandler implements ActionListener {
                 switch (yourChoice){
                     case "c1":
                         setUp.lobby();
+                        break;
+                    case "c2":
+                        javaScriptGame.jsGameStart();
                         break;
                 }
                 break;
@@ -181,8 +257,10 @@ public class ChoiceHandler implements ActionListener {
                     case "c3":
                         if(gameFrame.getBlackjackPlayed().equals(true)) {
                             setUp.talkInstructor("karl");
+                            break;
                         } else if(gameFrame.getThirdChoice().equals("Order spaghetti & pepsi")){
-                            setUp.gameFloor();
+                            setUp.restaurant();
+                            break;
                         }
                         break;
                     case "c4":
@@ -355,7 +433,7 @@ public class ChoiceHandler implements ActionListener {
                         magicGame.correctAnswerEasy();
                         magicGame.magicQuestionFour();
                         break;
-                    case "c2": case "c3":
+                    case "c2":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionFour();
                         break;

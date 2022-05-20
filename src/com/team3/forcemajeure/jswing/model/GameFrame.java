@@ -11,17 +11,18 @@ public class GameFrame {
     private static final GameFrame INSTANCE = new GameFrame();
     private JFrame window;
     private Container con;
+    private JPanel jsTextPanel, jsMenuPanel, jsUserNamePanel, jsTitleNamePanel, jsStartButtonPanel, jsMainTextPanel, jsChoiceButtonPanel, jsPlayerPanel;
     private JPanel magicTextPanel, menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
     public JLabel magicLabel, inventoryLabel, inventoryLabelName,ptLabelNumber,skipLabel;
     private JLabel userNameLabel, titleNameLabel, ptLabel;
     private Font titleFont = new Font("Impact", Font.PLAIN, 80);
-    private Font menuBarFont = new Font("Impact", Font.PLAIN, 20);
-    private Font choiceFont = new Font("Impact", Font.PLAIN, 16);
-    private Font narrativeFont = new Font("Impact", Font.PLAIN, 22);
-    private Font smallFont = new Font("Impact", Font.PLAIN, 16);
+    private Font menuBarFont = new Font("Impact", Font.PLAIN, 15);
+    private Font choiceFont = new Font("Impact", Font.PLAIN, 14);
+    private Font narrativeFont = new Font("Impact", Font.PLAIN, 20);
+    private Font smallFont = new Font("Impact", Font.PLAIN, 12);
     public JButton magicButton, soundButton, startButton, choice1, choice2, choice3, choice4;
     private  JTextField textField = new JTextField();
-    private JTextArea mainTextArea, magicTextArea;
+    private JTextArea mainTextArea, magicTextArea, jsTextArea;
     private int playerPT;
     public String position;
     private String magicWord, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
@@ -98,7 +99,7 @@ public class GameFrame {
         startButton = new JButton("START");
         startButton.setBackground(darkTeal);
         startButton.setForeground(skyBlue);
-        startButton.setFont(choiceFont);
+        startButton.setFont(narrativeFont);
         startButton.addActionListener(tsHandler);
         startButton.setFocusPainted(false);
 
@@ -111,8 +112,6 @@ public class GameFrame {
                 setPlayer(textField.getText());
             }
         });
-
-
 
 
         menuPanel.add(soundButton);
@@ -262,7 +261,37 @@ public class GameFrame {
         this.magicWordCorrect = magicWordCorrect;
     }
 
+    public Font getMenuBarFont() {
+        return menuBarFont;
+    }
 
+    public void setMenuBarFont(Font menuBarFont) {
+        this.menuBarFont = menuBarFont;
+    }
+
+    public Font getChoiceFont() {
+        return choiceFont;
+    }
+
+    public void setChoiceFont(Font choiceFont) {
+        this.choiceFont = choiceFont;
+    }
+
+    public Font getNarrativeFont() {
+        return narrativeFont;
+    }
+
+    public void setNarrativeFont(Font narrativeFont) {
+        this.narrativeFont = narrativeFont;
+    }
+
+    public Font getSmallFont() {
+        return smallFont;
+    }
+
+    public void setSmallFont(Font smallFont) {
+        this.smallFont = smallFont;
+    }
 
     //Business Methods
     /* creates the components to be added onto the frame */
@@ -345,17 +374,17 @@ public class GameFrame {
 
 
         playerPanel = new JPanel();
-        playerPanel.setBounds(250, 0, 600, 50);
+        playerPanel.setBounds(250, 0, 680, 50);
         playerPanel.setBackground(seaGreen);
         playerPanel.setLayout(new GridLayout(1, 4));
         con.add(playerPanel);
         ptLabel = new JLabel("Points:");
-        ptLabel.setFont(menuBarFont);
+        ptLabel.setFont(smallFont);
         ptLabel.setForeground(skyBlue);
         playerPanel.add(ptLabel);
         ptLabelNumber = new JLabel();
         ptLabelNumber.setFont(menuBarFont);
-        ptLabelNumber.setForeground(skyBlue);
+        ptLabelNumber.setForeground(goldenRod);
         playerPanel.add(ptLabelNumber);
         inventoryLabel = new JLabel("Inventory:");
         inventoryLabel.setFont(menuBarFont);
@@ -364,7 +393,7 @@ public class GameFrame {
         playerPanel.add(inventoryLabel);
         inventoryLabelName = new JLabel();
         inventoryLabelName.setFont(menuBarFont);
-        inventoryLabelName.setForeground(skyBlue);
+        inventoryLabelName.setForeground(goldenRod);
         playerPanel.add(inventoryLabelName);
         skipLabel = new JLabel();
         skipLabel.setFont(menuBarFont);
