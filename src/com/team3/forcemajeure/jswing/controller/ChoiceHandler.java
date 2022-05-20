@@ -34,8 +34,7 @@ public class ChoiceHandler implements ActionListener {
         String yourChoice = event.getActionCommand();
 
         switch (gameFrame.position) {
-            case "prelude":
-            case "sign":
+            case "prelude": case "sign":
                 switch (yourChoice) {
                     case "c1":
                         setUp.dock();
