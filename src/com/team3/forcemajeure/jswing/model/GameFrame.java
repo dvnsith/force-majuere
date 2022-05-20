@@ -3,7 +3,7 @@ package com.team3.forcemajeure.jswing.model;
 import com.team3.forcemajeure.jswing.controller.*;
 import com.team3.forcemajeure.util.SoundPlayer;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -20,8 +20,9 @@ public class GameFrame {
     private Font choiceFont = new Font("Impact", Font.PLAIN, 14);
     private Font narrativeFont = new Font("Impact", Font.PLAIN, 20);
     private Font smallFont = new Font("Impact", Font.PLAIN, 12);
-    public JButton magicButton, soundButton, startButton, choice1, choice2, choice3, choice4;
+    public JButton  magicButton, soundButton, startButton, choice1, choice2, choice3, choice4;
     private  JTextField textField = new JTextField();
+    private  JTextField magicTextField = new JTextField();
     private JTextArea mainTextArea, magicTextArea, jsTextArea;
     private int playerPT;
     public String position;
@@ -45,6 +46,8 @@ public class GameFrame {
     private Color seaGreen = new Color(12, 168, 153);
     private Color goldenRod = new Color(195, 178, 70);
     private int losses = 0;
+    //JS - added condition for stack overflow game
+    private Boolean soGameDone = false;
     private Boolean jsGameDone = false;
     private Boolean magicQuizDone = false;
     private Boolean magicWordCorrect = false;
@@ -234,6 +237,13 @@ public class GameFrame {
         this.losses = losses;
     }
 
+    public Boolean getSoGameDone() {
+        return soGameDone;
+    }
+
+    public void setSoGameDone(Boolean soGameDone) {
+        this.soGameDone = soGameDone;
+    }
 
     public Boolean getJsGameDone() {
         return jsGameDone;
@@ -302,7 +312,6 @@ public class GameFrame {
     //Business Methods
     /* creates the components to be added onto the frame */
     public void createGameScreen() {
-        magicWord = "BOOGER";
         setMagicWord(magicWord);
         userNamePanel.setVisible(false);
         titleNamePanel.setVisible(false);
@@ -427,9 +436,11 @@ public class GameFrame {
             magicTextArea.setText(mainText);
             setPreviousRoom(getCurrentRoom());
 
+            System.out.println("MAGIC WORD IS: " + getMagicWord());
+
             choice2.addActionListener(e -> {
                 String response = null;
-                String magicTxtField =  magicTextField.getText().toUpperCase().stripLeading().stripTrailing();
+                String magicTxtField =  magicTextField.getText().toLowerCase();
                 if (e.getSource() == choice2) {
 //                    magicTextField.getText().toUpperCase().stripLeading().stripTrailing();
                     if(magicTxtField.equals(getMagicWord())){

@@ -1,12 +1,13 @@
 package com.team3.forcemajeure.jswing.model;
 
 import com.team3.forcemajeure.util.*;
+import org.junit.jupiter.api.*;
 
 import java.util.*;
 
 public class JavaScriptGame {
     private GameFrame gameFrame;
-    SetUp setup = new SetUp();
+    private SetUp setup;
     private Player player = new Player();
     private boolean correctAnswer;
     private Boolean jsGameDone = false;
@@ -47,22 +48,21 @@ public class JavaScriptGame {
     }
 
     public void jsGameStart() {
-        gameFrame.setTexts("jsStart", player.getName() + " !You should know that as a developer that you are constantly using blueprints when designing web applications and pages." +
-                "\nYou see, I have this new idea but need help finding the blueprints for the site. " +
-                "I'm on a time crunch and need some quick help.\nLet me run some questions by you, let me know if you think I am on the right path. " +
-                "\nReady for a challenge?", "Let build!", "Let me check W3Schools first", "", "");
-        // gameFrame.mainTextArea.setFont(gameFrame.getChoiceFont());
-        gameFrame.choice1.setVisible(true);
-        gameFrame.choice2.setVisible(true);
-
-
+            gameFrame.setTexts("jsStart", player.getName() + " !You should know that as a developer that you are constantly using blueprints when designing web applications and pages." +
+                    "\nYou see, I have this new idea but need help finding the blueprints for the site. " +
+                    "I'm on a time crunch and need some quick help.\nLet me run some questions by you, let me know if you think I am on the right path. " +
+                    "\nReady for a challenge?", "Let build!", "Let me check W3Schools first", "", "");
+            // gameFrame.mainTextArea.setFont(gameFrame.getChoiceFont());
+            gameFrame.choice1.setVisible(true);
+            gameFrame.choice2.setVisible(true);
     }
 
     public void jsQuestionOne() {
         if (player.getSkips() > 0) {
             gameFrame.setTexts("jsQuestionOne", "Am I seeing this right?\nIt looks like there are 2 elements named 'trail'. " +
                     "What do you think?", "I agree, it is 2", "No, that's not right", "", "Skip Question");
-            gameFrame.choice3.setVisible(false);
+            gameFrame.choice1.setVisible(true);
+            gameFrame.choice2.setVisible(true);
             gameFrame.choice4.setVisible(true);
         } else if (player.getSkips() <= 0) {
             gameFrame.setTexts("jsQuestionOne", "Am I seeing this right?\nIt looks like there are 2 elements named 'trail'. " +
@@ -139,24 +139,23 @@ public class JavaScriptGame {
             gameFrame.choice4.setVisible(false);
         }
 
-        gameFrame.setJsGameDone(true);
     }
 
     public void jsEnd() {
         if (gameFrame.getPlayerPT() >= 10) {
             password();
             gameFrame.setTexts("jsEnd", "Well, I think that's it! Thanks for the help!\nAnd for looking out, like always.\nI have this " +
-                            "'magic word' that can get you into\nThe Fantastical Fesser's Show. The password is:\n" + getPassword().toUpperCase() + "\nNow go out there and kill it\nOh, and" + player.getName() +
+                            "'magic word' that can get you into\nThe Fantastical Fesser's Show. The password is:\n" + gameFrame.getMagicWord() + "\nNow go out there and kill it\nOh, and" + player.getName() +
                             ", keep an eye out for my blueprints. I want you to see them.",
                     "Return to Lobby", "", "", "");
             gameFrame.choice1.setVisible(true);
-            gameFrame.setJsGameDone(true);
-            System.out.println(getJsGameDone() + "Password: " + getPassword());
+
         } else if (gameFrame.getPlayerPT() < 10) {
-            gameFrame.setTexts("jsEnd", "I think you may need to go ahead and hit the docs, " + player.getName() + "\nI'm going to need you to come back and try again!",
+            gameFrame.setTexts("jsEnd2", "I think you may need to go ahead and hit the docs, " + player.getName() + "\nI'm going to need you to come back and try again!",
                     "Return to Lobby", "Try Again", "", "");
             gameFrame.choice1.setVisible(true);
             gameFrame.choice2.setVisible(true);
+            gameFrame.setJsGameDone(false);
 
         }
     }
@@ -185,7 +184,7 @@ public class JavaScriptGame {
         gameFrame.ptLabelNumber.setText("" + gameFrame.getPlayerPT());
     }
 
-    public Boolean password() {
+    public void password() {
         ArrayList<String> passwordArray = new ArrayList<>();
         passwordArray.add("duck race");
         passwordArray.add("no cap");
@@ -193,14 +192,18 @@ public class JavaScriptGame {
         passwordArray.add("cherry pepsi");
         passwordArray.add("vim froze again");
         int random = (int) Math.round((Math.random() * 4));
-        setPassword(passwordArray.get(random));
-        gameFrame.inventory.add(password);
-        gameFrame.inventoryLabelName.setText(gameFrame.inventory.get(0) + ", " + gameFrame.inventory.get(1).toUpperCase());
+        String rand = passwordArray.get(random);
+        gameFrame.setMagicWord(rand);
+        gameFrame.inventory.add(0, gameFrame.getMagicWord());
+        gameFrame.inventoryLabelName.setFont(gameFrame.getSmallFont());
 
+        gameFrame.setJsGameDone(true);
         setJsGameDone(true);
+        gameFrame.inventoryLabelName.setText(gameFrame.inventory.toString());
         System.out.println("Inventory: " + gameFrame.inventory + "\nPassword: " + password + "\nJS Game Done: ");
-        return getJsGameDone();
     }
+
+
 }
 
 

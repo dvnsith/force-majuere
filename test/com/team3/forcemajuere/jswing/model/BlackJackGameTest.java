@@ -2,11 +2,9 @@ package com.team3.forcemajuere.jswing.model;
 
 import com.team3.forcemajeure.jswing.model.BlackJackGame;
 import com.team3.forcemajeure.jswing.model.GameFrame;
-import org.junit.Test;
-
-
-import static org.junit.Assert.*;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BlackJackGameTest {
 

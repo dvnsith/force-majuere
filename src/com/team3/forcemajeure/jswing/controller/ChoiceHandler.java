@@ -10,6 +10,7 @@ public class ChoiceHandler implements ActionListener {
     private MagicGame magicGame;
     private BlackJackGame blackJackGame;
     private JavaScriptGame javaScriptGame;
+    private StackOverflowGame soGame;
     private SetUp setUp;
     private int skips;
 
@@ -24,6 +25,7 @@ public class ChoiceHandler implements ActionListener {
         blackJackGame = new BlackJackGame(view);
         setUp = new SetUp(view);
         javaScriptGame = new JavaScriptGame(view);
+        soGame = new StackOverflowGame(view);
     }
 
     // Business methods
@@ -33,6 +35,7 @@ public class ChoiceHandler implements ActionListener {
 
         switch (gameFrame.position) {
             case "prelude":
+            case "sign":
                 switch (yourChoice) {
                     case "c1":
                         setUp.dock();
@@ -55,13 +58,6 @@ public class ChoiceHandler implements ActionListener {
             case "map":
                 switch (yourChoice) {
                     case "c4": gameFrame.setTexts(gameFrame.getCurrentRoom(), gameFrame.getMainText(), gameFrame.getFirstChoice(),gameFrame.getSecondChoice(), gameFrame.getThirdChoice(), gameFrame.getFourthChoice());// get previous method of scene
-                        break;
-                }
-                break;
-            case "sign":
-                switch(yourChoice) {
-                    case "c1":
-                        setUp.dock();
                         break;
                 }
                 break;
@@ -225,8 +221,25 @@ public class ChoiceHandler implements ActionListener {
                     case "c1":
                         setUp.lobby();
                         break;
+                }
+                break;
+            case "jsEnd2":
+                switch (yourChoice){
+                    case "c1":
+                        setUp.lobby();
+                        break;
                     case "c2":
                         javaScriptGame.jsGameStart();
+                        break;
+                }
+                break;
+            case "jsNoStart":
+                switch (yourChoice){
+                    case "c1":
+                        setUp.gameFloor();
+                        break;
+                    case "c2":
+                        setUp.hall();
                         break;
                 }
                 break;
@@ -255,14 +268,13 @@ public class ChoiceHandler implements ActionListener {
                         setUp.gameFloor();
                         break;
                     case "c3":
-                        if(gameFrame.getBlackjackPlayed().equals(true)) {
+                        if (gameFrame.getBlackjackPlayed().equals(true)) {
                             setUp.talkInstructor("karl");
                             break;
-                        } else if(gameFrame.getThirdChoice().equals("Order spaghetti & pepsi")){
+                        } else if (gameFrame.getThirdChoice().equals("Order Spaghetti & Pepsi")) {
                             setUp.restaurant();
                             break;
                         }
-                        break;
                     case "c4":
                         gameFrame.showMap("restaurant");
                         break;
@@ -274,10 +286,148 @@ public class ChoiceHandler implements ActionListener {
                         setUp.restaurant();
                         break;
                     case "c2":
-                        setUp.miniGame();
+                        soGame.soGameStart();
                         break;
                     case "c4":
                         gameFrame.showMap("restaurant");
+                        break;
+                }
+                break;
+            case "soNoStart":
+                switch (yourChoice) {
+                    case "c1":
+                        setUp.gameFloor();
+                        break;
+                    case "c2":
+                        setUp.hall();
+                        break;
+                    case "c3":
+                        setUp.restaurant();
+                        break;
+                }
+                break;
+            case "soStart":
+                switch (yourChoice) {
+                    case "c1":
+                        soGame.soQuestionOne();
+                        break;
+                    case "c2":
+                        soGame.ideSet();
+                        break;
+                    case "c3":
+                        setUp.restaurant();
+                        break;
+                }
+                break;
+            case "soQuestionOne":
+                switch (yourChoice){
+                    case "c1": case "c3":
+                        soGame.soQuestionTwo();
+                        break;
+                    case "c2":
+                        soGame.correctAnswer();
+                        soGame.soQuestionTwo();
+                        break;
+                    case "c4":
+                        soGame.skipQuestion();
+                        soGame.soQuestionTwo();
+                        break;
+                }
+                break;
+            case "soQuestionTwo":
+                switch (yourChoice){
+                    case "c1": case "c2":
+                        soGame.soQuestionThree();
+                        break;
+                    case "c3":
+                        soGame.correctAnswer();
+                        soGame.soQuestionThree();
+                        break;
+                    case "c4":
+                        soGame.skipQuestion();
+                        soGame.soQuestionThree();
+                        break;
+                }
+                break;
+            case "soQuestionThree":
+                switch (yourChoice){
+                    case "c1":
+                        soGame.correctAnswer();
+                        soGame.soQuestionFour();
+                        break;
+                    case "c2": case "c3":
+                        soGame.soQuestionFour();
+                        break;
+                    case "c4":
+                        soGame.skipQuestion();
+                        soGame.soQuestionFour();
+                        break;
+                }
+                break;
+            case "soQuestionFour":
+                switch (yourChoice){
+                    case "c1":
+                        soGame.correctAnswer();
+                        soGame.soQuestionFive();
+                        break;
+                    case "c2": case "c3":
+                        soGame.soQuestionFive();
+                        break;
+                    case "c4":
+                        soGame.skipQuestion();
+                        soGame.soQuestionFive();
+                        break;
+                }
+                break;
+            case "soQuestionFive":
+                switch (yourChoice){
+                    case "c2": case "c3":
+                        soGame.soEnd();
+                        break;
+                    case "c1":
+                        soGame.correctAnswer();
+                        soGame.soEnd();
+                        break;
+                    case "c4":
+                        soGame.skipQuestion();
+                        soGame.soEnd();
+                        break;
+                }
+                break;
+            case "soEnd":
+                switch (yourChoice){
+                    case "c1":
+                        soGame.joke();
+                        break;
+                    case "c2":
+                        soGame.pepsi();
+                        setUp.restaurant();
+                        break;
+                    case "c3":
+                        setUp.restaurant();
+                        break;
+                }
+                break;
+            case "joke":
+                switch (yourChoice){
+                    case "c1":
+                        soGame.joke();
+                        break;
+                    case "c2":
+                        setUp.restaurant();
+                        break;
+                }
+                break;
+            case "ideSet":
+                switch (yourChoice){
+                    case "c1":
+                        soGame.ideSet();
+                        break;
+                    case "c2":
+                        soGame.soQuestionOne();
+                        break;
+                    case"c3":
+                        setUp.restaurant();
                         break;
                 }
                 break;
@@ -288,10 +438,9 @@ public class ChoiceHandler implements ActionListener {
                         break;
                     case "c2": //set pre theater method
                         if(gameFrame.getJsGameDone()){
-                            setUp.theater();
-                        } else {
                             setUp.preTheater();
-                        }
+                        } else {
+                            setUp.theater();}
                         break;
                     case "c3":
                         setUp.restaurant();
