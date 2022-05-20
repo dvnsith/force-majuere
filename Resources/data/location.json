@@ -36,7 +36,7 @@
     "pos": "lobby",
     "id": "03",
     "npc": "true",
-    "maintext": "You are in a massive resort lobby. It is extravagantly decorated. As you are looking through the lobby, you hear a familiar voice.",
+    "maintext": "You are in a massive resort lobby. Although it is currently under renovations, it is extravagantly decorated. You see signs about a blackjack tournament on the Game Floor.",
     "c1": "Go to the Hall",
     "c2": "Go to the Beach",
     "c3": "",
@@ -58,7 +58,7 @@
     "pos": "restaurant",
     "id": "05",
     "npc": "true",
-    "maintext": "Welcome to the Italy's very own virtual restaurant",
+    "maintext": "The Italian Bistro is currently empty, but you can smell the aroma of spices cooking in the back. The host says they'll be serving soon.",
     "c1": "Go to Hall",
     "c2": "Go to the Game Floor",
     "c3": "",
@@ -98,7 +98,7 @@
     "pos": "rennie",
     "id": "08",
     "inventory": "sanddollar",
-    "maintext": ", Rennie smiles as he greets you: 'Welcome to your final virtual challenge! Your cohort has been one of the best so far, so at this point. Have fun. Are you ready to start your first challenge?' ",
+    "maintext": ", Rennie smiles as he greets you: 'Welcome to your final virtual challenge! Your cohort has been one of the best so far, so at this point. Have fun. Are you ready to start exploring the island resort?' ",
     "c1": "Go Explore",
     "c2": "",
     "c3": "",
@@ -149,9 +149,9 @@
     "id": "13",
     "npc": "false",
     "maintext": "You Read the Sign.",
-    "c1": "",
+    "c1": "Return to the Dock",
     "c2": "",
-    "c3": "Return to the Dock",
-    "c4":"Show Map"
+    "c3": "",
+    "c4":""
   }
 }

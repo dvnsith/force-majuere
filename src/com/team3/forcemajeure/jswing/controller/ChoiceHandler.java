@@ -34,8 +34,7 @@ public class ChoiceHandler implements ActionListener {
         String yourChoice = event.getActionCommand();
 
         switch (gameFrame.position) {
-            case "prelude":
-            case "sign":
+            case "prelude": case "sign":
                 switch (yourChoice) {
                     case "c1":
                         setUp.dock();
@@ -69,8 +68,6 @@ public class ChoiceHandler implements ActionListener {
                     case "c2":
                         if(gameFrame.inventory.contains("Blueprint")){
                             setUp.getKey();
-                        } else if(gameFrame.inventory.contains("Key")){
-                            setUp.preending();
                         }
                         break;
                     case "c4":
@@ -271,12 +268,7 @@ public class ChoiceHandler implements ActionListener {
                     case "c3":
                         if (gameFrame.getBlackjackPlayed().equals(true)) {
                             setUp.talkInstructor("karl");
-//                        } else if(gameFrame.getBlackjackPlayed().equals(false) && gameFrame.getThirdChoice().equals("Order spaghetti & pepsi")) {
-//                            gameFrame.setLosses(0);
-//                            setUp.gameFloor();
-//                        }
-                        } else if(gameFrame.getThirdChoice().equals("Order spaghetti & pepsi")) {
-                            setUp.gameFloor();
+//
                         }
                         break;
                     case "c4":
@@ -629,13 +621,6 @@ public class ChoiceHandler implements ActionListener {
                 switch (yourChoice) {
                     case "c1":
                         setUp.theater();
-                        break;
-                }
-                break;
-            case "preending":
-                switch(yourChoice){
-                    case "c1":
-                        setUp.ending();
                         break;
                 }
                 break;
