@@ -1,6 +1,6 @@
 package com.team3.forcemajeure.jswing.model;
 
-import com.team3.forcemajeure.util.ReadFile;
+import com.team3.forcemajeure.util.*;
 import org.json.simple.JSONObject;
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +13,8 @@ public class SetUp {
     private MagicGame magicGame;
     private JavaScriptGame jsGame;
     private JSONObject jsonObject;
+    private StackOverflowGame soGame;
+    Player player = new Player();
 
     // Ctors
     public SetUp(){}
@@ -21,6 +23,7 @@ public class SetUp {
         gameFrame = view;
         magicGame = new MagicGame(view);
         jsGame = new JavaScriptGame(view);
+        soGame = new StackOverflowGame(view);
     }
 
     // accessor methods
@@ -38,7 +41,7 @@ public class SetUp {
         gameFrame.inventory.add("Map");
         gameFrame.inventoryLabelName.setText(gameFrame.inventory.get(0));
         gameFrame.ptLabelNumber.setText("" + gameFrame.getPlayerPT());
-        gameFrame.skipLabel.setText("Skips: " + magicGame.getSkips());
+        gameFrame.skipLabel.setText("Skips: " + player.getSkips());
         //start off with dock
         prelude();
     }
@@ -70,18 +73,34 @@ public class SetUp {
                 // show lobby image
                 imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/lobby.jpg";
                 break;
-            case "nelly": case "jsStart": case "jsMid": case "jsEnd":
+            case "nelly": case "jsStart": case "jsEnd2case": case "jsEnd2": case "jsQuestionThree": case "jsQuestionFour": case "jsQuestionTwo": case "jsEnd":
                 // show talkInstructor image
-                imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/nelly.jpg";
+                imagePath = isMap ? "/images/map/VisitDock/LobbyMap.jpg" : "/images/nelly.jpg";
+                break;
+            case "jsQuestionOne":
+                imagePath = isMap ? "/images/map/VisitDock/LobbyMap.jpg" : "/images/js1.png";
+                break;
+            case "jsQuestionFive":
+                imagePath = isMap ? "/images/map/VisitDock/LobbyMap.jpg" : "/images/js2.png";
+                break;
+            case "jsEnd1": case "jsNoStart":
+                imagePath = isMap ? "/images/map/VisitDock/LobbyMap.jpg" : "/images/magicword.png";
                 break;
             case "hall":
                 // show hall image
                 imagePath = isMap ? "/images/map/VisitDock/BeachMap.jpg" : "/images/hall.jpg";
                 break;
-            case "karl":
+            case "karl": case "soQuestionOne": case "soQuestionTwo": case "soQuestionThree":
+                case "soQuestionFour": case "soQuestionFive": case "soStart": case "soEnd":
                 imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.jpg" : "/images/karl.jpg";
                 break;
-            case "restaurant":
+            case "ideSet":
+                imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.jpg" : "/images/ide.png";
+                break;
+            case "joke":
+                imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.jpg" : "/images/joke.png";
+                break;
+            case "restaurant": case "soNoStart":
                 // show restaurant image
                 imagePath = isMap ? "/images/map/VisitDock/RestaurantMap.jpg" : "/images/restaurant.jpg";
                 break;
@@ -133,7 +152,7 @@ public class SetUp {
     }
 
     /* pulls the JSON data and creates a panel based on room location */
-    public void createPanelScene(String pos){
+    public void createPanelScene(String pos) {
 
         while(true){
             setJsonObject(readFile.retrieveJson("data/location.json"));
@@ -162,10 +181,6 @@ public class SetUp {
                             mainTxt = gameFrame.getPlayer() + gameMap.get("maintext");
                         }
                     }
-
-//                    if(pos.matches("preending")) {
-//
-//                    }
 
                     // if pos = lobby && getBlackJack = true
                         // choice three = investigate noise (goes to nelly)
@@ -201,13 +216,21 @@ public class SetUp {
                         System.out.println("JS Game played: " + jsGame.getJsGameDone());
                     }
 
-                    if(pos.matches("restaurant") && gameFrame.getLosses() >= 5){
-                        choiceThree = "Order spaghetti & pepsi";
+                    if (pos.matches("restaurant") && gameFrame.getLosses() >= 5) {
+                        choiceThree = "Order Spaghetti & Pepsi";
                         mainTxt = "Long day? How about we give you an order of Spaghetti and Pepsi. It's on the house!";
-                    } else if(pos.matches("restaurant") && gameFrame.getBlackjackPlayed().equals(true)){
+                        gameFrame.setLosses(0);
+                    }
+                    if (pos.matches("restaurant") && gameFrame.getBlackjackPlayed().equals(true) && gameFrame.getSoGameDone().equals(false)) {
                         mainTxt = "There seems to be an issue in the restaurant, you can hear the chef shouting from the back, there appears to be an issue with the ordering system. You can investigate the issue, head to the game floor, or return to the hallway.";
                         choiceThree = "Investigate the issue";
                     }
+                    if (pos.matches("restaurant") && gameFrame.getSoGameDone().equals(true)) {
+                        mainTxt = "A sign hangs on the door that says:\n\n**CLOSED**\nSetting IDEs & Rebuilding Furniture\n\n";
+                        choiceOne = "Return to Hall";
+                        choiceTwo = "Return to Game Floor";
+                    }
+
 
                     gameFrame.setTexts(pos,mainTxt,choiceOne,choiceTwo,choiceThree,choiceFour);/* set valuue of room here*/
 
@@ -265,7 +288,6 @@ public class SetUp {
     public void prelude(){
         createPanelScene("prelude");
     }
-
     public void dock() {
         createPanelScene("dock");
     }
@@ -276,9 +298,6 @@ public class SetUp {
     }
     public void beach() {
         createPanelScene("beach");
-//        if(gameFrame.getMagicQuizDone().equals(true)){
-//            gameFrame.setMainText("You hear the sound of music to celebrate your SDE journey. There is one last thing you have to do. Go see Rennie");
-//        }
     }
     public void lobby() {
         createPanelScene("lobby");
