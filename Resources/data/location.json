@@ -99,8 +99,8 @@
     "id": "08",
     "inventory": "sanddollar",
     "maintext": ", Rennie smiles as he greets you: 'Welcome to your final virtual challenge! Your cohort has been one of the best so far, so at this point. Have fun. Are you ready to start your first challenge?' ",
-    "c1": "No, Go Explore More",
-    "c2": "Start Challenge",
+    "c1": "Go Explore",
+    "c2": "",
     "c3": "",
     "c4": "Show Map"
   },
@@ -108,7 +108,7 @@
     "pos": "nelly",
     "id": "09",
     "inventory": "career-blueprint",
-    "maintext": ", You see Nelly walk around from the corner, holding blueprints in hand. 'You got a second?', I need some help figuring this one out...",
+    "maintext": "You see Nelly walk around from the corner, holding blueprints in hand. 'You got a second?', I need some help figuring this one out...",
     "c1": "I want to explore some more! (Go back to Lobby)",
     "c2": "Start Challenge",
     "c3": "",
@@ -139,7 +139,7 @@
     "id": "12",
     "inventory": "python",
     "maintext": " , AH! Be CAREFUL! Naturally, I had to be on the nose and introduce a python into my magic act. But now it looks like I am out both a rabbit and a python. Well, would you like to start your next challenge?",
-    "c1": "After that? I need to step away and explore more.",
+    "c1": "Step away and explore",
     "c2": "Start Challenge",
     "c3": "",
     "c4": "Show Map"
@@ -149,9 +149,9 @@
     "id": "13",
     "npc": "false",
     "maintext": "You Read the Sign.",
-    "c1": "Return to the Dock",
+    "c1": "",
     "c2": "",
-    "c3": "",
+    "c3": "Return to the Dock",
     "c4":"Show Map"
   }
 }

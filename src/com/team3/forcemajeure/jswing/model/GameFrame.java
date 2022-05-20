@@ -49,6 +49,7 @@ public class GameFrame {
     private Boolean jsGameDone = false;
     private Boolean magicQuizDone = false;
     private Boolean magicWordCorrect = false;
+    private Boolean gotMeal = false;
 
     // Ctor - creates the frame for the game
     GameFrame() {
@@ -307,6 +308,14 @@ public class GameFrame {
 
     public void setSmallFont(Font smallFont) {
         this.smallFont = smallFont;
+    }
+
+    public Boolean getGotMeal() {
+        return gotMeal;
+    }
+
+    public void setGotMeal(Boolean gotMeal) {
+        this.gotMeal = gotMeal;
     }
 
     //Business Methods

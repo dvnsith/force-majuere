@@ -216,21 +216,32 @@ public class SetUp {
                         System.out.println("JS Game played: " + jsGame.getJsGameDone());
                     }
 
-                    if (pos.matches("restaurant") && gameFrame.getLosses() >= 5) {
-                        choiceThree = "Order Spaghetti & Pepsi";
-                        mainTxt = "Long day? How about we give you an order of Spaghetti and Pepsi. It's on the house!";
-                        gameFrame.setLosses(0);
-                    }
-                    if (pos.matches("restaurant") && gameFrame.getBlackjackPlayed().equals(true) && gameFrame.getSoGameDone().equals(false)) {
-                        mainTxt = "There seems to be an issue in the restaurant, you can hear the chef shouting from the back, there appears to be an issue with the ordering system. You can investigate the issue, head to the game floor, or return to the hallway.";
-                        choiceThree = "Investigate the issue";
-                    }
-                    if (pos.matches("restaurant") && gameFrame.getSoGameDone().equals(true)) {
-                        mainTxt = "A sign hangs on the door that says:\n\n**CLOSED**\nSetting IDEs & Rebuilding Furniture\n\n";
-                        choiceOne = "Return to Hall";
-                        choiceTwo = "Return to Game Floor";
-                    }
+                    if (pos.matches("restaurant")) {
 
+                        if(gameFrame.getLosses() > 0){
+                            choiceThree = "Order Spaghetti & Pepsi";
+                            mainTxt = "Long day? How about we give you an order of Spaghetti and Pepsi. It's on the house!";
+                            gameFrame.setLosses(0);
+                        }
+                        if(gameFrame.getBlackjackPlayed().equals(true) && gameFrame.getSoGameDone().equals(false)){
+                          mainTxt = "There seems to be an issue in the restaurant, you can hear the chef shouting from the back, there appears to be an issue with the ordering system. You can investigate the issue, head to the game floor, or return to the hallway.";
+                          choiceThree = "Investigate the issue";
+                       }
+                        if(gameFrame.getSoGameDone().equals(true)){
+                            mainTxt = "A sign hangs on the door that says:\n\n**CLOSED**\nSetting IDEs & Rebuilding Furniture\n\n";
+                            choiceOne = "Return to Hall";
+                            choiceTwo = "Return to Game Floor";
+                        }
+                    }
+//                    if (pos.matches("restaurant") && gameFrame.getBlackjackPlayed().equals(true) && gameFrame.getSoGameDone().equals(false)) {
+//                        mainTxt = "There seems to be an issue in the restaurant, you can hear the chef shouting from the back, there appears to be an issue with the ordering system. You can investigate the issue, head to the game floor, or return to the hallway.";
+//                        choiceThree = "Investigate the issue";
+//                    }
+//                    if (pos.matches("restaurant") && gameFrame.getSoGameDone().equals(true)) {
+//                        mainTxt = "A sign hangs on the door that says:\n\n**CLOSED**\nSetting IDEs & Rebuilding Furniture\n\n";
+//                        choiceOne = "Return to Hall";
+//                        choiceTwo = "Return to Game Floor";
+//                    }
 
                     gameFrame.setTexts(pos,mainTxt,choiceOne,choiceTwo,choiceThree,choiceFour);/* set valuue of room here*/
 

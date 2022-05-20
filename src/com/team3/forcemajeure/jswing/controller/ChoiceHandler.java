@@ -271,13 +271,13 @@ public class ChoiceHandler implements ActionListener {
                     case "c3":
                         if (gameFrame.getBlackjackPlayed().equals(true)) {
                             setUp.talkInstructor("karl");
-                        } else if(gameFrame.getBlackjackPlayed().equals(false) && gameFrame.getThirdChoice().equals("Order spaghetti & pepsi")) {
-                            gameFrame.setLosses(0);
+//                        } else if(gameFrame.getBlackjackPlayed().equals(false) && gameFrame.getThirdChoice().equals("Order spaghetti & pepsi")) {
+//                            gameFrame.setLosses(0);
+//                            setUp.gameFloor();
+//                        }
+                        } else if(gameFrame.getThirdChoice().equals("Order spaghetti & pepsi")) {
                             setUp.gameFloor();
                         }
-//                        } else if (gameFrame.getThirdChoice().equals("Order Spaghetti & Pepsi")) {
-//                            setUp.restaurant();
-//                        }
                         break;
                     case "c4":
                         gameFrame.showMap("restaurant");
