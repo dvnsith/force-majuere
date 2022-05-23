@@ -450,7 +450,7 @@ public class GameFrame {
             choice2.addActionListener(e -> {
                 String response = null;
                 String magicTxtField =  magicTextField.getText().toLowerCase().stripLeading().stripTrailing();
-                if (e.getSource() == choice2) {
+                if (e.getSource().equals(choice2)) {
                     if(magicTxtField.equals(getMagicWord())){
                         setMagicWordCorrect(true);
                         inventory.remove(magicTxtField);
