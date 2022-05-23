@@ -453,6 +453,7 @@ public class GameFrame {
                 if (e.getSource() == choice2) {
                     if(magicTxtField.equals(getMagicWord())){
                         setMagicWordCorrect(true);
+                        inventory.remove(magicTxtField);
                     } else {
                         response = ("Sorry, " + magicTxtField + " is not the magic word.");
                         if(magicTxtField.equals("I'M AN IDIOT") || magicTxtField.equals("IM AN IDIOT")){
@@ -465,6 +466,7 @@ public class GameFrame {
                             response = ("No word was given");
                         }
                         magicTextArea.setText(response);
+
                     }
                 }
             });
