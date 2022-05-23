@@ -53,6 +53,8 @@ public class SetUp {
         // When time is available: refactor to hashmap
         switch (roomName){
             case "prelude":
+            case "ending":
+                // show theater image
                 imagePath = "/images/vrset.jpg";
                 break;
             case "dock":
@@ -135,10 +137,6 @@ public class SetUp {
                 // show theater image
                 imagePath = isMap ? "/images/map/VisitDock/TheaterMap.jpg" : "/images/chad.jpg";
                 break;
-            case "ending":
-                // show theater image
-                imagePath = isMap ? "/images/map/VisitDock/TheaterMap.jpg" : "/images/rennie.jpg";
-                break;
             default:
                 imagePath = ("Unexpected value: " + roomName);
                 break;
@@ -173,7 +171,7 @@ public class SetUp {
                     if(pos.matches("rennie")){
                         if(gameFrame.inventory.contains("Blueprint")){
                             choiceTwo = "Get key";
-                            mainTxt = "In exchange for this blueprint, I'll hand you over the keys to begin your new career. Now go out there and remember to stay agile! 💪🏼";
+                            mainTxt = "In exchange for this blueprint, I'll hand you over the keys to begin your new career. Now go out there and remember to stay agile!";
                         }
                     }
 
@@ -342,15 +340,15 @@ public class SetUp {
 
     }
 
-    public void ending() {
-        //if points greater than X amount then show ending
-        gameFrame.setTexts("ending", "You unlock the boat with the key and the screen pixelates to black. As you take your VR goggles off, you're feeling exhausted from the challenges. Inside you feel a huge sense of accomplishment in your spirit. \n" +
-                "You feel ready for whatever challenges may come across your journey as an SDE as you remember your training. ", "scoreboard", "", "","");
-        gameFrame.choice1.setVisible(true);
-        gameFrame.choice2.setVisible(false);
-        gameFrame.choice3.setVisible(false);
-        gameFrame.choice4.setVisible(false);
-    }
+//    public void ending() {
+//        //if points greater than X amount then show ending
+//        gameFrame.setTexts("ending", "You unlock the boat with the key and the screen pixelates to black. As you take your VR goggles off, you're feeling exhausted from the challenges. Inside you feel a huge sense of accomplishment in your spirit. \n" +
+//                "You feel ready for whatever challenges may come across your journey as an SDE as you remember your training. ", "scoreboard", "", "","");
+//        gameFrame.choice1.setVisible(true);
+//        gameFrame.choice2.setVisible(false);
+//        gameFrame.choice3.setVisible(false);
+//        gameFrame.choice4.setVisible(false);
+//    }
 
     public void scoreBoard(){
         //show bgImage of closing scene and show scoreboard when leaving the island
