@@ -38,6 +38,7 @@ public class BlackJackGame {
     }
 
     // business methods
+    // This checks to see if the player already has five losses, and if so, they cannot play anymore.
     public void blackJackStart() {
         setPlayerHand(0);
         setDealerHand(0);
@@ -53,6 +54,7 @@ public class BlackJackGame {
         }
     }
 
+    // Deals a player 2 random cards between one and eleven, and the dealer gets a hand between thirteen and blackjack
     public void blackjackDeal() {
         setDealerHand(ThreadLocalRandom.current().nextInt(13, 21));
         for (int playerCount = 0; playerCount < 2; playerCount++) {
@@ -61,6 +63,7 @@ public class BlackJackGame {
         }
     }
 
+    // Checking to see if the player has busted after each card they ask for
     public void blackJackRound() {
         if (getPlayerHand() < 22) {
             gameFrame.setTexts("blackjackfirsthand", "Here is your hand: " + getPlayerHand(), "Hit me", "Stay", "", "");
@@ -77,11 +80,13 @@ public class BlackJackGame {
         }
     }
 
+    // Deals player another card when they request to hit me
     public void hitMe() {
         card = ThreadLocalRandom.current().nextInt(1, 11);
         setPlayerHand(playerHand += card);
     }
 
+    // End of game logic, the player will either get points with a win, lose with a loss, or if there is a tie, the house automatically wins.
     public void checkCards() {
         if (getPlayerHand() > getDealerHand()) {
             gameFrame.setBlackjackPlayed(true);

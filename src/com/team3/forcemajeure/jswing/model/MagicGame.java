@@ -7,8 +7,6 @@ public class MagicGame {
     private Boolean magicQuizDone = false;
     private Player player = new Player();
 
-
-    public MagicGame(){}
     // Ctor
     public MagicGame(GameFrame view){
         game = view;
@@ -18,11 +16,9 @@ public class MagicGame {
     public Boolean getMagicQuizDone() {
         return magicQuizDone;
     }
-
     public void setMagicQuizDone(Boolean magicQuizDone) {
         this.magicQuizDone = magicQuizDone;
     }
-
 
 
     // Business methods
@@ -47,7 +43,6 @@ public class MagicGame {
         }
         else if (player.getSkips() >= 3) {
             game.setTexts("magicQuestionOne", "Question 1: Which of the following is the correct extension of the Python file?", ".python", ".py", ".p", "");
-
         }
     }
     public void magicQuestionTwo() {
@@ -56,7 +51,6 @@ public class MagicGame {
         }
         else if (player.getSkips() <= 0) {
             game.setTexts("magicQuestionTwo", "Question 2: Which character is used in Python to make a single line comment?", "//", "#", "!", "");
-
         }
     }
     public void magicQuestionThree() {
@@ -89,6 +83,7 @@ public class MagicGame {
             game.choice4.setVisible(false);
         }
     }
+
     // Evaluating the players score, they need to get past the threshold in order to consider this a win
     public void magicQuestionEnd() {
         if(game.getPlayerPT() >= 10 ) {
@@ -110,10 +105,7 @@ public class MagicGame {
         player.setSkips(player.getSkips()-1);
         game.skipLabel.setText("Skips: " + player.getSkips());
     }
-    /*public void skipQuestion() {
-        setSkips(getSkips()-1);
-        game.skipLabel.setText("Skips: " + getSkips());
-    }*/
+
     // The first 3 questions will be easy and the last two will be hard. Easy questions give less points when correct.
     public void correctAnswerEasy() {
         game.setPlayerPT(game.getPlayerPT()+4);
