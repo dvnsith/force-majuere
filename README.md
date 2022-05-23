@@ -3,5 +3,5 @@
 ## An Adventure game.
 by Team4: Dev S, Jilly S, and Michael A
 
-### In this game the SDE will go through the VR game to get the tasks done to win the game!
+### In this game the apprentice will go through the VR experience to get the tasks done to win the and build their skills for the SDE Journey.
 
