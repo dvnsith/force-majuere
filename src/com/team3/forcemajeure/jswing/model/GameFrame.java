@@ -14,11 +14,11 @@ public class GameFrame {
     private JPanel magicTextPanel, menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
     public JLabel  inventoryLabel, inventoryLabelName,ptLabelNumber,skipLabel;
     private JLabel userNameLabel, titleNameLabel, ptLabel;
-    private Font titleFont = new Font("Impact", Font.PLAIN, 80);
-    private Font menuBarFont = new Font("Impact", Font.PLAIN, 15);
-    private Font choiceFont = new Font("Impact", Font.PLAIN, 14);
-    private Font narrativeFont = new Font("Impact", Font.PLAIN, 20);
-    private Font smallFont = new Font("Impact", Font.PLAIN, 12);
+    private Font titleFont = new Font("Agency FB", Font.BOLD, 84);
+    private Font menuBarFont = new Font("Agency FB", Font.BOLD, 16);
+    private Font choiceFont = new Font("Agency FB", Font.BOLD, 18);
+    private Font narrativeFont = new Font("Agency FB", Font.BOLD, 18);
+    private Font smallFont = new Font("Agency FB", Font.BOLD, 16);
     public JButton  magicButton, soundButton, startButton, choice1, choice2, choice3, choice4;
     private  JTextField textField = new JTextField();
     private  JTextField magicTextField = new JTextField();
@@ -37,12 +37,12 @@ public class GameFrame {
     private TitleScreenHandler tsHandler = new TitleScreenHandler(this);
     private SetUp setUp = new SetUp(this);
     private Boolean blackjackPlayed = false;
-    private Color bg = Color.black;
     private Color skyBlue = new Color(177, 251, 244);
     private Color darkTeal = new Color(15, 56, 67);
     private Color mintGreen = new Color(46, 226, 109);
     private Color seaGreen = new Color(12, 168, 153);
     private Color goldenRod = new Color(195, 178, 70);
+
     private int losses = 0;
     //JS - added condition for stack overflow game
     private Boolean soGameDone = false;
