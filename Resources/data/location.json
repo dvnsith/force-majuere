@@ -1,24 +1,24 @@
 {
   "prelude": {
-    "pos": "You place the ",
+    "pos": "prelude",
     "id": "00",
     "npc": "false",
-    "main": "y",
-    "c1": "wait, what?",
-    "c2": "c2",
-    "c3": "c3",
-    "c4":  "c4"
+    "maintext": ", so you've arrived. At your final test. You cannot believe it, a year ago you were working multiple jobs from dishwasher to line cook... and now you're here. The culmination of your work thus far. You take a deep breath and put on the headset.",
+    "c1": "Start Simulation",
+    "c2": "",
+    "c3": "",
+    "c4":  ""
   },
 
   "dock": {
     "pos": "dock",
     "id": "01",
     "npc": "false",
-    "maintext": "You are standing on a dock that outlooks a crystal-blue sea. You see a sign. You hear a familiar voice.",
+    "maintext": "You are standing on a dock that outlooks a crystal-blue sea. You see a sign in your periphery. ",
     "c1": "Check out the Beach",
-    "c2": "",
+    "c2": "Read the Sign",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
 
   "beach": {
@@ -29,17 +29,17 @@
     "c1": "Go to the Resort Lobby",
     "c2": "Go to the Dock",
     "c3": "Talk to Rennie",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
 
   "lobby": {
     "pos": "lobby",
     "id": "03",
     "npc": "true",
-    "maintext": "You are in a massive resort lobby. It is extravagantly decorated. As you are looking through the lobby, you hear a familiar voice.",
+    "maintext": "You are in a massive resort lobby. Although it is currently under renovations, it is extravagantly decorated. You see signs about a blackjack tournament on the Game Floor.",
     "c1": "Go to the Hall",
     "c2": "Go to the Beach",
-    "c3": "Investigate Voice",
+    "c3": "",
     "c4":  "See Map"
   },
 
@@ -51,20 +51,19 @@
     "c1": "Go to the Italian Restaurant",
     "c2": "Go to the Game Floor",
     "c3": "Go to the Lobby",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
 
   "restaurant": {
     "pos": "restaurant",
     "id": "05",
     "npc": "true",
-    "maintext": "There seems to be an issue in the restaurant, you can hear the chef shouting from the back, there appears to be an issue with the ordering system. You can investigate the issue, head to the game floor, or return to the hallway.",
-    "c1": "Investigate the issue",
+    "maintext": "The Italian Bistro is currently empty, but you can smell the aroma of spices cooking in the back. The host says they'll be serving soon.",
+    "c1": "Go to Hall",
     "c2": "Go to the Game Floor",
-    "c3": "Go to the Hall",
-    "c4":  "See Map"
+    "c3": "",
+    "c4": "See Map"
   },
-
   "gameFloor":  {
     "pos": "gameFloor",
     "id": "06",
@@ -73,67 +72,85 @@
     "c1": "Check out the Black Jack tables",
     "c2": "Go to the Theater",
     "c3": "Go to the Restaurant",
-    "c4":  "See Map"
+    "c4":  "Show Map"
+  },
+  "preTheater":  {
+    "pos": "preTheater",
+    "id": "07",
+    "npc": "true",
+    "maintext": "Please enter the magic word to watch the show",
+    "c1": "Go to game floor",
+    "c2": "submit magic word",
+    "c3": "",
+    "c4":  ""
   },
   "theater":  {
     "pos": "theater",
     "id": "07",
     "npc": "true",
-    "maintext": "The theater is abuzz with patrons awaiting to watch the show. You see a Python slither across the stage. A large rabbit shapped bulge in its stomach.",
-    "c1": "Investigate the issue",
+    "maintext": "Welcome to the live show! Please take your seatsssss as our next act will have you slytherin away...",
+    "c1": "Go to game floor",
     "c2": "",
     "c3": "",
-    "c4":  "See Map"
+    "c4":  "Show Map"
   },
   "rennie": {
     "pos": "rennie",
     "id": "08",
-    "inventory": "sanddollar",
-    "maintext": ", Rennie smiles as he greets you: 'Welcome to your final virtual challenge! Your cohort has been one of the best so far, so at this point. Have fun. Are you ready to start your first challenge?' ",
-    "c1": "No, Go Explore More",
-    "c2": "Start Challenge",
+    "maintext": "Rennie smiles as he greets you: 'Welcome to your final virtual challenge! Your cohort has been one of the best so far, so at this point. Have fun. Are you ready to start exploring the island resort?' ",
+    "c1": "Go Explore",
+    "c2": "",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "nelly": {
     "pos": "nelly",
     "id": "09",
     "inventory": "career-blueprint",
-    "maintext": ", You see Nelly walk around from the corner, holding blueprints in hand. 'You got a second?', I need some help figuring this one out...",
+    "maintext": "You see Nelly walk around from the corner, holding blueprints in hand. 'You got a second?', I need some help figuring this one out...",
     "c1": "I want to explore some more! (Go back to Lobby)",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "karl": {
     "pos": "karl",
     "id": "10",
     "inventory": "spaghetti",
-    "maintext": "Momma Mia! I have no idea what happened, at one moment we were able to get these tickets in and now, it looks like somethings wrong! Can you help?",
-    "c1": "I can't help a brother out right now. Explore more",
-    "c2": "Start Challenge",
+    "maintext": "\n'IT'S COMING OUT FASTER THAN I CAN CATCH IT'.\n'CAN YOU GIVE ME A HAND?!'\nChef Luigi Larson yells at you from the back of the restaurant.'",
+    "c1": "Don't help a brother out",
+    "c2": "Help a brother out",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "jay": {
     "pos": "jay",
     "id": "11",
     "inventory": "duck race medal",
-    "maintext": " , Jay smiles a warm smile. When I'm not shredding air guitar or I moonlight as a Black Jack Dealer. Ready to find out what your next challenge is? ",
+    "maintext": "Jay smiles a warm smile. When I'm not shredding air guitar, I moonlight as a Black Jack Dealer. Ready to find out what your next challenge is? ",
     "c1": "I'm not ready to play a solo, right now. Explore more",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
   },
   "chad": {
     "pos": "chad",
     "id": "12",
     "inventory": "python",
-    "maintext": " , AH! Be CAREFUL! Naturally, I had to be on the nose and introduce a python into my magic act. But now it looks like I am out both a rabbit and a python. Well, would you like to start your next challenge?",
-    "c1": "After that? I need to step away and explore more.",
+    "maintext": "AH! Be CAREFUL! Naturally, I had to be on the nose and introduce a python into my magic act. But now it looks like I am out both a rabbit and a python. Well, would you like to start your next challenge?",
+    "c1": "Go back.",
     "c2": "Start Challenge",
     "c3": "",
-    "c4": "See Map"
+    "c4": "Show Map"
+  },
+  "sign": {
+    "pos": "sign",
+    "id": "13",
+    "npc": "false",
+    "maintext": "You Read the Sign.",
+    "c1": "Return to the Dock",
+    "c2": "",
+    "c3": "",
+    "c4":""
   }
-
 }

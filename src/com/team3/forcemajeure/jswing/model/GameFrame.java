@@ -1,8 +1,6 @@
 package com.team3.forcemajeure.jswing.model;
 
-
-import com.team3.forcemajeure.jswing.controller.ChoiceHandler;
-import com.team3.forcemajeure.jswing.controller.TitleScreenHandler;
+import com.team3.forcemajeure.jswing.controller.*;
 import com.team3.forcemajeure.util.SoundPlayer;
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,19 +8,24 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class GameFrame {
-
+    private static final GameFrame INSTANCE = new GameFrame();
     private JFrame window;
     private Container con;
-    private JPanel menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
-    public JLabel inventoryLabel, inventoryLabelName,ptLabelNumber,skipLabel;
+    private JPanel magicTextPanel, menuPanel, userNamePanel, titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
+    public JLabel  inventoryLabel, inventoryLabelName,ptLabelNumber,skipLabel;
     private JLabel userNameLabel, titleNameLabel, ptLabel;
-    private Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
-    private Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
-    public JButton soundButton, startButton, choice1, choice2, choice3, choice4;
-    private JTextArea mainTextArea;
+    private Font titleFont = new Font("Agency FB", Font.BOLD, 84);
+    private Font menuBarFont = new Font("Agency FB", Font.BOLD, 16);
+    private Font choiceFont = new Font("Agency FB", Font.BOLD, 18);
+    private Font narrativeFont = new Font("Agency FB", Font.BOLD, 18);
+    private Font smallFont = new Font("Agency FB", Font.BOLD, 16);
+    public JButton  magicButton, soundButton, startButton, choice1, choice2, choice3, choice4;
+    private  JTextField textField = new JTextField();
+    private  JTextField magicTextField = new JTextField();
+    private JTextArea mainTextArea, magicTextArea, jsTextArea;
     private int playerPT;
     public String position;
-    private String player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
+    private String magicWord, player, previousRoom, currentRoom, mainText, firstChoice, secondChoice, thirdChoice, fourthChoice;
     public ArrayList<String> inventory = new ArrayList<>();
     private Boolean soundOn = true;
     private ImageIcon logo = new ImageIcon("resources/images/island.png");
@@ -34,22 +37,29 @@ public class GameFrame {
     private TitleScreenHandler tsHandler = new TitleScreenHandler(this);
     private SetUp setUp = new SetUp(this);
     private Boolean blackjackPlayed = false;
-    private Color bg = Color.black;
     private Color skyBlue = new Color(177, 251, 244);
     private Color darkTeal = new Color(15, 56, 67);
     private Color mintGreen = new Color(46, 226, 109);
     private Color seaGreen = new Color(12, 168, 153);
     private Color goldenRod = new Color(195, 178, 70);
 
+    private int losses = 0;
+    //JS - added condition for stack overflow game
+    private Boolean soGameDone = false;
+    private Boolean jsGameDone = false;
+    private Boolean magicQuizDone = false;
+    private Boolean magicWordCorrect = false;
+    private Boolean gotMeal = false;
 
     // Ctor - creates the frame for the game
-    public GameFrame() {
+    GameFrame() {
         window = new JFrame();
         window.setSize(1000, 800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().setBackground(seaGreen);
         window.setLayout(null);
         window.setIconImage(logo.getImage());
+        window.setResizable(false);
         con = window.getContentPane();
 
         Clip themeSong = sound.play("start",true,0, GameFrame.class);
@@ -91,22 +101,28 @@ public class GameFrame {
         startButtonPanel.setBackground(seaGreen);
 
         startButton = new JButton("START");
-        startButton.setBackground(goldenRod);
-        startButton.setForeground(seaGreen);
-        startButton.setFont(normalFont);
+        startButton.setBackground(darkTeal);
+        startButton.setForeground(skyBlue);
+        startButton.setFont(narrativeFont);
         startButton.addActionListener(tsHandler);
         startButton.setFocusPainted(false);
 
         userNameLabel = new JLabel("Enter username");
-        userNameLabel.setForeground(skyBlue);
-        JTextField textField = new JTextField();
+        userNameLabel.setForeground(goldenRod);
+        userNameLabel.setFont(menuBarFont);
+        textField= new JTextField();
         textField.setPreferredSize(new Dimension(200,40));
         startButton.addActionListener(e -> {
             if(e.getSource() == startButton){
-                setPlayer(textField.getText());
-
+                String username = textField.getText().stripLeading().stripTrailing();
+                if(username.length() > 0){
+                    setPlayer(username);
+                } else {
+                    setPlayer("Unnamed player");
+                }
             }
         });
+
 
         menuPanel.add(soundButton);
         userNamePanel.add(userNameLabel);
@@ -122,13 +138,16 @@ public class GameFrame {
         window.setVisible(true);
     }
 
+    public static GameFrame getInstance() {
+        return INSTANCE;
+    }
     //Accessor
     public String getPlayer() {
         return player;
     }
 
     public void setPlayer(String player) {
-        this.player = player;
+            this.player = player;
     }
 
     public boolean isSoundOn() {
@@ -211,28 +230,133 @@ public class GameFrame {
         this.blackjackPlayed = blackjackPlayed;
     }
 
+    public int getLosses() {
+        return losses;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public Boolean getSoGameDone() {
+        return soGameDone;
+    }
+
+    public void setSoGameDone(Boolean soGameDone) {
+        this.soGameDone = soGameDone;
+    }
+
+    public Boolean getJsGameDone() {
+        return jsGameDone;
+    }
+
+    public void setJsGameDone(Boolean jsGameDone) {
+        this.jsGameDone = jsGameDone;
+    }
+
+    public Boolean getMagicQuizDone() {
+        return magicQuizDone;
+    }
+
+    public void setMagicQuizDone(Boolean magicQuizDone) {
+        this.magicQuizDone = magicQuizDone;
+    }
+
+    public String getMagicWord() {
+        return magicWord;
+    }
+
+    public void setMagicWord(String magicWord) {
+        this.magicWord = magicWord;
+    }
+
+    public Boolean getMagicWordCorrect() {
+        return magicWordCorrect;
+    }
+
+    public void setMagicWordCorrect(Boolean magicWordCorrect) {
+        this.magicWordCorrect = magicWordCorrect;
+    }
+
+    public Font getMenuBarFont() {
+        return menuBarFont;
+    }
+
+    public void setMenuBarFont(Font menuBarFont) {
+        this.menuBarFont = menuBarFont;
+    }
+
+    public Font getChoiceFont() {
+        return choiceFont;
+    }
+
+    public void setChoiceFont(Font choiceFont) {
+        this.choiceFont = choiceFont;
+    }
+
+    public Font getNarrativeFont() {
+        return narrativeFont;
+    }
+
+    public void setNarrativeFont(Font narrativeFont) {
+        this.narrativeFont = narrativeFont;
+    }
+
+    public Font getSmallFont() {
+        return smallFont;
+    }
+
+    public void setSmallFont(Font smallFont) {
+        this.smallFont = smallFont;
+    }
+
+    public Boolean getGotMeal() {
+        return gotMeal;
+    }
+
+    public void setGotMeal(Boolean gotMeal) {
+        this.gotMeal = gotMeal;
+    }
+
     //Business Methods
     /* creates the components to be added onto the frame */
     public void createGameScreen() {
+        setMagicWord(magicWord);
         userNamePanel.setVisible(false);
         titleNamePanel.setVisible(false);
         startButtonPanel.setVisible(false);
 
         mainTextPanel = new JPanel();
         mainTextPanel.setBounds(220, 75, 600, 425);
-        mainTextPanel.setBackground(Color.black);
+        mainTextPanel.setBackground(seaGreen);
         con.add(mainTextPanel);
         mainTextArea = new JTextArea(
                 "Oops...the text is not showing.");
         mainTextArea.setBounds(225, 500, 500, 300);
         mainTextArea.setBackground(seaGreen);
         mainTextArea.setForeground(darkTeal);
-        mainTextArea.setFont(normalFont);
+        mainTextArea.setFont(narrativeFont);
         mainTextArea.setLineWrap(true);
         mainTextArea.setWrapStyleWord(true);
         mainTextArea.setEditable(false);
 
         mainTextPanel.add(mainTextArea);
+
+        magicTextField = new JTextField();
+        magicTextPanel = new JPanel();
+        magicTextPanel.setBounds(220, 75, 600, 425);
+        magicTextPanel.setBackground(seaGreen);
+        magicTextArea = new JTextArea(
+                "Oops...the text is not showing.");
+        magicTextArea.setBounds(225, 500, 500, 300);
+        magicTextArea.setBackground(seaGreen);
+        magicTextArea.setForeground(darkTeal);
+        magicTextArea.setFont(narrativeFont);
+        magicTextArea.setLineWrap(true);
+        magicTextArea.setWrapStyleWord(true);
+        magicTextArea.setEditable(false);
+        magicTextPanel.add(magicTextArea);
+        con.add(magicTextPanel);
 
         choiceButtonPanel = new JPanel();
         choiceButtonPanel.setBounds(350, 515, 300, 125);
@@ -242,7 +366,7 @@ public class GameFrame {
         choice1 = new JButton("Choice 1");
         choice1.setBackground(darkTeal);
         choice1.setForeground(skyBlue);
-        choice1.setFont(normalFont);
+        choice1.setFont(choiceFont);
         choice1.setFocusPainted(false);
         choice1.addActionListener(choiceHandler);
         choice1.setActionCommand("c1");
@@ -250,7 +374,7 @@ public class GameFrame {
         choice2 = new JButton("Choice 2");
         choice2.setBackground(darkTeal);
         choice2.setForeground(skyBlue);
-        choice2.setFont(normalFont);
+        choice2.setFont(choiceFont);
         choice2.setFocusPainted(false);
         choice2.addActionListener(choiceHandler);
         choice2.setActionCommand("c2");
@@ -258,7 +382,7 @@ public class GameFrame {
         choice3 = new JButton("Choice 3");
         choice3.setBackground(darkTeal);
         choice3.setForeground(skyBlue);
-        choice3.setFont(normalFont);
+        choice3.setFont(choiceFont);
         choice3.setFocusPainted(false);
         choice3.addActionListener(choiceHandler);
         choice3.setActionCommand("c3");
@@ -266,70 +390,119 @@ public class GameFrame {
         choice4 = new JButton("Choice 4");
         choice4.setBackground(darkTeal);
         choice4.setForeground(skyBlue);
-        choice4.setFont(normalFont);
+        choice4.setFont(choiceFont);
         choice4.setFocusPainted(false);
         choice4.addActionListener(choiceHandler);
         choice4.setActionCommand("c4");
         choiceButtonPanel.add(choice4);
 
+
         playerPanel = new JPanel();
-        playerPanel.setBounds(250, 0, 600, 50);
+        playerPanel.setBounds(250, 0, 680, 50);
         playerPanel.setBackground(seaGreen);
         playerPanel.setLayout(new GridLayout(1, 4));
         con.add(playerPanel);
         ptLabel = new JLabel("Points:");
-        ptLabel.setFont(normalFont);
+        ptLabel.setFont(smallFont);
         ptLabel.setForeground(skyBlue);
         playerPanel.add(ptLabel);
         ptLabelNumber = new JLabel();
-        ptLabelNumber.setFont(normalFont);
-        ptLabelNumber.setForeground(skyBlue);
+        ptLabelNumber.setFont(menuBarFont);
+        ptLabelNumber.setForeground(goldenRod);
         playerPanel.add(ptLabelNumber);
         inventoryLabel = new JLabel("Inventory:");
-        inventoryLabel.setFont(normalFont);
+        inventoryLabel.setFont(menuBarFont);
         inventoryLabel.setForeground(skyBlue);
         inventoryLabel.setBackground(darkTeal);
         playerPanel.add(inventoryLabel);
         inventoryLabelName = new JLabel();
-        inventoryLabelName.setFont(normalFont);
-        inventoryLabelName.setForeground(skyBlue);
+        inventoryLabelName.setFont(menuBarFont);
+        inventoryLabelName.setForeground(goldenRod);
         playerPanel.add(inventoryLabelName);
         skipLabel = new JLabel();
-        skipLabel.setFont(normalFont);
+        skipLabel.setFont(menuBarFont);
         skipLabel.setForeground(skyBlue);
         playerPanel.add(skipLabel);
         setUp.playerSetup();
 
-
     }
+
 
     /* set up panel to display room's text and image */
     public void setTexts(String pos, String mainText, String choiceOne, String choiceTwo, String choiceThree,
                          String choiceFour) {
 
-        mainTextPanel.setVisible(true);
-        choice1.setVisible(true);
-        choice2.setVisible(true);
-        choice3.setVisible(true);
-        mapLabel.setVisible(false);
-        imageBgLabel.setVisible(true);
-        position = pos;
+        if(pos.equals("preTheater")){
+            magicTextField.setVisible(true);
+            mainTextPanel.setVisible(false);
+            magicTextPanel.setVisible(true);
+            imageBgLabel.setVisible(true);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
+            gameBgImage = setUp.setImage("preTheater", false);
+            magicTextField.setPreferredSize(new Dimension(200,40));
+            imageBgLabel.setIcon(gameBgImage);
+            magicTextPanel.add(magicTextField);
+            magicTextPanel.add(imageBgLabel);
+            magicTextArea.setText(mainText);
+            setPreviousRoom(getCurrentRoom());
+
+            choice2.addActionListener(e -> {
+                String response = null;
+                String magicTxtField =  magicTextField.getText().toLowerCase().stripLeading().stripTrailing();
+                if (e.getSource().equals(choice2)) {
+                    if(magicTxtField.equals(getMagicWord())){
+                        setMagicWordCorrect(true);
+                        inventory.remove(magicTxtField);
+                    } else {
+                        response = ("Sorry, " + magicTxtField + " is not the magic word.");
+                        if(magicTxtField.equals("I'M AN IDIOT") || magicTxtField.equals("IM AN IDIOT")){
+                            response = ("You're an idiot!");
+                        }
+                        if(magicTxtField.equals("42")){
+                            response = ("Yes, we know that is the meaning of life but it's not the magic word");
+                        }
+                        if(magicTxtField.equals("")){
+                            response = ("No word was given");
+                        }
+                        magicTextArea.setText(response);
+
+                    }
+                }
+            });
+        } else {
+            textField.setVisible(false);
+            mainTextPanel.setVisible(true);
+            magicTextPanel.setVisible(false);
+            choice2.setVisible(true);
+            choice3.setVisible(true);
+            choice4.setVisible(true);
 
         //if room is null then set bgImage to dock else
         //get bg of image based on room
         if(getPreviousRoom() == null){
-            gameBgImage = setUp.setImage("dock", false);
-            setPreviousRoom("dock");
+            gameBgImage = setUp.setImage("prelude", false);
+            setPreviousRoom("prelude");
+            choice2.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
 
-        } else {
-            gameBgImage = setUp.setImage(pos, false);
-            setPreviousRoom(getCurrentRoom());
+            } else {
+                gameBgImage = setUp.setImage(pos, false);
+                setPreviousRoom(getCurrentRoom());
+            choice2.setVisible(true);
+            choice3.setVisible(true);
+            choice4.setVisible(true);
+            }
+            mainTextPanel.add(imageBgLabel);
+            mainTextArea.setText(mainText);
         }
-
+        position = pos;
+        choice1.setVisible(true);
+        mapLabel.setVisible(false);
+        imageBgLabel.setVisible(true);
         setCurrentRoom(pos);
         imageBgLabel.setIcon(gameBgImage);
-        mainTextPanel.add(imageBgLabel);
-        mainTextArea.setText(mainText);
         choice1.setText(choiceOne);
         choice2.setText(choiceTwo);
         choice3.setText(choiceThree);
@@ -339,7 +512,6 @@ public class GameFrame {
         setSecondChoice(choiceTwo);
         setThirdChoice(choiceThree);
         setFourthChoice(choiceFour);
-
         System.out.println("🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴\n" + "🌴 Previous room: "+ getPreviousRoom() + "\n🌴 Current room: " + getCurrentRoom() + "\n🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴🌴");
     }
 
@@ -349,16 +521,12 @@ public class GameFrame {
         setCurrentRoom(currentRoomName);
         imageBgLabel.setVisible(false);
         mapLabel.setVisible(true);
-
         gameMapImage = setUp.setImage(getCurrentRoom(), true);
-
         choiceButtonPanel.setOpaque(true);
-
         mapLabel.setIcon(gameMapImage);
         mainTextPanel.add(mapLabel);
         position = "map";
         mainTextArea.setText("");
-
         choice1.setVisible(false);
         choice2.setVisible(false);
         choice3.setVisible(false);

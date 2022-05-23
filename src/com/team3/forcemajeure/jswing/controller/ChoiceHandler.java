@@ -6,29 +6,48 @@ import java.awt.event.ActionListener;
 
 public class ChoiceHandler implements ActionListener {
 
-    private final GameFrame gameFrame;
-    private final MagicGame magicGame;
-    private final BlackJackGame blackJackGame;
-    private final SetUp setUp;
+    private GameFrame gameFrame;
+    private MagicGame magicGame;
+    private BlackJackGame blackJackGame;
+    private JavaScriptGame javaScriptGame;
+    private StackOverflowGame soGame;
+    private SetUp setUp;
+    private int skips;
 
-    //Ctor
+
+    // Ctor
+    public ChoiceHandler(){
+
+    }
     public ChoiceHandler(GameFrame view) {
         gameFrame = view;
         magicGame = new MagicGame(view);
         blackJackGame = new BlackJackGame(view);
         setUp = new SetUp(view);
+        javaScriptGame = new JavaScriptGame(view);
+        soGame = new StackOverflowGame(view);
     }
 
-    //Business methods
+    // Business methods
     public void actionPerformed(ActionEvent event) {
 
         String yourChoice = event.getActionCommand();
 
         switch (gameFrame.position) {
+            case "prelude": case "sign":
+                switch (yourChoice) {
+                    case "c1":
+                        setUp.dock();
+                        break;
+                }
+                break;
             case "dock":
                 switch (yourChoice) {
                     case "c1":
                         setUp.beach();
+                        break;
+                    case "c2":
+                        setUp.sign();
                         break;
                     case "c4":
                         gameFrame.showMap("dock");
@@ -36,7 +55,7 @@ public class ChoiceHandler implements ActionListener {
                 }
                 break;
             case "map":
-                switch (yourChoice){
+                switch (yourChoice) {
                     case "c4": gameFrame.setTexts(gameFrame.getCurrentRoom(), gameFrame.getMainText(), gameFrame.getFirstChoice(),gameFrame.getSecondChoice(), gameFrame.getThirdChoice(), gameFrame.getFourthChoice());// get previous method of scene
                         break;
                 }
@@ -44,18 +63,17 @@ public class ChoiceHandler implements ActionListener {
             case "rennie":
                 switch (yourChoice) {
                     case "c1":
-                        setUp.dock();
+                        setUp.beach();
                         break;
                     case "c2":
-                        setUp.miniGame();
-                        break;
-                    case "c3":
-                        if(gameFrame.inventory.contains("Key")){
-                            setUp.ending();
+                        if(gameFrame.inventory.contains("Blueprint")){
+                            setUp.getKey();
                         }
                         break;
                     case "c4":
-                        gameFrame.showMap("beach");
+                        if(gameFrame.getMagicQuizDone().equals(false) || gameFrame.inventory.contains("Blueprint")){
+                            gameFrame.showMap("rennie");
+                        }
                         break;
                 }
                 break;
@@ -84,7 +102,9 @@ public class ChoiceHandler implements ActionListener {
                         setUp.beach();
                         break;
                     case "c3":
-                        setUp.talkInstructor("nelly");
+                        if(gameFrame.getBlackjackPlayed().equals(true) && gameFrame.getJsGameDone().equals(false)){
+                            setUp.talkInstructor("nelly");
+                        }
                         break;
                     case "c4":
                         gameFrame.showMap("lobby");
@@ -97,15 +117,127 @@ public class ChoiceHandler implements ActionListener {
                         setUp.lobby();
                         break;
                     case "c2":
-                        setUp.miniGame();
+                        javaScriptGame.jsGameStart();
                         break;
-//                    case "c3":
-//                        if(gameFrame.inventory.contains("Key")){
-//                            setUp.ending();
-//                        }
-//                        break;
                     case "c4":
-                        gameFrame.showMap("lobby");
+                        gameFrame.showMap("nelly");
+                        break;
+                }
+                break;
+            case "jsStart":
+                switch (yourChoice) {
+                    case "c1":
+                        javaScriptGame.jsQuestionOne();
+                        break;
+                    case "c2":
+                        setUp.lobby();
+                        break;
+                }
+                break;
+            case "jsQuestionOne":
+                switch (yourChoice){
+                    case "c1":
+                        javaScriptGame.correctImagesAnswer();
+                        javaScriptGame.jsQuestionTwo();
+                        break;
+                    case "c2":
+                        javaScriptGame.wrongAnswer();
+                        javaScriptGame.jsQuestionTwo();
+                        break;
+                    case "c4":
+                        javaScriptGame.skipQuestion();
+                        javaScriptGame.jsQuestionTwo();
+                        break;
+                }
+                break;
+            case "jsQuestionTwo":
+                switch (yourChoice){
+                    case "c1":
+                        javaScriptGame.wrongAnswer();
+                        javaScriptGame.jsQuestionThree();
+                        break;
+                    case "c2":
+                        javaScriptGame.correctAnswer();
+                        javaScriptGame.jsQuestionThree();
+                        break;
+                    case "c4":
+                        javaScriptGame.skipQuestion();
+                        javaScriptGame.jsQuestionThree();
+                        break;
+                }
+                break;
+            case "jsQuestionThree":
+                switch (yourChoice){
+                    case "c1":
+                        javaScriptGame.wrongAnswer();
+                        javaScriptGame.jsQuestionFour();
+                        break;
+                    case "c2":
+                        javaScriptGame.correctAnswer();
+                        javaScriptGame.jsQuestionFour();
+                        break;
+                    case "c4":
+                        javaScriptGame.skipQuestion();
+                        javaScriptGame.jsQuestionFour();
+                        break;
+                }
+                break;
+            case "jsQuestionFour":
+                switch (yourChoice){
+                    case "c1":
+                        javaScriptGame.correctAnswer();
+                        javaScriptGame.jsQuestionFive();
+                        break;
+                    case "c2":
+                        javaScriptGame.wrongAnswer();
+                        javaScriptGame.jsQuestionFive();
+                        break;
+                    case "c4":
+                        javaScriptGame.skipQuestion();
+                        javaScriptGame.jsQuestionFive();
+                        break;
+                }
+                break;
+            case "jsQuestionFive":
+                switch (yourChoice){
+                    case "c1":
+                        javaScriptGame.wrongAnswer();
+                        javaScriptGame.jsEnd();
+                        break;
+                    case "c2":
+                        javaScriptGame.correctImagesAnswer();
+                        javaScriptGame.jsEnd();
+                        break;
+                    case "c4":
+                        javaScriptGame.skipQuestion();
+                        javaScriptGame.jsEnd();
+                        break;
+                }
+                break;
+            case "jsEnd":
+                switch (yourChoice){
+                    case "c1":
+                        setUp.lobby();
+                        break;
+                }
+                break;
+            case "jsEnd2":
+                switch (yourChoice){
+                    case "c1":
+                        setUp.lobby();
+                        break;
+                    case "c2":
+                        javaScriptGame.jsGameStart();
+                        break;
+                }
+                break;
+            case "jsNoStart":
+                switch (yourChoice){
+                    case "c1":
+                        setUp.gameFloor();
+                        break;
+                    case "c2":
+                        setUp.hall();
                         break;
                 }
                 break;
@@ -128,13 +260,15 @@ public class ChoiceHandler implements ActionListener {
             case "restaurant":
                 switch (yourChoice) {
                     case "c1":
-                        setUp.talkInstructor("karl");
+                        setUp.hall();
                         break;
                     case "c2":
                         setUp.gameFloor();
                         break;
                     case "c3":
-                        setUp.hall();
+                        if (gameFrame.getBlackjackPlayed().equals(true)) {
+                            setUp.talkInstructor("karl");
+                        }
                         break;
                     case "c4":
                         gameFrame.showMap("restaurant");
@@ -147,10 +281,148 @@ public class ChoiceHandler implements ActionListener {
                         setUp.restaurant();
                         break;
                     case "c2":
-                        setUp.miniGame();
+                        soGame.soGameStart();
                         break;
                     case "c4":
-                        gameFrame.showMap("restaurant");
+                        gameFrame.showMap("karl");
+                        break;
+                }
+                break;
+            case "soNoStart":
+                switch (yourChoice) {
+                    case "c1":
+                        setUp.gameFloor();
+                        break;
+                    case "c2":
+                        setUp.hall();
+                        break;
+                    case "c3":
+                        setUp.restaurant();
+                        break;
+                }
+                break;
+            case "soStart":
+                switch (yourChoice) {
+                    case "c1":
+                        soGame.soQuestionOne();
+                        break;
+                    case "c2":
+                        soGame.ideSet();
+                        break;
+                    case "c3":
+                        setUp.restaurant();
+                        break;
+                }
+                break;
+            case "soQuestionOne":
+                switch (yourChoice){
+                    case "c1": case "c3":
+                        soGame.soQuestionTwo();
+                        break;
+                    case "c2":
+                        soGame.correctAnswer();
+                        soGame.soQuestionTwo();
+                        break;
+                    case "c4":
+                        soGame.skipQuestion();
+                        soGame.soQuestionTwo();
+                        break;
+                }
+                break;
+            case "soQuestionTwo":
+                switch (yourChoice){
+                    case "c1": case "c2":
+                        soGame.soQuestionThree();
+                        break;
+                    case "c3":
+                        soGame.correctAnswer();
+                        soGame.soQuestionThree();
+                        break;
+                    case "c4":
+                        soGame.skipQuestion();
+                        soGame.soQuestionThree();
+                        break;
+                }
+                break;
+            case "soQuestionThree":
+                switch (yourChoice){
+                    case "c1":
+                        soGame.correctAnswer();
+                        soGame.soQuestionFour();
+                        break;
+                    case "c2": case "c3":
+                        soGame.soQuestionFour();
+                        break;
+                    case "c4":
+                        soGame.skipQuestion();
+                        soGame.soQuestionFour();
+                        break;
+                }
+                break;
+            case "soQuestionFour":
+                switch (yourChoice){
+                    case "c1":
+                        soGame.correctAnswer();
+                        soGame.soQuestionFive();
+                        break;
+                    case "c2": case "c3":
+                        soGame.soQuestionFive();
+                        break;
+                    case "c4":
+                        soGame.skipQuestion();
+                        soGame.soQuestionFive();
+                        break;
+                }
+                break;
+            case "soQuestionFive":
+                switch (yourChoice){
+                    case "c2": case "c3":
+                        soGame.soEnd();
+                        break;
+                    case "c1":
+                        soGame.correctAnswer();
+                        soGame.soEnd();
+                        break;
+                    case "c4":
+                        soGame.skipQuestion();
+                        soGame.soEnd();
+                        break;
+                }
+                break;
+            case "soEnd":
+                switch (yourChoice){
+                    case "c1":
+                        soGame.joke();
+                        break;
+                    case "c2":
+                        soGame.pepsi();
+                        setUp.restaurant();
+                        break;
+                    case "c3":
+                        setUp.restaurant();
+                        break;
+                }
+                break;
+            case "joke":
+                switch (yourChoice){
+                    case "c1":
+                        soGame.joke();
+                        break;
+                    case "c2":
+                        setUp.restaurant();
+                        break;
+                }
+                break;
+            case "ideSet":
+                switch (yourChoice){
+                    case "c1":
+                        soGame.ideSet();
+                        break;
+                    case "c2":
+                        soGame.soQuestionOne();
+                        break;
+                    case"c3":
+                        setUp.restaurant();
                         break;
                 }
                 break;
@@ -159,8 +431,12 @@ public class ChoiceHandler implements ActionListener {
                     case "c1":
                         setUp.talkInstructor("jay");
                         break;
-                    case "c2":
-                        setUp.theater();
+                    case "c2": //set pre theater method
+                        if(gameFrame.getMagicWordCorrect()){
+                            setUp.theater();
+                        } else {
+                            setUp.preTheater();
+                        }
                         break;
                     case "c3":
                         setUp.restaurant();
@@ -177,9 +453,6 @@ public class ChoiceHandler implements ActionListener {
                         break;
                     case "c2":
                         blackJackGame.blackJackStart();
-                        break;
-                    case "c4":
-                        gameFrame.showMap("gameFloor");
                         break;
                 }
                 break;
@@ -212,13 +485,25 @@ public class ChoiceHandler implements ActionListener {
                         break;
                 }
                 break;
+            case "preTheater":
+                switch (yourChoice) {
+                    case "c1":
+                        setUp.gameFloor();
+                        break;
+                    case "c2":
+                        if(gameFrame.getMagicWordCorrect()){
+                            setUp.theater();
+                        }
+                        break;
+                }
+                break;
             case "theater":
                 switch (yourChoice) {
                     case "c1":
                         setUp.gameFloor();
                         break;
                     case "c2":
-                        if (gameFrame.getBlackjackPlayed().equals(true)){
+                        if (gameFrame.getJsGameDone().equals(true) && gameFrame.getMagicQuizDone().equals(false)){
                             setUp.talkInstructor("chad");
                         }
                         break;
@@ -233,9 +518,7 @@ public class ChoiceHandler implements ActionListener {
                         break;
                     case "c2":
                         //if beaten 21
-                        if(gameFrame.getBlackjackPlayed().equals(true)){
-                            magicGame.magicQuizAsk();
-                        }
+                        magicGame.magicQuizAsk();
                         break;
                     case "c4":
                         gameFrame.showMap("theater");
@@ -254,7 +537,7 @@ public class ChoiceHandler implements ActionListener {
                 break;
             case "magicQuestionOne":
                 switch (yourChoice) {
-                    case "c1": case "c3": case "c4":
+                    case "c1": case "c3":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionTwo();
                         break;
@@ -262,17 +545,24 @@ public class ChoiceHandler implements ActionListener {
                         magicGame.correctAnswerEasy();
                         magicGame.magicQuestionTwo();
                         break;
-
+                    case "c4":
+                        magicGame.skipQuestion();
+                        magicGame.magicQuestionTwo();
+                        break;
                 }
                 break;
             case "magicQuestionTwo":
                 switch (yourChoice) {
-                    case "c1": case "c2": case "c3":
+                    case "c1": case "c3":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionThree();
                         break;
-                    case "c4":
+                    case "c2":
                         magicGame.correctAnswerEasy();
+                        magicGame.magicQuestionThree();
+                        break;
+                    case "c4":
+                        magicGame.skipQuestion();
                         magicGame.magicQuestionThree();
                         break;
                 }
@@ -283,32 +573,44 @@ public class ChoiceHandler implements ActionListener {
                         magicGame.correctAnswerEasy();
                         magicGame.magicQuestionFour();
                         break;
-                    case "c2": case "c3": case "c4":
+                    case "c2": case "c3":
                         magicGame.wrongAnswer();
+                        magicGame.magicQuestionFour();
+                        break;
+                    case "c4":
+                        magicGame.skipQuestion();
                         magicGame.magicQuestionFour();
                         break;
                 }
                 break;
             case "magicQuestionFour":
                 switch (yourChoice) {
-                    case "c1": case "c3": case "c4":
+                    case "c1": case "c3":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionFive();
                         break;
                     case "c2":
-                        magicGame.correctAnswerEasy();
+                        magicGame.correctAnswerHard();
+                        magicGame.magicQuestionFive();
+                        break;
+                    case "c4":
+                        magicGame.skipQuestion();
                         magicGame.magicQuestionFive();
                         break;
                 }
                 break;
             case "magicQuestionFive":
                 switch (yourChoice) {
-                    case "c1": case "c2": case "c4":
+                    case "c1": case "c2":
                         magicGame.wrongAnswer();
                         magicGame.magicQuestionEnd();
                         break;
                     case "c3":
-                        magicGame.correctAnswerEasy();
+                        magicGame.correctAnswerHard();
+                        magicGame.magicQuestionEnd();
+                        break;
+                    case "c4":
+                        magicGame.skipQuestion();
                         magicGame.magicQuestionEnd();
                         break;
 
@@ -327,6 +629,7 @@ public class ChoiceHandler implements ActionListener {
                         setUp.scoreBoard();
                         break;
                 }
+                break;
         }
     }
 }

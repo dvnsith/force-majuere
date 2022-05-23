@@ -7,11 +7,14 @@ import java.awt.event.ActionListener;
 
 public class TitleScreenHandler implements ActionListener {
 
-    private final GameFrame gameFrame;
+    private GameFrame gameFrame;
 
+    public TitleScreenHandler(){}
+    // ctor
     public TitleScreenHandler(GameFrame view){
         gameFrame = view;
     }
+    // business method
     public void actionPerformed(ActionEvent event) {
 
         gameFrame.createGameScreen();
