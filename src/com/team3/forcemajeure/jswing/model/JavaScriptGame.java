@@ -55,7 +55,7 @@ public class JavaScriptGame {
             gameFrame.choice1.setVisible(true);
             gameFrame.choice2.setVisible(true);
             gameFrame.choice3.setVisible(false);
-            gameFrame.choice3.setVisible(false);
+            gameFrame.choice4.setVisible(false);
     }
 
     public void jsQuestionOne() {

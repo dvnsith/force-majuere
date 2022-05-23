@@ -95,6 +95,9 @@ public class MagicGame {
             game.inventory.add("Blueprint");
             game.inventoryLabelName.setText(game.inventory.get(0) + ", " + game.inventory.get(1));
             game.setTexts("magicQuestionEnd","Your total points: " + game.getPlayerPT() + " , you did well enough to succeed here! You've received a key off the island.","Return to Theater","","","");
+            game.choice2.setVisible(false);
+            game.choice3.setVisible(false);
+            game.choice4.setVisible(false);
             game.setMagicQuizDone(true);
         }
         else if(game.getPlayerPT() < 10){

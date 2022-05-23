@@ -268,7 +268,6 @@ public class ChoiceHandler implements ActionListener {
                     case "c3":
                         if (gameFrame.getBlackjackPlayed().equals(true)) {
                             setUp.talkInstructor("karl");
-//
                         }
                         break;
                     case "c4":
